@@ -1,36 +1,47 @@
 #include "HotelRoom.h"
 
-HotelRoom::HotelRoom() : Accomodations() {
-    cout << "(!) HotelRoom::Constructor, Accomodations inc." << endl;
+HotelRoom::HotelRoom(
+    const int id,
+    const int nbr_people,
+    const int size,
+    const bool bathroom_with_bath,
+    const string luxury_level, 
+    const int floor,
+    const string location,
+    const int nbr_beds,
+    const bool children_bed
+) : Accomodations(id, nbr_people, size, bathroom_with_bath, luxury_level), m_floor(floor), m_location(location), m_nbrBeds(nbr_beds), m_childrenBed(children_bed) {
+    cout << "(!) HotelRoom::Constructor" << endl;
 }
+
 HotelRoom::~HotelRoom() {
     cout << "(!) HotelRoom::Destructor" << endl;
 }
 
 const int& HotelRoom::getFloor() const {
-    return this->Floor;
+    return this->m_floor;
 }
 const string& HotelRoom::getLocation() const {
-    return this->Location;
+    return this->m_location;
 }
 const int& HotelRoom::getNbrBeds() const {
-    return this->NbrBeds;
+    return this->m_nbrBeds;
 }
 const bool& HotelRoom::getChildrenBed() const {
-    return this->ChildrenBed;
+    return this->m_childrenBed;
 }
 
 void HotelRoom::setFloor(const int floor) {
-    this->Floor = floor;
+    this->m_floor = floor;
 }
 void HotelRoom::setLocation(const string location) {
-    this->Location = location;
+    this->m_location = location;
 }
 void HotelRoom::setNbrBeds(const int nbr_beds) {
-    this->NbrBeds = nbr_beds;
+    this->m_nbrBeds = nbr_beds;
 }
 void HotelRoom::setChildrenBed(const bool children_bed) {
-    this->ChildrenBed = children_bed;
+    this->m_childrenBed = children_bed;
 }
 
 const string HotelRoom::toString() const {
@@ -44,7 +55,7 @@ const string HotelRoom::toString() const {
     output << " HotelRoom::Floor -> " << this->getFloor() << endl;
     output << " HotelRoom::Location -> " << this->getLocation() << endl;
     output << " HotelRoom::NbrBeds -> " << this->getNbrBeds() << endl;
-    output << " HotelRoom::ChildrenBed -> " << this->getChildrenBed();
+    output << " HotelRoom::ChildrenBed -> " << boolalpha << this->getChildrenBed();
 
     return output.str();
 }

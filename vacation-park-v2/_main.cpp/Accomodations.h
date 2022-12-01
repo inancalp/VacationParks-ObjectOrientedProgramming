@@ -10,18 +10,24 @@ class Accomodations
 {
 
 private:
-	int Id = -1;
-	int NbrPeople = -1;
-	int Size = -1;
-	bool BathroomWithBath = false;
-	// LuxuryLevel type will change later.
-	string LuxuryLevel = "N/A";
+	int m_id;
+	int m_nbrPeople;
+	int m_size;
+	bool m_bathroomWithBath;
+	string m_luxuryLevel; // LuxuryLevel type will change later.
 
 public:
 
-	Accomodations(const int id, const int nbr_people, const int size, const bool bathroom_with_bath, const string luxury_level);
-	Accomodations();
-	virtual ~Accomodations();
+	Accomodations
+	(
+		const int id,
+		const int nbr_people,
+		const int size,
+		const bool bathroom_with_bath,
+		const string luxury_level //change later
+	);
+
+	virtual ~Accomodations(); // virtual as desing convention: otherwise memory leak may happen.
 
 	const int& getId() const;
 	const int& getNbrPeople() const;

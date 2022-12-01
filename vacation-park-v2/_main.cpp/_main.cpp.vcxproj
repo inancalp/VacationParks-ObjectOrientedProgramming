@@ -132,6 +132,9 @@
     <ClCompile Include="Bungalow.cpp" />
     <ClCompile Include="Customer.cpp" />
     <ClCompile Include="HotelRoom.cpp" />
+    <ClCompile Include="LuxuryLevel.cpp" />
+    <ClCompile Include="Parcs.cpp" />
+    <ClCompile Include="ParcServices.cpp" />
     <ClCompile Include="useCaseLibrary.cpp" />
     <ClCompile Include="VacationParcs.cpp" />
     <ClCompile Include="_main.cpp" />
@@ -142,6 +145,9 @@
     <ClInclude Include="Bungalow.h" />
     <ClInclude Include="Customer.h" />
     <ClInclude Include="HotelRoom.h" />
+    <ClInclude Include="LuxuryLevel.h" />
+    <ClInclude Include="Parcs.h" />
+    <ClInclude Include="ParcServices.h" />
     <ClInclude Include="useCaseLibrary.h" />
     <ClInclude Include="VacationParcs.h" />
   </ItemGroup>

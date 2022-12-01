@@ -39,6 +39,15 @@
     <ClCompile Include="Bungalow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Parcs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParcServices.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LuxuryLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Customer.h">
@@ -60,6 +69,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Bungalow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Parcs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParcServices.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuxuryLevel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,9 +7,25 @@
 class Bungalow :
     public Accomodations
 {
+private:
+    int m_bedrooms;
 public:
-    Bungalow();
+    Bungalow
+    (
+        const int id,
+        const int nbr_people,
+        const int size,
+        const bool bathroom_with_bath,
+        const string luxury_level,
+        const int bedrooms
+    );
+
     ~Bungalow();
+
+    const int& getBedrooms() const;
+    void setBedrooms(const int bedrooms);
+
+    const string toString() const override;
 };
 
 #endif // BUNGALOW_H

@@ -1,0 +1,78 @@
+	//LuxuryLevel* l = new LuxuryLevel(false, true, false, true, "Bungalow");
+	//cout << l->toString() << endl;
+	//cout << endl;
+	//delete l;
+
+
+	//Parcs* p = new Parcs("myParc", "myAddress");
+	//p->setParcServices("a_bit_of_a_service");
+	//cout << p->toString() << endl;
+	//delete p;
+
+	//Accomodations* a = new Accomodations(1, 2, 3, true, "a bit luxxx");
+	//cout << "\n\n\n";
+	//Accomodations* h = new HotelRoom(11, 22, 33, true, "a bit luxxxer", 44, "boulevard", 55, false);
+	//cout << "\n\n\n";
+	//Accomodations* b = new Bungalow(111, 222, 333, false, "not the best", 444);
+	//cout << "\n\n\n";
+	//cout << a->toString() << endl;
+	//cout << "\n\n\n";
+	//cout << h->toString() << endl;
+	//cout << "\n\n\n";
+	//cout << b->toString() << endl;
+	//cout << "\n\n\n";
+	//delete a;
+	//cout << "\n\n\n";
+	//delete h;
+	//cout << "\n\n\n";
+	//delete b;
+	//cout << "\n\n\n";
+	
+
+
+
+	//VacationParcs* VP = new VacationParcs("VP", "ADDRESS", "VAT");
+
+	//createCustomer(VP);
+	//cout << VP->getCustomers()[0]->toString() << endl;
+	//createBooking(VP->getCustomers()[0]);
+
+	//for (size_t i{ 0 }; i < VP->getCustomers().size(); i++)
+	//{
+	//	cout << VP->getCustomers()[i]->getBookings()[0]->toString() << endl;
+	//	cout << VP->getCustomers()[i]->toString() << endl;
+	//}
+
+	//delete VP;
+
+
+
+	//Accomodation* a = new Accomodation(1, 10, 20, true, "very luxxx");
+	//cout << a->toString() << endl;
+	//delete a;
+
+
+
+	//VacationParcs* VP = new VacationParcs("VP//name", "VP//address", "VP//vat");
+	//createCustomer(VP);
+	//createCustomer(VP);
+	//delete VP;
+
+
+
+
+	//VacationParcs* VP = new VacationParcs("VP//name", "VP//address", "VP//vat");
+	//VP->setParc(111);
+	//VP->setParc(222);
+	//VP->setCustomer(new Customer("Inanc", "Hertgostraat", "inanc@gunalp.com"));
+	//VP->setCustomer(new Customer("Alp", "Hoegaarden", "alp@gunalp.com"));
+	//cout << VP->toString() << endl;
+	//delete VP;
+
+
+	//string name{ "inanc" };
+	//string address{ "thomas more" };
+	//string email{ "gunalp@g.com" };
+	//Customer* c = new Customer(name, address, email);
+	//cout << c->customerToString() << endl;
+	//delete c;
