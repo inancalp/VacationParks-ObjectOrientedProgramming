@@ -21,7 +21,7 @@
     <ClInclude Include="Customer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mLibrary.h">
+    <ClInclude Include="myLibrary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Accomodation.h">

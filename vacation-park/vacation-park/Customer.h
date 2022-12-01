@@ -7,43 +7,46 @@ using namespace std;
 #include <string>
 #include <vector>
 #include <sstream>
+#include "Booking.h"
 
 class Customer {
 
 private:
-	int Id = -1;
-	string Name = "N/A";
-	string Email = "N/A";
-	vector<int> Bookings{};
+	string Name;
+	string Address;
+	string Email;
 
 public:
-	Customer(const int& id,
-		const string& name,
-		const string& email,
-		const vector<int>& bookings
-	);
+	//vector<Booking*> Bookings; // best way to handle?
 
-	Customer();
+	Customer(const string& name, const string& address, const string& email);
 
-	void setId(const int& id);
+	~Customer();
 
 	void setName(const string& name);
 
+	void setAddress(const string& address);
+
 	void setEmail(const string& email);
 
-	void setBookings(const vector<int>& bookings);
-
-	void addBooking(const int& booking);
-
-	const int& getId() const;
 	const string& getName() const;
-	const string& getEmail() const;
-	const vector<int>& getBookings() const;
-	
 
-	const string showBookings() const;
-	const void showCustomerInfo() const;
+	const string& getAddress() const;
+
+	const string& getEmail() const;
+	
+	const string& customerToString() const; // change toString()
 };
 
 #endif //CUSTOMER_H
 
+//Customer::Customer
+//(
+//	const string& name,
+//	const string& address,
+//	const string& email
+//)
+//	: Name(name), Address(address), Email(email), Bookings(bookings)
+//{
+//	cout << "Customer::Constructor ->> " << this->getName() << " created." << endl;
+//}

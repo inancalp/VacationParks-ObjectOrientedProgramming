@@ -1,4 +1,4 @@
-#include "mLibrary.h"
+#include "myLibrary.h"
 #include "Customer.h"
 #include "VacationParcs.h"
 #include "Booking.h"
@@ -72,19 +72,19 @@ const int& CustomerOptionsList()
 	return selected_option;
 }
 
-void CreateCustomer(Customer& customer, int& id, string& name, string& email, vector<int>& bookings)
-{
-	customer.setId(id);
-	customer.setBookings(bookings);
-
-	cout << "Customer Name: ";
-	cin >> name;
-	customer.setName(name);
-
-	cout << "Customer E-Mail: ";
-	cin >> email;
-	customer.setEmail(email);
-};
+//void CreateCustomer(Customer& customer, int& id, string& name, string& email, vector<int>& bookings)
+//{
+//	customer.setId(id);
+//	customer.setBookings(bookings);
+//
+//	cout << "Customer Name: ";
+//	cin >> name;
+//	customer.setName(name);
+//
+//	cout << "Customer E-Mail: ";
+//	cin >> email;
+//	customer.setEmail(email);
+//};
 
 void CreateBooking(
 	Customer& customer,

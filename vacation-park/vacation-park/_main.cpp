@@ -4,11 +4,37 @@
 #include "Accomodation.h"
 #include "Bungalow.h"
 #include "HotelRoom.h"
-#include "mLibrary.h"
+#include "myLibrary.h"
 
 int main()
 {
-	int is_customer;
+
+	string name{ "inanc" };
+	string address{ "thomas more" };
+	string email{ "gunalp@g.com" };
+	Customer* c = new Customer(name, address, email);
+
+	cout << c->customerToString() << endl;
+
+
+	delete c;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/*int is_customer;
 	int booking_id = 1;
 	int customer_id = 1;
 	string customer_name;
@@ -39,7 +65,7 @@ int main()
 
 
 	cout << endl << endl;
-	cout << endl << endl;
+	cout << endl << endl;*/
 
 
 
@@ -120,61 +146,49 @@ int main()
 	
 
 	// "Welcome();" should return [int](3) for to progress as customer.
-	is_customer = Welcome(); 
-	if (is_customer != 3)
-	{
-		cout << "\nThis program is only functional if the user is a customer." << endl;
-		cout << " Program being terminated." << endl;
-		return 0;
-	}
-	Customer myCustomer;
-	cout << "You are a customer, great! Let's get going..." << endl;
+	//is_customer = Welcome(); 
+	//if (is_customer != 3)
+	//{
+	//	cout << "\nThis program is only functional if the user is a customer." << endl;
+	//	cout << " Program being terminated." << endl;
+	//	return 0;
+	//}
 
-	CreateCustomer(
-		myCustomer,
-		customer_id,
-		customer_name,
-		customer_email,
-		customer_bookings
-	);
 
-	myCustomer.showCustomerInfo();
 
-	cout << "\nOkay then " << myCustomer.getName() << "! " << "Lets show you your options: \n\n";
+	//selected_option = CustomerOptionsList();
 
-	selected_option = CustomerOptionsList();
+	//bool activity_pass;
+	//bool sports_pass;
+	//bool bicycle_rent;
+	//bool swimming_pass;
+	//vector<int> accomodations{ -1 };
 
-	bool activity_pass;
-	bool sports_pass;
-	bool bicycle_rent;
-	bool swimming_pass;
-	vector<int> accomodations{ -1 };
-
-	switch (selected_option)
-	{
-		// can't put another "case" cuz Booking Object Declaration
-	case 1:
-		CreateBooking(
-			myCustomer,
-			booking_id,
-			activity_pass,
-			sports_pass,
-			bicycle_rent,
-			swimming_pass
-		);
-		Booking myBooking(
-			booking_id,
-			myCustomer,
-			accomodations,
-			activity_pass,
-			sports_pass,
-			bicycle_rent,
-			swimming_pass
-		);
-		myCustomer.addBooking(booking_id);
-		booking_id++;
-		myCustomer.showCustomerInfo();
-		break;
-	}
+	//switch (selected_option)
+	//{
+	//	// can't put another "case" cuz Booking Object Declaration
+	//case 1:
+	//	CreateBooking(
+	//		myCustomer,
+	//		booking_id,
+	//		activity_pass,
+	//		sports_pass,
+	//		bicycle_rent,
+	//		swimming_pass
+	//	);
+	//	Booking myBooking(
+	//		booking_id,
+	//		myCustomer,
+	//		accomodations,
+	//		activity_pass,
+	//		sports_pass,
+	//		bicycle_rent,
+	//		swimming_pass
+	//	);
+	//	myCustomer.addBooking(booking_id);
+	//	booking_id++;
+	//	myCustomer.showCustomerInfo();
+	//	break;
+	//}
 	return 0;
 }

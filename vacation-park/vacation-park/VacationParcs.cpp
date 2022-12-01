@@ -85,7 +85,7 @@ const string VacationParcs::getAccomodations() const {
 	}
 	for (size_t i{ 0 }; i < this->Accomodations.size(); i++)
 	{	
-		output << Accomodations[i]->toString() << endl << endl;
+		output << this->Accomodations[i]->toString() << endl << endl;
 	}
 
 	return output.str();

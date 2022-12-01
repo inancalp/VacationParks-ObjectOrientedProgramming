@@ -133,7 +133,7 @@
     <ClInclude Include="Customer.h" />
     <ClInclude Include="HotelRoom.h" />
     <ClInclude Include="LuxuryLevel.h" />
-    <ClInclude Include="mLibrary.h" />
+    <ClInclude Include="myLibrary.h" />
     <ClInclude Include="VacationParcs.h" />
   </ItemGroup>
   <ItemGroup>
