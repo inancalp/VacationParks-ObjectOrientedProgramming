@@ -82,17 +82,17 @@ const string Booking::toString() const
 {
 	ostringstream output;
 	output << "--------------" << endl;
-	output << "Booking::getId() ->> " << this->getId() << endl;
-	output << "Booking::getActivityPass() ->> " << boolalpha << this->getActivityPass() << endl;
-	output << "Booking::getSportPass() ->> " << boolalpha << this->getSportPass() << endl;
-	output << "Booking::getBicycleRent() ->> " << boolalpha << this->getBicycleRent() << endl;
-	output << "Booking::getSwimmingPass() ->> " << boolalpha << this->getSwimmingPass() << endl;
-	output << "Booking::getAccomodations() ->> [ ";
+	output << "\t Booking::getId() ->> " << this->getId() << endl;
+	output << "\t Booking::getActivityPass() ->> " << boolalpha << this->getActivityPass() << endl;
+	output << "\t Booking::getSportPass() ->> " << boolalpha << this->getSportPass() << endl;
+	output << "\t Booking::getBicycleRent() ->> " << boolalpha << this->getBicycleRent() << endl;
+	output << "\t Booking::getSwimmingPass() ->> " << boolalpha << this->getSwimmingPass() << endl;
+	output << "\t Booking::getAccomodations() ->> [ ";
 	for (size_t i{ 0 }; i < this->getAccomodations().size(); i++)
 	{
 		output << "\"" << this->getAccomodations()[i] << "\" ";
 	}
 	output << "]" << endl;
-	output << "--------------";
+	output << "\t--------------";
 	return output.str();
 }

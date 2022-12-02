@@ -1,14 +1,19 @@
 #include "Parcs.h"
 
 
-Parcs::Parcs(string name, string address) : m_name(name), m_address(address) {
+Parcs::Parcs(string name, string address, ParcServices* parc_services) : m_name(name), m_address(address), m_parcServices(parc_services) {
 	cout << "Parcs::Constructor ->> " << this->getName() << " created." << endl;
 }
 Parcs::~Parcs() {
+	//delete accomodations
 	for (size_t i{ 0 }; i < this->getAccomodations().size(); i++)
 	{
 		delete this->getAccomodations()[i];
 	}
+
+	//delete services object
+	delete this->getParcServices();
+
 	cout << "Parcs::Destructor ->> " << this->getName() << " deleted." << endl;
 }
 
@@ -20,7 +25,7 @@ const string& Parcs::getAddress() const
 {
 	return this->m_address;
 }
-const vector<string>& Parcs::getParcServices() const
+ParcServices* Parcs::getParcServices() const
 {
 	return this->m_parcServices;
 }
@@ -37,9 +42,9 @@ void Parcs::setAddress(const string& address)
 {
 	this->m_address = address;
 }
-void Parcs::setParcServices(string parc_services)
+void Parcs::setParcServices(ParcServices* parc_services)
 {
-	this->m_parcServices.push_back(parc_services);
+	this->m_parcServices = parc_services;
 }
 void Parcs::setAccomodation(Accomodations* accomodation)
 {
@@ -52,11 +57,7 @@ const string Parcs::toString() const
 	output << "--------------" << endl;
 	output << "Parcs::getName() ->> " << this->getName() << endl;
 	output << "Parcs::getAddress() ->> " << this->getAddress() << endl;
-	output << "\nParcs::getParcServices()" << endl;
-	for (size_t i{ 0 }; i < this->getParcServices().size(); i++)
-	{
-		output << "\t" << this->getParcServices()[i] << endl; //change later
-	}
+	output << "\nParcs::getParcServices() -> " << endl << this->getParcServices()->toString() << endl;
 	output << "\nParcs::getAccomodations()" << endl;
 	for (size_t i{ 0 }; i < this->getAccomodations().size(); i++)
 	{

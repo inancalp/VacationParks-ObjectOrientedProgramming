@@ -76,3 +76,15 @@
 	//Customer* c = new Customer(name, address, email);
 	//cout << c->customerToString() << endl;
 	//delete c;
+
+
+
+	//VacationParcs* vp = new VacationParcs("vp", "vp->address", "vp->vat");
+	//cout << vp->toString() << endl;
+	//createCustomer(vp);
+	//cout << vp->getCustomers()[0]->toString() << endl; //deleted when delete vp
+	////customer's address being passed
+	////deleted when delete vp->customer
+	//createBooking(vp->getCustomers()[0]);
+	//cout << vp->getCustomers()[0]->toString() << endl;
+	//delete vp;

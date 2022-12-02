@@ -48,12 +48,12 @@ void LuxuryLevel::setAccomodationKind(const string& accomodation_kind) {
 
 const string LuxuryLevel::toString() const {
 	ostringstream output;
-	output << "--------------" << endl;
-	output << "LuxuryLevel::getBbq() ->> " << boolalpha << this->getBbq() << endl;
-	output << "LuxuryLevel::getSurroundSystem() ->> " << boolalpha << this->getSurroundSystem() << endl;
-	output << "LuxuryLevel::getBreakfastService() ->> " << boolalpha << this->getBreakfastService() << endl;
-	output << "LuxuryLevel::getCleaningService() ->> " << boolalpha << this->getCleaningService() << endl;
-	output << "LuxuryLevel::getAccomodationKind() ->> " << this->getAccomodationKind() << endl;
-	output << "--------------";
+	output << "\t|---------------" << endl;
+	output << "\t| LuxuryLevel::getBbq() ->> " << boolalpha << this->getBbq() << endl;
+	output << "\t| LuxuryLevel::getSurroundSystem() ->> " << boolalpha << this->getSurroundSystem() << endl;
+	output << "\t| LuxuryLevel::getBreakfastService() ->> " << boolalpha << this->getBreakfastService() << endl;
+	output << "\t| LuxuryLevel::getCleaningService() ->> " << boolalpha << this->getCleaningService() << endl;
+	output << "\t| LuxuryLevel::getAccomodationKind() ->> " << this->getAccomodationKind() << endl;
+	output << "\t|---------------";
 	return output.str();
 }

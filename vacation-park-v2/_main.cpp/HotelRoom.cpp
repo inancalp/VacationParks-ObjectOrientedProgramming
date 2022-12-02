@@ -5,7 +5,7 @@ HotelRoom::HotelRoom(
     const int nbr_people,
     const int size,
     const bool bathroom_with_bath,
-    const string luxury_level, 
+    LuxuryLevel* luxury_level, 
     const int floor,
     const string location,
     const int nbr_beds,
@@ -47,15 +47,17 @@ void HotelRoom::setChildrenBed(const bool children_bed) {
 const string HotelRoom::toString() const {
 
     ostringstream output;
-    output << " HotelRoom::ID -> " << this->getId() << endl;
-    output << " HotelRoom::NbrPeople -> " << this->getNbrPeople() << endl;
-    output << " HotelRoom::Size -> " << this->getSize() << endl;
-    output << " HotelRoom::BathroomWithBath -> " << this->getBathroomWithBath() << endl;
-    output << " HotelRoom::LuxuryLevel -> " << this->getLuxuryLevel() << endl;
-    output << " HotelRoom::Floor -> " << this->getFloor() << endl;
-    output << " HotelRoom::Location -> " << this->getLocation() << endl;
-    output << " HotelRoom::NbrBeds -> " << this->getNbrBeds() << endl;
-    output << " HotelRoom::ChildrenBed -> " << boolalpha << this->getChildrenBed();
+    output << "|---------------" << endl;
+    output << "| HotelRoom::ID -> " << this->getId() << endl;
+    output << "| HotelRoom::NbrPeople -> " << this->getNbrPeople() << endl;
+    output << "| HotelRoom::Size -> " << this->getSize() << endl;
+    output << "| HotelRoom::BathroomWithBath -> " << this->getBathroomWithBath() << endl;
+    output << "| (!) Accomodations::LuxuryLevel -> " << endl << this->getLuxuryLevel()->toString() << endl;
+    output << "| HotelRoom::Floor -> " << this->getFloor() << endl;
+    output << "| HotelRoom::Location -> " << this->getLocation() << endl;
+    output << "| HotelRoom::NbrBeds -> " << this->getNbrBeds() << endl;
+    output << "| HotelRoom::ChildrenBed -> " << boolalpha << this->getChildrenBed();
+    output << "|---------------" << endl;
 
     return output.str();
 }

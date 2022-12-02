@@ -79,7 +79,7 @@ const string Customer::toString() const
 
 	for (size_t i{ 0 }; i < this->getBookings().size(); i++)
 	{
-		output << "\t" << this->getBookings()[i]->getId() << endl;
+		output << "\t" << this->getBookings()[i]->toString() << endl;
 	}
 	return output.str();
 }

@@ -4,10 +4,7 @@
 
 using namespace std;
 #include "Customer.h"
-#include <iostream>
-#include <string>
-#include <vector>
-#include <sstream>
+#include "Parcs.h" // two times standard libraries ??
 
 class VacationParcs
 {
@@ -15,7 +12,7 @@ private:
 	string m_name;
 	string m_address;
 	string m_vat;
-	vector<int> m_parcs; //change to pointer later
+	vector<Parcs*> m_parcs; //change to pointer later
 	vector<Customer*> m_customers;
 
 public:
@@ -26,18 +23,19 @@ public:
 	const string& getAddress() const;
 	const string& getVat() const;
 
-	const vector<int>& getParcs() const;
+	vector<Parcs*>& getParcs();
 	const vector<Customer*>& getCustomers() const;
 
 	void setName(const string& name);
 	void setAddress(const string& address);
 	void setVat(const string& vat);
 
-	void setParc(int parc);
+	void setParc(Parcs* parc);
 	void setCustomer(Customer* customer);
 
-	const string toString() const;
+	string toString();
 };
 
 
 #endif
+

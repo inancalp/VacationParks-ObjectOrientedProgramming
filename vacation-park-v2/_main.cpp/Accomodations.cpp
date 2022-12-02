@@ -7,7 +7,7 @@ Accomodations::Accomodations
 	const int nbr_people,
 	const int size,
 	const bool bathroom_with_bath,
-	const string luxury_level
+	LuxuryLevel* luxury_level //
 )
 	: m_id(id), m_nbrPeople(nbr_people), m_size(size), m_bathroomWithBath(bathroom_with_bath), m_luxuryLevel(luxury_level)
 {
@@ -15,6 +15,9 @@ Accomodations::Accomodations
 }
 
 Accomodations::~Accomodations() {
+
+	// luxuryLevel can stay as an object when Acc. been deleted
+
 	cout << "(!) Accomodations::Destructor ->> Accomodation with id[" << this->getId() << "] deleted." << endl;
 };
 
@@ -42,7 +45,7 @@ const bool& Accomodations::getBathroomWithBath() const
 }
 
 
-const string& Accomodations::getLuxuryLevel() const
+const LuxuryLevel* Accomodations::getLuxuryLevel() const
 {
 	return this->m_luxuryLevel;
 }
@@ -72,18 +75,19 @@ void Accomodations::setBathroomWithBath(const bool& bathroom_with_bath)
 }
 
 
-void Accomodations::setLuxuryLevel(const string& luxury_level)
+void Accomodations::setLuxuryLevel(LuxuryLevel* luxury_level) // ??
 {
 	this->m_luxuryLevel = luxury_level;
 }
 
 const string Accomodations::toString() const {
 	ostringstream output;
-	output << " Accomodations::ID -> " << this->getId() << endl;
-	output << " Accomodations::NbrPeople -> " << this->getNbrPeople() << endl;
-	output << " Accomodations::Size -> " << this->getSize() << endl;
-	output << " Accomodations::BathroomWithBath -> " << boolalpha << this->getBathroomWithBath() << endl;
-	output << " Accomodations::LuxuryLevel -> " << this->getLuxuryLevel();
-
+	output << "|---------------" << endl;
+	output << "| Accomodations::ID -> " << this->getId() << endl;
+	output << "| Accomodations::NbrPeople -> " << this->getNbrPeople() << endl;
+	output << "| Accomodations::Size -> " << this->getSize() << endl;
+	output << "| Accomodations::BathroomWithBath -> " << boolalpha << this->getBathroomWithBath() << endl;
+	output << "| (!) Accomodations::LuxuryLevel -> " << endl << this->getLuxuryLevel()->toString() << endl;
+	output << "|---------------" << endl;
 	return output.str();
 }

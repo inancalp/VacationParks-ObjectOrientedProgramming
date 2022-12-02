@@ -9,7 +9,7 @@ VacationParcs::~VacationParcs()
 {
 	for (size_t i{ 0 }; i < this->getParcs().size(); i++)
 	{
-		// change to pointer later.
+		delete this->getParcs()[i];
 	}
 	for (size_t i{ 0 }; i < this->getCustomers().size(); i++)
 	{
@@ -34,7 +34,7 @@ const string& VacationParcs::getVat() const
 }
 
 
-const vector<int>& VacationParcs::getParcs() const
+vector<Parcs*>& VacationParcs::getParcs() // (?) deleted const's
 {
 	return this->m_parcs;
 }
@@ -58,7 +58,7 @@ void VacationParcs::setVat(const string& vat)
 }
 
 
-void VacationParcs::setParc(int parc)
+void VacationParcs::setParc(Parcs* parc)
 {
 	this->m_parcs.push_back(parc);
 }
@@ -69,7 +69,7 @@ void VacationParcs::setCustomer(Customer* customer)
 
 
 
-const string VacationParcs::toString() const
+string VacationParcs::toString() // (?) deleted const's
 {
 	ostringstream output;
 	output << "--------------" << endl;

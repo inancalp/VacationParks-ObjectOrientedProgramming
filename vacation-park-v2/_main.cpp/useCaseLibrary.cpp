@@ -1,6 +1,6 @@
 #include "useCaseLibrary.h"
 
-void createCustomer(VacationParcs* VP)
+void createCustomer(VacationParcs* vp)
 {
 	string name;
 	string address;
@@ -19,9 +19,9 @@ void createCustomer(VacationParcs* VP)
 		cout << "Email: ";
 		cin >> email;
 
-		for (size_t i{ 0 }; i < VP->getCustomers().size(); i++)
+		for (size_t i{ 0 }; i < vp->getCustomers().size(); i++)
 		{
-			if (VP->getCustomers()[i]->getEmail() == email)
+			if (vp->getCustomers()[i]->getEmail() == email)
 			{
 				cout << "E-mail is already in use, please try another one." << endl;
 				email_is_taken = true;
@@ -36,10 +36,8 @@ void createCustomer(VacationParcs* VP)
 			customer_created = true;
 		}
 	}
-	VP->setCustomer(new Customer(name, address, email));
+	vp->setCustomer(new Customer(name, address, email));
 }
-
-
 
 void createBooking(Customer* customer)
 {
@@ -49,7 +47,6 @@ void createBooking(Customer* customer)
 	bool sportsPass;
 	bool bicycleRent;
 	bool swimmingPass;
-
 
 	cout << "\t\t\t\t|----------------------------------------------|\n";
 	cout << "\t\t\t\t|                                              |\n";

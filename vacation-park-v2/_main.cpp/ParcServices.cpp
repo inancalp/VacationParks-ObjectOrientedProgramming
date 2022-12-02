@@ -10,12 +10,12 @@ ParcServices::ParcServices
 	bool water_bikes
 ) : m_subtropicSwimmingPool(subtropic_swimming_pool), m_sportsInfrastructure(sports_infrastructure), m_bowlingAlley(bowling_alley), m_bicycleRent(bicycle_rent), m_childrensParadise(childrens_paradise), m_waterBikes(water_bikes)
 {
-	cout << "(!) Parcs::Constructor" << endl;
+	cout << "(!) ParcServices::Constructor" << endl;
 }
 
 ParcServices::~ParcServices()
 {
-	cout << "(!) Parcs::Destructor" << endl;
+	cout << "(!) ParcServices::Destructor" << endl;
 }
 
 const bool& ParcServices::getSubtropicSwimmingPool() const
@@ -71,13 +71,13 @@ void ParcServices::setWaterBikes(const bool& water_bikes)
 const string ParcServices::toString() const
 {
 	stringstream output;
-	output << "--------------" << endl;
-	output << "ParcServices::getSubtropicSwimmingPool() ->> " << boolalpha << this->getSubtropicSwimmingPool() << endl;
-	output << "ParcServices::getSportsInfrastructure() ->> " << boolalpha << this->getSportsInfrastructure() << endl;
-	output << "ParcServices::getBowlingAlley() ->> " << boolalpha << this->getBowlingAlley() << endl;
-	output << "ParcServices::getBicycleRent() ->> " << boolalpha << this->getBicycleRent() << endl;
-	output << "ParcServices::getChildrensParadise() ->> " << boolalpha << this->getChildrensParadise() << endl;
-	output << "ParcServices::getWaterBikes() ->> " << boolalpha << this->getWaterBikes() << endl;
-	output << "--------------";
+	output << "\t|--------------" << endl;
+	output << "\t| (1) ParcServices::getSubtropicSwimmingPool() ->> " << boolalpha << this->getSubtropicSwimmingPool() << endl;
+	output << "\t| (2) ParcServices::getSportsInfrastructure() ->> " << boolalpha << this->getSportsInfrastructure() << endl;
+	output << "\t| (3) ParcServices::getBowlingAlley() ->> " << boolalpha << this->getBowlingAlley() << endl;
+	output << "\t| (4) ParcServices::getBicycleRent() ->> " << boolalpha << this->getBicycleRent() << endl;
+	output << "\t| (5) ParcServices::getChildrensParadise() ->> " << boolalpha << this->getChildrensParadise() << endl;
+	output << "\t| (6) ParcServices::getWaterBikes() ->> " << boolalpha << this->getWaterBikes() << endl;
+	output << "\t|--------------";
 	return output.str();
 }
