@@ -34,11 +34,11 @@ const string& VacationParcs::getVat() const
 }
 
 
-vector<Parcs*>& VacationParcs::getParcs() // (?) deleted const's
+vector<Parcs*>& VacationParcs::getParcs() //(?) deleted const's
 {
 	return this->m_parcs;
 }
-const vector<Customer*>& VacationParcs::getCustomers() const
+vector<Customer*>& VacationParcs::getCustomers() //same above
 {
 	return this->m_customers;
 }
@@ -69,7 +69,7 @@ void VacationParcs::setCustomer(Customer* customer)
 
 
 
-string VacationParcs::toString() // (?) deleted const's
+string VacationParcs::toString() //deleted both consts, else this->getParcs problem (??)
 {
 	ostringstream output;
 	output << "--------------" << endl;

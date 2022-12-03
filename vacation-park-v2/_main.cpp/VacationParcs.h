@@ -23,8 +23,8 @@ public:
 	const string& getAddress() const;
 	const string& getVat() const;
 
-	vector<Parcs*>& getParcs();
-	const vector<Customer*>& getCustomers() const;
+	vector<Parcs*>& getParcs(); //deleted both consts, to be able to deleteParc()
+	vector<Customer*>& getCustomers(); //same above
 
 	void setName(const string& name);
 	void setAddress(const string& address);
@@ -33,7 +33,7 @@ public:
 	void setParc(Parcs* parc);
 	void setCustomer(Customer* customer);
 
-	string toString();
+	string toString(); //deleted both consts, else this->getParcs problem (??)
 };
 
 

@@ -57,8 +57,8 @@ const string Parcs::toString() const
 	output << "--------------" << endl;
 	output << "Parcs::getName() ->> " << this->getName() << endl;
 	output << "Parcs::getAddress() ->> " << this->getAddress() << endl;
-	output << "\nParcs::getParcServices() -> " << endl << this->getParcServices()->toString() << endl;
-	output << "\nParcs::getAccomodations()" << endl;
+	output << "Parcs::getParcServices() -> " << endl << this->getParcServices()->toString() << endl;
+	output << "Parcs::getAccomodations()" << endl;
 	for (size_t i{ 0 }; i < this->getAccomodations().size(); i++)
 	{
 		output << "-> Parcs::getCustomers()[" << i << "]" << endl;

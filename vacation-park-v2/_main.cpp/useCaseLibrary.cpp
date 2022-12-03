@@ -1,48 +1,10 @@
 #include "useCaseLibrary.h"
 
-void createCustomer(VacationParcs* vp)
-{
-	string name;
-	string address;
-	string email;
 
-	bool customer_created{ false };
-	bool email_is_taken{ false };
-
-	cout << "Name: ";
-	cin >> name;
-	cout << "Address: ";
-	cin >> address;
-
-	while (customer_created == false) {
-
-		cout << "Email: ";
-		cin >> email;
-
-		for (size_t i{ 0 }; i < vp->getCustomers().size(); i++)
-		{
-			if (vp->getCustomers()[i]->getEmail() == email)
-			{
-				cout << "E-mail is already in use, please try another one." << endl;
-				email_is_taken = true;
-			}
-			else
-			{
-				email_is_taken = false;
-			}
-		}
-
-		if (email_is_taken == false) {
-			customer_created = true;
-		}
-	}
-	vp->setCustomer(new Customer(name, address, email));
-}
 
 void createBooking(Customer* customer)
 {
-	static int id = 0; 
-	vector<string> accomodations; // should change
+	static int id = 0;  // should change
 	bool activityPass;
 	bool sportsPass;
 	bool bicycleRent;
@@ -75,6 +37,90 @@ void createBooking(Customer* customer)
 	cin >> swimmingPass;
 	cout << endl;
 
-	customer->setBooking(new Booking(++id, accomodations, activityPass, sportsPass, bicycleRent, swimmingPass));
+	//customer->setBooking(new Booking(++id, activityPass, sportsPass, bicycleRent, swimmingPass));
+
+}
+
+void OwnerType(VacationParcs* vp)
+{
+	bool quit{ false };
+	int selected_option;
+	Parcs* p;
+	do
+	{
+		cout << "__________________________________" << endl;
+		cout << "   OwnerType Functionalities:     " << endl;
+		cout << "__________________________________" << endl;
+		cout << "                                  " << endl;
+		cout << "     1) Show Parcs                " << endl;
+		cout << "     2) Create Parc               " << endl;
+		cout << "     3) Change Parc               " << endl;
+		cout << "     4) Delete Parc               " << endl;
+		cout << "     5) Show Accomodations        " << endl;
+		cout << "     6) Create Accomodation       " << endl;
+		cout << "     7) Change Accomodation       " << endl;
+		cout << "     8) Delete Accomodation       " << endl;
+		cout << "     9) Exit                      " << endl;
+		cout << "                                  " << endl;
+		cout << "__________________________________" << endl;
+		cout << endl;
+		cout << "Select Option: ";
+		cin >> selected_option;
+		cout << endl;
+		cout << endl;
+		switch (selected_option)
+		{
+		case 1:
+			showParcs(vp);
+			break;
+		case 2:
+			createParc(vp);
+			break;
+		case 3:
+			changeParc(vp);
+			break;
+		case 4:
+			deleteParc(vp);
+			break;
+		case 5:
+			p = selectParc(vp);
+			showAccomodations(p);
+			break;
+		case 6:
+			p = selectParc(vp);
+			createAccomodation(p);
+			break;
+		case 7:
+			cout << "changeAccomodation() FEATURE (COMING SOON..)" << endl;
+			break;
+		case 8:
+			cout << "deleteAccomodation() FEATURE (COMING SOON..)" << endl;
+			break;
+		case 9:
+			quit = true;
+			break;
+		default:
+			cout << "Invalid input, please try again later." << endl;
+			break;
+		}
+	} while (!quit);
+
+
+
+}
+
+
+
+
+
+
+
+void EmployeeType(VacationParcs* vp)
+{
+
+}
+
+void CustomerType(VacationParcs* vp)
+{
 
 }

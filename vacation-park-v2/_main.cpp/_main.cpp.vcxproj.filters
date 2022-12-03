@@ -51,6 +51,12 @@
     <ClCompile Include="_ParcController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="_CustomerController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="_AccomodationController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Customer.h">
@@ -84,6 +90,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="_ParcController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_CustomerController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_AccomodationController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

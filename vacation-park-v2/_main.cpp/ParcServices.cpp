@@ -71,13 +71,13 @@ void ParcServices::setWaterBikes(const bool& water_bikes)
 const string ParcServices::toString() const
 {
 	stringstream output;
-	output << "\t|--------------" << endl;
-	output << "\t| (1) ParcServices::getSubtropicSwimmingPool() ->> " << boolalpha << this->getSubtropicSwimmingPool() << endl;
-	output << "\t| (2) ParcServices::getSportsInfrastructure() ->> " << boolalpha << this->getSportsInfrastructure() << endl;
-	output << "\t| (3) ParcServices::getBowlingAlley() ->> " << boolalpha << this->getBowlingAlley() << endl;
-	output << "\t| (4) ParcServices::getBicycleRent() ->> " << boolalpha << this->getBicycleRent() << endl;
-	output << "\t| (5) ParcServices::getChildrensParadise() ->> " << boolalpha << this->getChildrensParadise() << endl;
-	output << "\t| (6) ParcServices::getWaterBikes() ->> " << boolalpha << this->getWaterBikes() << endl;
-	output << "\t|--------------";
+	output << "\t --------------" << endl;
+	output << "\t (1) ParcServices::getSubtropicSwimmingPool() ->> " << boolalpha << this->getSubtropicSwimmingPool() << endl;
+	output << "\t (2) ParcServices::getSportsInfrastructure() ->> " << boolalpha << this->getSportsInfrastructure() << endl;
+	output << "\t (3) ParcServices::getBowlingAlley() ->> " << boolalpha << this->getBowlingAlley() << endl;
+	output << "\t (4) ParcServices::getBicycleRent() ->> " << boolalpha << this->getBicycleRent() << endl;
+	output << "\t (5) ParcServices::getChildrensParadise() ->> " << boolalpha << this->getChildrensParadise() << endl;
+	output << "\t (6) ParcServices::getWaterBikes() ->> " << boolalpha << this->getWaterBikes() << endl;
+	output << "\t --------------";
 	return output.str();
 }

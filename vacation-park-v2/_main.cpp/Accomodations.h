@@ -5,7 +5,6 @@
 
 class Accomodations
 {
-
 private:
 	int m_id;
 	int m_nbrPeople;
@@ -14,7 +13,6 @@ private:
 	LuxuryLevel* m_luxuryLevel; 
 
 public:
-
 	Accomodations
 	(
 		const int id,

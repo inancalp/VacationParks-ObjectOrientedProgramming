@@ -9,11 +9,18 @@
 #include "HotelRoom.h"
 #include "Bungalow.h"
 #include "LuxuryLevel.h"
+#include "_ParcController.h"
+#include "_AccomodationController.h"
 #include <iomanip>
 
 
-void createCustomer(VacationParcs* vp);
 void createBooking(Customer* customer);
+void OwnerType(VacationParcs* vp);
+void EmployeeType(VacationParcs* vp);
+void CustomerType(VacationParcs* vp);
+
+
+
 
 
 

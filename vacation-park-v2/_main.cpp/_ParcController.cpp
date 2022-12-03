@@ -1,10 +1,7 @@
 #include "_ParcController.h"
 
 
-
-
-
-//ParcServices
+//createParcServices() included in createParc();
 ParcServices* createParcServices()
 {
 	int subtropic_swimming_pool;
@@ -41,6 +38,7 @@ ParcServices* createParcServices()
 	);
 }
 
+//createParcServicesMiddleWare() included in createParcServices()
 void createParcServicesMiddleWare(int& data, string& data_name)
 {
 	do
@@ -60,13 +58,12 @@ void createParcServicesMiddleWare(int& data, string& data_name)
 }
 
 
-
 //Parcs CRUD
 void createParc(VacationParcs* vp)
 {
 	string name;
 	string address;
-
+	ParcServices* parc_services;
 	bool parc_created{ false };
 	bool parc_name_taken{ false };
 	bool parc_address_taken{ false };
@@ -84,7 +81,9 @@ void createParc(VacationParcs* vp)
 			{
 				if (vp->getParcs()[i]->getName() == name)
 				{
+					cout << "------------------------------------------------------" << endl;
 					cout << "Parc Name is already in use, please try another one." << endl;
+					cout << "------------------------------------------------------" << endl;
 					name.clear(); // to empty the string
 					parc_name_taken = true;
 				}
@@ -98,7 +97,7 @@ void createParc(VacationParcs* vp)
 		do
 		{
 			if (address.empty())
-			{
+			{	
 				cout << "Parc Address: ";
 				cin >> address;
 			}
@@ -106,7 +105,10 @@ void createParc(VacationParcs* vp)
 			{
 				if (vp->getParcs()[i]->getAddress() == address)
 				{
+					cout << "--------------------------------------------------------" << endl;
 					cout << "Parc Address is already in use, please try another one." << endl;
+					cout << "--------------------------------------------------------" << endl;
+
 					address.clear();
 					parc_address_taken = true;
 				}
@@ -121,17 +123,23 @@ void createParc(VacationParcs* vp)
 			parc_created = true;
 		}
 	}
-	ParcServices* p = createParcServices();
-	vp->setParc(new Parcs(name, address, p));
+	parc_services = createParcServices();
+	vp->setParc(new Parcs(name, address, parc_services));
+	cout << "-------------------" << endl;
+	cout << "End of createParc()" << endl;
+	cout << "-------------------" << endl;
+
 }
 
 void showParcs(VacationParcs* vp)
 {
+	cout << "-------------------------" << endl;
 	cout << "Parcs included in the system of VacationParcs::getName() ->> " << vp->getName() << endl;
 	for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
 	{
 		cout << vp->getParcs()[i]->toString() << endl;
 	}
+	cout << "-------------------------" << endl;
 }
 
 void changeParc(VacationParcs* vp)
@@ -160,6 +168,7 @@ void changeParc(VacationParcs* vp)
 
 	do
 	{
+		cout << "------------------------------------------------------" << endl;
 		cout << "Enter the name of the park to see Services available: ";
 		cin >> parc_name;
 		for (int i{ 0 }; i < vp->getParcs().size(); i++)
@@ -175,7 +184,7 @@ void changeParc(VacationParcs* vp)
 			cout << "Parc name can't be found on the system. Try again." << endl;
 		}
 	} while (!parc_found);
-
+	cout << "------------------------------------------------------" << endl;
 
 	selected_parc = vp->getParcs()[parc_index];
 	selected_services = selected_parc->getParcServices();
@@ -187,19 +196,21 @@ void changeParc(VacationParcs* vp)
 	childrens_paradise_val = selected_services->getChildrensParadise();
 	water_bikes_val = selected_services->getWaterBikes();
 
-
+	cout << "-----------------------------" << endl;
 	cout << "ParcServices::toString() ->> " << endl;
 	cout << selected_parc->toString() << endl;
-
+	cout << "-----------------------------" << endl;
 
 	do
 	{
+		cout << "------------------------------------------------------------------" << endl;
 		cout << "Enter the number for the service you would like to add or remove: ";
 		cin >> service_num;
 
 		switch (service_num)
 		{
 		case 1:
+			cout << "--------------" << endl;
 			cout
 				<< subtropic_swimming_pool_name
 				<< " has change from \""
@@ -207,9 +218,11 @@ void changeParc(VacationParcs* vp)
 				<< "\" to \"" << !subtropic_swimming_pool_val
 				<< "\"."
 				<< endl;
+			cout << "--------------" << endl;
 			selected_services->setSubtropicSwimmingPool(!subtropic_swimming_pool_val);
 			break;
 		case 2:
+			cout << "--------------" << endl;
 			cout
 				<< sports_infrastructure_name
 				<< " has change from \""
@@ -217,9 +230,11 @@ void changeParc(VacationParcs* vp)
 				<< "\" to \"" << !sports_infrastructure_val
 				<< "\"."
 				<< endl;
+			cout << "--------------" << endl;
 			selected_services->setSportsInfrastructure(!sports_infrastructure_val);
 			break;
 		case 3:
+			cout << "--------------" << endl;
 			cout
 				<< bowling_alley_name
 				<< " has change from \""
@@ -227,9 +242,11 @@ void changeParc(VacationParcs* vp)
 				<< "\" to \"" << !bowling_alley_val
 				<< "\"."
 				<< endl;
+			cout << "--------------" << endl;
 			selected_services->setBowlingAlley(!bowling_alley_val);
 			break;
 		case 4:
+			cout << "--------------" << endl;
 			cout
 				<< bicycle_rent_name
 				<< " has change from \""
@@ -237,9 +254,11 @@ void changeParc(VacationParcs* vp)
 				<< "\" to \"" << !bicycle_rent_val
 				<< "\"."
 				<< endl;
+			cout << "--------------" << endl;
 			selected_services->setBicycleRent(!bicycle_rent_val);
 			break;
 		case 5:
+			cout << "--------------" << endl;
 			cout
 				<< childrens_paradise_name
 				<< " has change from \""
@@ -247,9 +266,11 @@ void changeParc(VacationParcs* vp)
 				<< "\" to \"" << !childrens_paradise_val
 				<< "\"."
 				<< endl;
+			cout << "--------------" << endl;
 			selected_services->setChildrensParadise(!childrens_paradise_val);
 			break;
 		case 6:
+			cout << "--------------" << endl;
 			cout
 				<< water_bikes_name
 				<< " has change from \""
@@ -257,10 +278,13 @@ void changeParc(VacationParcs* vp)
 				<< "\" to \"" << !water_bikes_val
 				<< "\"."
 				<< endl;
+			cout << "--------------" << endl;
 			selected_services->setWaterBikes(!water_bikes_val);
 			break;
 		default:
+			cout << "--------------" << endl;
 			cout << "Invalid input, try again." << endl;
+			cout << "--------------" << endl;
 			break;
 		}
 	} while (service_num < 1 || service_num > 6);
@@ -276,6 +300,7 @@ void deleteParc(VacationParcs* vp)
 
 	do
 	{
+		cout << "--------------------------------------------------------" << endl;
 		cout << "Enter the name of the park to that needs to be deleted: ";
 		cin >> parc_name;
 		for (int i{ 0 }; i < vp->getParcs().size(); i++)
@@ -292,12 +317,14 @@ void deleteParc(VacationParcs* vp)
 		}
 	} while (!parc_found);
 
-
+	cout << "--------------------------------------------------------" << endl;
 	cout << "Here is the information for the parc to be deleted: " << endl;
 	cout << vp->getParcs()[parc_index]->toString() << endl;
+	cout << "--------------------------------------------------------" << endl;
 
 	do
 	{
+		cout << "--------------------------------------------------------" << endl;
 		cout << "If you are sure to delete it enter \"y\", else enter \"n\".: ";
 		cin >> delete_parc;
 
@@ -306,17 +333,49 @@ void deleteParc(VacationParcs* vp)
 			cout << "Invalid input, please try again." << endl;
 		}
 	} while (!(delete_parc == 'y' || delete_parc == 'n'));
-
+	cout << "--------------------------------------------------------" << endl;
 	if (delete_parc == 'y')
 	{
+		cout << "---------------------" << endl;
 		cout << vp->getParcs()[parc_index]->getName() << " IS deleted." << endl;
+		cout << "---------------------" << endl;
 		delete vp->getParcs()[parc_index];
 		vp->getParcs().erase(vp->getParcs().begin() + parc_index);
+
 	}
 	else
 	{
+		cout << "---------------------" << endl;
 		cout << vp->getParcs()[parc_index]->getName() << " IS NOT deleted." << endl;
+		cout << "---------------------" << endl;
 	}
 
+}
 
+Parcs* selectParc(VacationParcs* vp)
+{
+	string parc_name;
+	int parc_index;
+	bool parc_found{ false };
+	int i;
+	do
+	{
+		cout << "Enter Parc Name: ";
+		cin >> parc_name;
+
+		for (i = 0; i < vp->getParcs().size(); i++)
+		{
+			if (vp->getParcs()[i]->getName() == parc_name)
+			{
+				parc_found = true;
+				parc_index = i;
+			}
+		}
+		if (!parc_found)
+		{
+			cout << "Parc with name \"" << parc_name << "\" is not in the system. Try again." << endl;
+		}
+	} while (!parc_found);
+
+	return vp->getParcs()[parc_index];
 }

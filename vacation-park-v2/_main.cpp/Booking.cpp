@@ -3,14 +3,12 @@
 Booking::Booking
 (
 	const int& id,
-	const vector<string>& accomodations, // change it to an Accomodation object ??
 	const bool& activity_pass,
 	const bool& sports_pass,
 	const bool& bicycle_rent,
 	const bool& swimming_pass
 ) : 
 	m_id(id),
-	m_accomodations(accomodations),
 	m_activityPass(activity_pass),
 	m_sportsPass(sports_pass),
 	m_bicycleRent(bicycle_rent),
@@ -28,7 +26,7 @@ void Booking::setId(const int& id)
 {
 	this->m_id = id;
 }
-void Booking::setAccomodations(const vector<string>& accomodations)
+void Booking::setAccomodations(vector<Accomodations*>& accomodations)
 {
 	this->m_accomodations = accomodations;
 }
@@ -56,7 +54,7 @@ const int& Booking::getId() const
 {
 	return this->m_id;
 }
-const vector<string>& Booking::getAccomodations() const
+vector<Accomodations*>& Booking::getAccomodations()
 {
 	return this->m_accomodations;
 }
@@ -78,7 +76,7 @@ const bool& Booking::getSwimmingPass() const
 	return this->m_swimmingPass;
 }
 
-const string Booking::toString() const
+string Booking::toString()
 {
 	ostringstream output;
 	output << "--------------" << endl;
@@ -90,7 +88,7 @@ const string Booking::toString() const
 	output << "\t Booking::getAccomodations() ->> [ ";
 	for (size_t i{ 0 }; i < this->getAccomodations().size(); i++)
 	{
-		output << "\"" << this->getAccomodations()[i] << "\" ";
+		output << "\"" << this->getAccomodations()[i]->toString() << "\" ";
 	}
 	output << "]" << endl;
 	output << "\t--------------";

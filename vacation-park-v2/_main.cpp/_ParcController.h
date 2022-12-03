@@ -1,4 +1,7 @@
 
+#ifndef  PARCCONTROLLER_H
+#define PARCCONTROLLER_H
+
 #include "VacationParcs.h"
 #include "Parcs.h"
 #include <iomanip>
@@ -9,4 +12,6 @@ void createParcServicesMiddleWare(int& data, string& data_name);
 void showParcs(VacationParcs* vp);
 void changeParc(VacationParcs* vp);
 void deleteParc(VacationParcs* vp);
+Parcs* selectParc(VacationParcs* vp);
 
+#endif

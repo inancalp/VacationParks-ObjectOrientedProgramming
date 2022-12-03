@@ -32,9 +32,9 @@ public:
 
 	const string& getEmail() const;
 
-	const vector<Booking*>& getBookings() const;
+	const vector<Booking*>& getBookings() const; //might need to delete consts.
 
-	const string toString() const; // change toString()
+	const string toString() const;
 
 	
 };
