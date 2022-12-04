@@ -1,14 +1,17 @@
 #include "Booking.h"
-
 Booking::Booking
 (
 	const int& id,
+	Customer* customer,
+	vector<Accomodations*> accomodations,
 	const bool& activity_pass,
 	const bool& sports_pass,
 	const bool& bicycle_rent,
 	const bool& swimming_pass
 ) : 
 	m_id(id),
+	m_customer(customer),
+	m_accomodations(accomodations),
 	m_activityPass(activity_pass),
 	m_sportsPass(sports_pass),
 	m_bicycleRent(bicycle_rent),
@@ -26,6 +29,13 @@ void Booking::setId(const int& id)
 {
 	this->m_id = id;
 }
+
+
+void Booking::setCustomer(Customer* customer) 
+{
+	this->m_customer = customer;
+}
+
 void Booking::setAccomodations(vector<Accomodations*>& accomodations)
 {
 	this->m_accomodations = accomodations;
@@ -54,6 +64,12 @@ const int& Booking::getId() const
 {
 	return this->m_id;
 }
+
+Customer* Booking::getCustomer() const
+{
+	return this->m_customer;
+}
+
 vector<Accomodations*>& Booking::getAccomodations()
 {
 	return this->m_accomodations;
@@ -81,6 +97,8 @@ string Booking::toString()
 	ostringstream output;
 	output << "--------------" << endl;
 	output << "\t Booking::getId() ->> " << this->getId() << endl;
+	output << "\t Booking::CustomerInfo ->> " <<
+		this->getCustomer()->toString() << endl;
 	output << "\t Booking::getActivityPass() ->> " << boolalpha << this->getActivityPass() << endl;
 	output << "\t Booking::getSportPass() ->> " << boolalpha << this->getSportPass() << endl;
 	output << "\t Booking::getBicycleRent() ->> " << boolalpha << this->getBicycleRent() << endl;

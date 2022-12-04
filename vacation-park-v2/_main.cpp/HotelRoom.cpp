@@ -5,12 +5,13 @@ HotelRoom::HotelRoom(
     const int nbr_people,
     const int size,
     const bool bathroom_with_bath,
+    const bool is_booked,
     LuxuryLevel* luxury_level, 
     const int floor,
     const string location,
     const int nbr_beds,
     const bool children_bed
-) : Accomodations(id, nbr_people, size, bathroom_with_bath, luxury_level), m_floor(floor), m_location(location), m_nbrBeds(nbr_beds), m_childrenBed(children_bed) {
+) : Accomodations(id, nbr_people, size, bathroom_with_bath, is_booked, luxury_level), m_floor(floor), m_location(location), m_nbrBeds(nbr_beds), m_childrenBed(children_bed) {
     cout << "(!) HotelRoom::Constructor" << endl;
 }
 
@@ -52,6 +53,8 @@ const string HotelRoom::toString() const {
     output << "HotelRoom::NbrPeople -> " << this->getNbrPeople() << endl;
     output << "HotelRoom::Size -> " << this->getSize() << endl;
     output << "HotelRoom::BathroomWithBath -> " << this->getBathroomWithBath() << endl;
+
+    output << "Accomodations::IsBooked -> " << ((this->getIsBooked() == true) ? "State: Booked" : "State: Available") << endl;
     output << "(!) Accomodations::LuxuryLevel -> " << endl << this->getLuxuryLevel()->toString() << endl;
     output << "HotelRoom::Floor -> " << this->getFloor() << endl;
     output << "HotelRoom::Location -> " << this->getLocation() << endl;

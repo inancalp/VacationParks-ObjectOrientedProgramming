@@ -2,9 +2,9 @@
 #include "Customer.h"
 Customer::Customer
 (
-	string& name,
-	string& address,
-	string& email
+	string name,
+	string address,
+	string email
 )
 	: m_name(name), m_address(address), m_email(email)
 {
@@ -13,10 +13,10 @@ Customer::Customer
 
 Customer::~Customer()
 {
-	for (size_t i{ 0 }; i < this->getBookings().size(); i++)
+	/*for (size_t i{ 0 }; i < this->getBookings().size(); i++)
 	{
 		delete this->getBookings()[i];
-	}
+	}*/
 	cout << "Customer::Destructor ->> " << this->getEmail() << " deleted." << endl;
 }
 
@@ -37,10 +37,10 @@ void Customer::setEmail(const string& email)
 	this->m_email = email;
 }
 
-void Customer::setBooking(Booking* booking)
-{
-	this->m_bookings.push_back(booking);
-}
+//void Customer::setBooking(Booking* booking)
+//{
+//	this->m_bookings.push_back(booking);
+//}
 
 
 const string& Customer::getName() const
@@ -58,10 +58,10 @@ const string& Customer::getEmail() const
 	return this->m_email;
 }
 
-const vector<Booking*>& Customer::getBookings() const
-{
-	return this->m_bookings;
-}
+//const vector<Booking*>& Customer::getBookings() const
+//{
+//	return this->m_bookings;
+//}
 
 
 const string Customer::toString() const
@@ -70,17 +70,17 @@ const string Customer::toString() const
 	output << "\tCustomer Name: " << this->getName() << endl;
 	output << "\tCustomer ID: " << this->getAddress() << endl;
 	output << "\tCustomer E-mail: " << this->getEmail() << endl;
-	output << "\tCustomer Bookings:" << endl;
-	
-	if (!this->getBookings().size())
-	{
-		output << "\t->> There are no bookings yet for " << this->getName() << "." << endl;
-	}
+	//output << "\tCustomer Bookings:" << endl;
+	//
+	//if (!this->getBookings().size())
+	//{
+	//	output << "\t->> There are no bookings yet for " << this->getName() << "." << endl;
+	//}
 
-	for (size_t i{ 0 }; i < this->getBookings().size(); i++)
-	{
-		output << "\t" << this->getBookings()[i]->toString() << endl;
-	}
+	//for (size_t i{ 0 }; i < this->getBookings().size(); i++)
+	//{
+	//	output << "\t" << this->getBookings()[i]->toString() << endl;
+	//}
 	return output.str();
 }
 

@@ -134,6 +134,7 @@
     <ClCompile Include="HotelRoom.cpp" />
     <ClCompile Include="LuxuryLevel.cpp" />
     <ClCompile Include="_AccomodationController.cpp" />
+    <ClCompile Include="_BookingController.cpp" />
     <ClCompile Include="_CustomerController.cpp" />
     <ClCompile Include="_ParcController.cpp" />
     <ClCompile Include="Parcs.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="HotelRoom.h" />
     <ClInclude Include="LuxuryLevel.h" />
     <ClInclude Include="_AccomodationController.h" />
+    <ClInclude Include="_BookingController.h" />
     <ClInclude Include="_CustomerController.h" />
     <ClInclude Include="_ParcController.h" />
     <ClInclude Include="Parcs.h" />

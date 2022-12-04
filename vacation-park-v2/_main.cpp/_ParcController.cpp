@@ -356,26 +356,45 @@ Parcs* selectParc(VacationParcs* vp)
 {
 	string parc_name;
 	int parc_index;
-	bool parc_found{ false };
+	bool parc_name_found{ false };
 	int i;
+
+	for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
+	{
+		cout << vp->getParcs()[i]->toString() << endl;
+	}
+
+	cout << "Here above, is the list of parcs in our system!" << endl;
+
 	do
 	{
-		cout << "Enter Parc Name: ";
-		cin >> parc_name;
+		cout << "Please enter the \"name\" of the Parc: ";
+		cin >> parc_name; //cin to secure
 
 		for (i = 0; i < vp->getParcs().size(); i++)
 		{
 			if (vp->getParcs()[i]->getName() == parc_name)
 			{
-				parc_found = true;
-				parc_index = i;
+				parc_name_found = true;
+				break;
 			}
 		}
-		if (!parc_found)
+
+		if (!parc_name_found)
 		{
-			cout << "Parc with name \"" << parc_name << "\" is not in the system. Try again." << endl;
+			cout << "Invalid ParcName, please try again!" << endl;
 		}
-	} while (!parc_found);
+
+	} while (!parc_name_found);
+
+	for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
+	{
+		if (parc_name == vp->getParcs()[i]->getName())
+		{
+			parc_index = i;
+			break;
+		}
+	}
 
 	return vp->getParcs()[parc_index];
 }

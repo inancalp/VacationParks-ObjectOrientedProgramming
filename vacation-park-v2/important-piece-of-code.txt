@@ -1,0 +1,16 @@
+{
+	do
+	{
+		cout << "\t? " << data_name << ": ";
+		cin >> data;
+		if (!cin) {
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			data = -1; //invalid value to handle.
+		}
+		if (data < 0 || data > 1)
+		{
+			cout << "(!) Invalid input, try again." << endl;
+		}
+	} while (data < 0 || data > 1);
+}

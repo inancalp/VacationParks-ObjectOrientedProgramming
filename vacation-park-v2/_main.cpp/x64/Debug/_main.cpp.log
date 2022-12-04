@@ -1,7 +1,13 @@
-﻿  Parcs.cpp
+﻿  Booking.cpp
+  VacationParcs.cpp
+  _AccomodationController.cpp
+  _BookingController.cpp
+C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\_main.cpp\_BookingController.cpp(21,7): warning C4101: 'include_service': unreferenced local variable
+  _CustomerController.cpp
   _ParcController.cpp
+C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\_main.cpp\_ParcController.cpp(394,18): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
   _main.cpp
   useCaseLibrary.cpp
   Generating Code...
-  LINK : C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\x64\Debug\_main.cpp.exe not found or not built by the last incremental link; performing full link
+C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\_main.cpp\_BookingController.cpp(227): warning C4715: 'addServiceMiddleware': not all control paths return a value
   _main.cpp.vcxproj -> C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\x64\Debug\_main.cpp.exe

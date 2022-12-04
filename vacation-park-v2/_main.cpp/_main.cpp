@@ -2,15 +2,46 @@
 #include "_ParcController.h"
 #include "_CustomerController.h"
 #include "_AccomodationController.h"
-
+#include "_BookingController.h"
 int main()
 {
 
 	VacationParcs* vp = new VacationParcs("MainObject", "Sint Katelijne Waver", "VAT info here.");
+	vp->setCustomer(new Customer("inanc", "hertog", "inanc@gmail"));
+	vp->setCustomer(new Customer("alp", "heverlee", "inanc@alp"));
+	ParcServices* ps1 = new ParcServices(1, 1, 1, 1, 1, 1);
+	ParcServices* ps2 = new ParcServices(1, 1, 1, 1, 1, 1);
+	Parcs* p1 = new Parcs("park1", "park-address1", ps1);
+	Parcs* p2 = new Parcs("park2", "park-address2", ps2);
+	LuxuryLevel* lux_vip = new LuxuryLevel(true, true, true, true, "VIP");
+	LuxuryLevel* lux_prem = new LuxuryLevel(false, false, true, true, "Premium");
+	LuxuryLevel* lux_comfort = new LuxuryLevel(false, false, false, true, "Comfort");
+	Accomodations* a1 = new HotelRoom(1, 5, 35, false, false, lux_comfort, 20, "Next to Ocean", 3, 1);
+	Accomodations* a2 = new Bungalow(2, 2, 30, true, false, lux_vip, 1);
+	Accomodations* a3 = new Bungalow(3, 2, 30, true, false, lux_prem, 1);
+	Accomodations* a4 = new Bungalow(4, 2, 30, true, false, lux_comfort, 1);
+	Accomodations* a5 = new HotelRoom(5, 5, 35, false, false, lux_vip, 20, "Next to Downtown", 3, 1);
+	Accomodations* a6 = new HotelRoom(6, 5, 35, false, false, lux_comfort, 20, "Next to market", 3, 1);
+	Accomodations* a7 = new HotelRoom(7, 5, 35, false, false, lux_comfort, 20, "Next to hood", 3, 1);
+	Accomodations* a8 = new HotelRoom(8, 5, 35, false, false, lux_comfort, 20, "Next to parc", 3, 1);
+	p1->setAccomodation(a1);
+	p1->setAccomodation(a2);
+	p2->setAccomodation(a3);
+	p2->setAccomodation(a4);
+	p2->setAccomodation(a5);
+	p2->setAccomodation(a6);
+	p2->setAccomodation(a7);
+	p2->setAccomodation(a8);
+	vp->setLuxuryLevel(lux_vip);
+	vp->setLuxuryLevel(lux_prem);
+	vp->setLuxuryLevel(lux_comfort);
+	vp->setParc(p1);
+	vp->setParc(p2);
 
 	bool quit{ false };
 	int user_type;
-	cout << "|_________________________________|" << endl;
+
+	cout << "|---------------------------------|" << endl;
 	cout << "|Welcome to VacationParcs Project!|" << endl;
 	cout << "|_________________________________|" << endl;
 
@@ -58,33 +89,6 @@ int main()
 
 	delete vp;
 
-
-	//createParc(vp);
-	//showParcs(vp);
-	//createAccomodation(vp->getParcs()[0]);
-	//showAccomodations(vp->getParcs()[0]);
-	//createAccomodation(vp->getParcs()[0]);
-	//showAccomodations(vp->getParcs()[0]);
-	
-	//createCustomer(vp);
-	//createCustomer(vp);
-	//showCustomers(vp);
-	//deleteCustomer(vp);
-	//showCustomers(vp);
-	//delete vp;
-
-	//LuxuryLevel* lux_vip = new LuxuryLevel(true, true, true, true, "VIP");
-	//LuxuryLevel* lux_prem = new LuxuryLevel(false, false, true, true, "Premium");
-	//LuxuryLevel* lux_comfort = new LuxuryLevel(false, false, false, true, "Comfort");
-	//Accomodations* a1 = new HotelRoom(1, 5, 35, false, lux_comfort, 20, "Next to Ocean", 3, 1);
-	//Accomodations* a2 = new Bungalow(2, 2, 30, true, lux_vip, 1);
-	//cout << a1->toString() << endl;
-	//cout << a2->toString() << endl;
-	//delete lux_vip;
-	//delete lux_prem;
-	//delete lux_comfort;
-	//delete a1;
-	//delete a2;
 
 	return 0;
 }

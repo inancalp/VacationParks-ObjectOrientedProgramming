@@ -7,9 +7,10 @@ Accomodations::Accomodations
 	const int nbr_people,
 	const int size,
 	const bool bathroom_with_bath,
+	const bool is_booked,
 	LuxuryLevel* luxury_level //
 )
-	: m_id(id), m_nbrPeople(nbr_people), m_size(size), m_bathroomWithBath(bathroom_with_bath), m_luxuryLevel(luxury_level)
+	: m_id(id), m_nbrPeople(nbr_people), m_size(size), m_bathroomWithBath(bathroom_with_bath), m_isBooked(is_booked), m_luxuryLevel(luxury_level)
 {
 	cout << "(!) Accomodations::Constructor ->> Accomodation with id[" << this->getId() << "] created." << endl;
 }
@@ -44,6 +45,10 @@ const bool& Accomodations::getBathroomWithBath() const
 	return this->m_bathroomWithBath;
 }
 
+const bool& Accomodations::getIsBooked() const
+{
+	return this->m_isBooked;
+}
 
 const LuxuryLevel* Accomodations::getLuxuryLevel() const
 {
@@ -74,6 +79,10 @@ void Accomodations::setBathroomWithBath(const bool& bathroom_with_bath)
 	this->m_bathroomWithBath = bathroom_with_bath;
 }
 
+void Accomodations::setIsBooked(const bool& is_booked)
+{
+	this->m_isBooked = is_booked;
+}
 
 void Accomodations::setLuxuryLevel(LuxuryLevel* luxury_level) // ??
 {
@@ -82,12 +91,6 @@ void Accomodations::setLuxuryLevel(LuxuryLevel* luxury_level) // ??
 
 const string Accomodations::toString() const {
 	ostringstream output;
-	output << "|---------------" << endl;
-	output << "| Accomodations::ID -> " << this->getId() << endl;
-	output << "| Accomodations::NbrPeople -> " << this->getNbrPeople() << endl;
-	output << "| Accomodations::Size -> " << this->getSize() << endl;
-	output << "| Accomodations::BathroomWithBath -> " << boolalpha << this->getBathroomWithBath() << endl;
-	output << "| (!) Accomodations::LuxuryLevel -> " << endl << this->getLuxuryLevel()->toString() << endl;
-	output << "|---------------" << endl;
+	output << "N/A" << endl;
 	return output.str();
 }

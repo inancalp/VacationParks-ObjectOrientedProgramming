@@ -7,6 +7,7 @@ void createAccomodation(Parcs* p)
 	int accom_nbrPeople;
 	int accom_size;
 	bool accom_withBath;
+	bool accom_isBooked{ false };
 	LuxuryLevel* accom_luxuryLevel;
 	int accom_floor;
 	string accom_location;
@@ -55,6 +56,7 @@ void createAccomodation(Parcs* p)
 				accom_nbrPeople,
 				accom_size,
 				accom_withBath,
+				accom_isBooked,
 				accom_luxuryLevel,
 				accom_floor,
 				accom_location,
@@ -87,6 +89,7 @@ void createAccomodation(Parcs* p)
 				accom_nbrPeople,
 				accom_size,
 				accom_withBath,
+				accom_isBooked,
 				accom_luxuryLevel,
 				accom_bedrooms
 			)
@@ -141,13 +144,16 @@ void createLuxuryLevelMiddleWare(int& data, string data_name)
 	} while (data < 0 || data > 1);
 }
 
-void showAccomodations(Parcs* p)
+void showAccomodations(VacationParcs* vp)
 {
-	cout << "-------------------------" << endl;
-	cout << "Accomodations included in the system of Parcs::getName() ->> " << p->getName() << endl;
-	for (size_t i{ 0 }; i < p->getAccomodations().size(); i++)
+	for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
 	{
-		cout << p->getAccomodations()[i]->toString() << endl;
+		cout << "-------------------------" << endl;
+		cout << "Accomodations included in the system of Parcs::getName() ->> " << vp->getParcs()[i]->getName() << endl;
+		for (size_t j{ 0 }; j < vp->getParcs()[i]->getAccomodations().size(); j++)
+		{
+			cout << vp->getParcs()[i]->getAccomodations()[j]->toString() << endl;
+		}
+		cout << "-------------------------" << endl;
 	}
-	cout << "-------------------------" << endl;
 }

@@ -18,6 +18,7 @@ public:
         const int nbr_people,
         const int size,
         const bool bathroom_with_bath,
+        const bool is_booked,
         LuxuryLevel* luxury_level,
         const int floor,
         const string location,

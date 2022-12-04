@@ -57,6 +57,9 @@
     <ClCompile Include="_AccomodationController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="_BookingController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Customer.h">
@@ -96,6 +99,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="_AccomodationController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_BookingController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

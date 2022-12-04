@@ -6,8 +6,9 @@
 
 void createCustomer(VacationParcs* vp);
 void showCustomers(VacationParcs* vp);
-void changeCustomer(VacationParcs* vp);
 void deleteCustomer(VacationParcs* vp);
+void ModifyCustomer(VacationParcs* vp, Customer* c);
+string ModifyCustomerEmail(VacationParcs* vp, Customer* c);
 
 #endif // !CUSTOMERCONTROLLER_H
 

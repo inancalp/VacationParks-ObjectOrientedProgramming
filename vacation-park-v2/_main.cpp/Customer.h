@@ -2,19 +2,22 @@
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 
-#include "Booking.h"
-
+//#include "Booking.h"
+using namespace std;
+#include <iostream>
+#include <string>
+#include <sstream>
 class Customer {
 
 private:
 	string m_name;
 	string m_address;
 	string m_email;
-	vector<Booking*> m_bookings;
+	//vector<Booking*> m_bookings;
 
 public:
 
-	Customer(string& name, string& address, string& email);
+	Customer(string name, string address, string email);
 
 	~Customer();
 
@@ -24,7 +27,7 @@ public:
 
 	void setEmail(const string& email);
 
-	void setBooking(Booking* booking);
+	//void setBooking(Booking* booking);
 
 	const string& getName() const;
 
@@ -32,7 +35,7 @@ public:
 
 	const string& getEmail() const;
 
-	const vector<Booking*>& getBookings() const; //might need to delete consts.
+	//const vector<Booking*>& getBookings() const; 
 
 	const string toString() const;
 
