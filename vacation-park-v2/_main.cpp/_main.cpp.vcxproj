@@ -139,9 +139,9 @@
     <ClCompile Include="_ParcController.cpp" />
     <ClCompile Include="Parcs.cpp" />
     <ClCompile Include="ParcServices.cpp" />
-    <ClCompile Include="useCaseLibrary.cpp" />
+    <ClCompile Include="_useCaseLibrary.cpp" />
     <ClCompile Include="VacationParcs.cpp" />
-    <ClCompile Include="_main.cpp" />
+    <ClCompile Include="__main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Accomodations.h" />
@@ -156,7 +156,7 @@
     <ClInclude Include="_ParcController.h" />
     <ClInclude Include="Parcs.h" />
     <ClInclude Include="ParcServices.h" />
-    <ClInclude Include="useCaseLibrary.h" />
+    <ClInclude Include="_useCaseLibrary.h" />
     <ClInclude Include="VacationParcs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

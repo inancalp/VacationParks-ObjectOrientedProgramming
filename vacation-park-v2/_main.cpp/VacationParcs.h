@@ -2,7 +2,6 @@
 #ifndef VACATIONPARCS_H
 #define VACATIONPARCS_H
 
-using namespace std;
 #include "Customer.h"
 #include "Parcs.h" // two times standard libraries ??
 #include "Booking.h"

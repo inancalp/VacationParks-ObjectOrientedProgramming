@@ -9,6 +9,7 @@ using namespace std;
 
 class ParcServices {
 private:
+	string m_parcName;
 	bool m_subtropicSwimmingPool;
 	bool m_sportsInfrastructure;
 	bool m_bowlingAlley;
@@ -20,6 +21,7 @@ public:
 
 	ParcServices
 	(
+		string m_parcName,
 		bool subtropic_swimming_pool,
 		bool sports_infrastructure,
 		bool bowling_alley,
@@ -29,6 +31,7 @@ public:
 	);
 	~ParcServices();
 
+	const string& getParcName() const;
 	const bool& getSubtropicSwimmingPool() const;
 	const bool& getSportsInfrastructure() const;
 	const bool& getBowlingAlley() const;
@@ -36,6 +39,7 @@ public:
 	const bool& getChildrensParadise() const;
 	const bool& getWaterBikes() const;
 
+	void setParcName(const string& parc_name);
 	void setSubtropicSwimmingPool(const bool& subtropic_swimming_pool);
 	void setSportsInfrastructure(const bool& sports_infrastructure);
 	void setBowlingAlley(const bool& bowling_alley);

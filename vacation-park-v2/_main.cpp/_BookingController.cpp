@@ -19,20 +19,34 @@ void CreateBooking(VacationParcs* vp, Customer* c)
 	char add_another_accom;
 	bool parc_has_service{ false };
 	char include_service;
-
+	bool no_available_accom;
 
 	cout << "---------------------" << endl;
 	cout << "LET'S GET YOU BOOKED!" << endl;
 	cout << "---------------------" << endl;
 
-	selected_parc_obj = selectParc(vp); //refer _parcController
-	for (size_t i{ 0 }; i < selected_parc_obj->getAccomodations().size(); i++)
+	showParcs(vp); // @_parController
+
+	cout << "Here above, is the list of parcs in our system!" << endl;
+
+	do
 	{
-		if (selected_parc_obj->getAccomodations()[i]->getIsBooked() == false)
+		selected_parc_obj = selectParc(vp); // @_parcController
+
+		if (selected_parc_obj->getAccomodations().size() == 0)
 		{
-			cout << selected_parc_obj->getAccomodations()[i]->toString() << endl;
+			cout << "There are no Accomodations available in the park..Please try another park." << endl;
+			continue;
 		}
-	}
+		for (size_t i{ 0 }; i < selected_parc_obj->getAccomodations().size(); i++)
+		{
+			if (selected_parc_obj->getAccomodations()[i]->getIsBooked() == false)
+			{
+				cout << selected_parc_obj->getAccomodations()[i]->toString() << endl;
+			}
+		}
+	} while (selected_parc_obj->getAccomodations().size() == 0);
+
 
 	cout << "---------------------------------------------------------- " << endl;
 	cout << "Here Above, are the available accomodations from the parc: " << selected_parc_obj->getName() << endl;
@@ -148,6 +162,7 @@ void CreateBooking(VacationParcs* vp, Customer* c)
 	bool sportsPass{ false };
 	bool bicycleRent{ false };
 	bool swimmingPass{ false };
+
 	addService(selected_parc_obj, swimmingPass, sportsPass, bicycleRent, activityPass);
 
 	cout << "Selected Services: " << endl;
@@ -158,8 +173,7 @@ void CreateBooking(VacationParcs* vp, Customer* c)
 		<< "activityPass: " << boolalpha << activityPass << endl;
 
 	//setBooking()
-	vp->setBooking(new Booking(booking_id, c, accoms_to_book, activityPass, sportsPass, bicycleRent, swimmingPass));
-
+	vp->setBooking(new Booking(booking_id++, c, accoms_to_book, activityPass, sportsPass, bicycleRent, swimmingPass));
 }
 
 void addService(Parcs* selected_parc_obj, bool& swimmingPass, bool& sportsPass, bool& bicycleRent, bool& activityPass)
@@ -180,6 +194,8 @@ void addService(Parcs* selected_parc_obj, bool& swimmingPass, bool& sportsPass, 
 	bool parc_childrens_paradise = selected_parc_obj->getParcServices()->getChildrensParadise();
 	bool parc_water_bikes = selected_parc_obj->getParcServices()->getWaterBikes();
 	bool parc_activity_pass{ false };
+
+	//if no service has set to true:
 	if (!(parc_subtropic_swimming_pool == true
 		|| parc_sports_infrastructure == true
 		|| parc_bowling_alley == true
@@ -194,11 +210,20 @@ void addService(Parcs* selected_parc_obj, bool& swimmingPass, bool& sportsPass, 
 		cout << "Select the Parc Services you would like to include with your booking(y/n)." << endl;
 	}
 
-	swimmingPass = addServiceMiddleware(parc_subtropic_swimming_pool, subtropic_swimming_pool_name);
-	sportsPass = addServiceMiddleware(parc_sports_infrastructure, sports_infrastructure_name);
-	bicycleRent = addServiceMiddleware(parc_bicycle_rent, bicycle_rent_name);
+	if (parc_subtropic_swimming_pool)
+	{
+		swimmingPass = addServiceMiddleware(parc_subtropic_swimming_pool, subtropic_swimming_pool_name);
+	}
+	if (parc_sports_infrastructure)
+	{
+		sportsPass = addServiceMiddleware(parc_sports_infrastructure, sports_infrastructure_name);
+	}
+	if (parc_bicycle_rent)
+	{
+		bicycleRent = addServiceMiddleware(parc_bicycle_rent, bicycle_rent_name);
+	}
 
-	if (parc_bowling_alley == true || parc_childrens_paradise == true || parc_bicycle_rent == true)
+	if (parc_bowling_alley || parc_childrens_paradise || parc_bicycle_rent)
 	{
 		parc_activity_pass = true;
 		cout << "Any other activities inside the park are included with Activity Pass." << endl;

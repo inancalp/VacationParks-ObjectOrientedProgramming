@@ -2,68 +2,194 @@
 
 
 //createParcServices() included in createParc();
-ParcServices* createParcServices()
+ParcServices* createParcServices(string& parc_name)
 {
-	int subtropic_swimming_pool;
-	int sports_infrastructure;
-	int bowling_alley;
-	int bicycle_rent;
-	int childrens_paradise;
-	int water_bikes;
-	string subtropic_swimming_pool_name{ " -> SubtropicSwimmingPool: " };
-	string sports_infrastructure_name{ " -> SportsInfrastructure: " };
-	string bowling_alley_name{ " -> BowlingAlley: " };
-	string bicycle_rent_name{ " -> BicycleRent: " };
-	string childrens_paradise_name{ " -> ChildrensParadise: " };
-	string water_bikes_name{ " -> WaterBikes: " };
-
+	char selected_option{'\0'};
 	cout << "Select Services included with the Parc" << endl;
-	cout << "(1) to include, (0) to not: " << endl;
+	cout << "(y)es/(n)o/(e)xit: " << endl;
 
-	createParcServicesMiddleWare(subtropic_swimming_pool, subtropic_swimming_pool_name);
-	createParcServicesMiddleWare(sports_infrastructure, sports_infrastructure_name);
-	createParcServicesMiddleWare(bowling_alley, bowling_alley_name);
-	createParcServicesMiddleWare(bicycle_rent, bicycle_rent_name);
-	createParcServicesMiddleWare(childrens_paradise, childrens_paradise_name);
-	createParcServicesMiddleWare(water_bikes, water_bikes_name);
+	array<bool, PARCSERVICESSIZE> parc_services{};
+	array<string, PARCSERVICESSIZE> parc_service_names = {
+		"SubtropicSwimmingPool",
+		"SportsInfrastructure",
+		"BowlingAlley",
+		"BicycleRent",
+		"ChildrensParadise",
+		"WaterBikes"
+	};
 
-	return new ParcServices
-	(
-		static_cast<bool>(subtropic_swimming_pool),
-		static_cast<bool>(sports_infrastructure),
-		static_cast<bool>(bowling_alley),
-		static_cast<bool>(bicycle_rent),
-		static_cast<bool>(childrens_paradise),
-		static_cast<bool>(water_bikes)
-	);
+	for (size_t i{0}; i < parc_services.size(); i++)
+	{
+
+		while (!selected_option)
+		{
+			cout << "-> " << parc_service_names[i] << ": " << right;
+			cin >> selected_option;
+			if (!cin) {
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				cout << "Invalid input please try again." << endl;
+				selected_option = '\0'; //
+				continue;
+			}
+			switch (selected_option)
+			{
+			case 'y':
+				parc_services[i] = true;
+				break;
+			case 'n':
+				parc_services[i] = false;
+				break;
+			case 'e':
+				//exit
+				return NULL; //null for return object.
+			default:
+				cout << "Invalid input please try again." << endl;
+				selected_option = '\0';
+				break;
+			}
+		}
+		selected_option = '\0';
+	}
+
+	//update in case PARCSERVICESSIZE changes.
+	return new ParcServices(parc_name, parc_services[0], parc_services[1], parc_services[2], parc_services[3], parc_services[4], parc_services[5]);
+
 }
 
-//createParcServicesMiddleWare() included in createParcServices()
-void createParcServicesMiddleWare(int& data, string& data_name)
+void saveParcFile(Parcs* parc)
 {
-	do
+	ofstream parcsFile(PARCSFILE, ios::out | ios::app);
+	if (!parcsFile)
 	{
-		cout << setw(28) << left << data_name << right;
-		cin >> data;
-		if (!cin) {
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			data = -1; //invalid value to handle.
-		}
-		if (data < 0 || data > 1)
-		{
-			cout << "(!) Invalid input, try again." << endl;
-		}
-	} while (data < 0 || data > 1);
+		cout << "Error occured while opening parcs.txt file" << endl;
+		return;
+	}
+	
+	parcsFile << parc->getName() << " " << parc->getAddress() << endl;
+
+	parcsFile.close();
+
+	saveParcServicesFile(parc->getParcServices()); 
+
+}
+
+void saveParcServicesFile(ParcServices* parc_services)
+{
+	ofstream parcServicesFile(PARCSERVICESFILE, ios::out | ios::app);
+
+	if (!parcServicesFile)
+	{
+		cout << "Error occured while opening parcs.txt file" << endl;
+		return;
+	}
+
+	parcServicesFile <<
+		parc_services->getParcName() << " " <<
+		parc_services->getSubtropicSwimmingPool() << " " <<
+		parc_services->getSportsInfrastructure() << " " <<
+		parc_services->getBowlingAlley() << " " <<
+		parc_services->getBicycleRent() << " " <<
+		parc_services->getChildrensParadise() << " " <<
+		parc_services->getWaterBikes() << endl;
+
+	parcServicesFile.close();
+}
+
+void reWriteParcsFile(VacationParcs* vp)
+{
+	ofstream parcsFile(PARCSFILE, ios::out);
+
+	if (!parcsFile)
+	{
+		cout << "Error occured while opening parcs.txt file" << endl;
+		return;
+	}
+
+	emptyParcServicesFile();
+
+	for (Parcs* parc : vp->getParcs())
+	{
+		cout << "Parc -> " << parc->getName() << " is being manipulated" << endl;
+		parcsFile << parc->getName() << " " << parc->getAddress() << endl;
+		saveParcServicesFile(parc->getParcServices());
+	}
+
+	parcsFile.close();
+
+}
+
+void emptyParcServicesFile()
+{
+	ofstream parcServicesFile(PARCSERVICESFILE, ios::out);
+
+	if (!parcServicesFile)
+	{
+		cout << "Error occured while opening parcs.txt file" << endl;
+		return;
+	}
+
+	parcServicesFile.close();
+}
+
+void retrieveParcsFile(VacationParcs* vp)
+{
+	string parc_name;
+	string parc_address;
+
+	ifstream parcsFile(PARCSFILE, ios::in);
+	ifstream parcServicesFile(PARCSERVICESFILE, ios::in);
+
+	if (!parcsFile)
+	{
+		cout << "Error occured while opening parcs.txt file" << endl;
+		return;
+	}
+
+	while (parcsFile >> parc_name >> parc_address)
+	{
+		vp->setParc(new Parcs(parc_name, parc_address, retrieveParcServicesFile(parcServicesFile)));
+	}
+	parcServicesFile.close();
+	parcsFile.close();
+}
+
+ParcServices* retrieveParcServicesFile(ifstream& parcServicesFile)
+{
+	array<bool, PARCSERVICESSIZE> parc_services;
+	bool parc_service_value;
+	string parc_name;
+
+	parcServicesFile >> parc_name;
+
+	for (size_t i{ 0 }; i < PARCSERVICESSIZE; i++)
+	{
+		parcServicesFile >> parc_service_value;
+		cout << "ParcName! = " << parc_name << endl;
+		cout << "ParcServicesValue! = " << parc_service_value << endl;
+		parc_services[i] = parc_service_value;
+	}
+
+	return new ParcServices(
+		parc_name,
+		parc_services[0],
+		parc_services[1],
+		parc_services[2],
+		parc_services[3],
+		parc_services[4],
+		parc_services[5]
+	);
 }
 
 
 //Parcs CRUD
 void createParc(VacationParcs* vp)
 {
-	string name;
-	string address;
+
+	string parc_name;
+	string parc_address;
 	ParcServices* parc_services;
+	Parcs* parc;
 	bool parc_created{ false };
 	bool parc_name_taken{ false };
 	bool parc_address_taken{ false };
@@ -72,45 +198,45 @@ void createParc(VacationParcs* vp)
 	{
 		do
 		{
-			if (name.empty())
-			{
-				cout << "Parc Name: ";
-				cin >> name;
-			}
+			cout << "Parc Name: ";
+			cin >> parc_name;
 			for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
 			{
-				if (vp->getParcs()[i]->getName() == name)
+				if (vp->getParcs()[i]->getName() == parc_name)
 				{
 					cout << "------------------------------------------------------" << endl;
 					cout << "Parc Name is already in use, please try another one." << endl;
 					cout << "------------------------------------------------------" << endl;
-					name.clear(); // to empty the string
 					parc_name_taken = true;
+					break;
 				}
 				else
 				{
 					parc_name_taken = false;
 				}
 			}
+
 		} while (parc_name_taken);
+
+
+		if (parc_name == "exit")
+		{
+			return;
+		}
 
 		do
 		{
-			if (address.empty())
-			{	
-				cout << "Parc Address: ";
-				cin >> address;
-			}
+			cout << "Parc Address: ";
+			cin >> parc_address;
 			for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
 			{
-				if (vp->getParcs()[i]->getAddress() == address)
+				if (vp->getParcs()[i]->getAddress() == parc_address)
 				{
 					cout << "--------------------------------------------------------" << endl;
 					cout << "Parc Address is already in use, please try another one." << endl;
 					cout << "--------------------------------------------------------" << endl;
-
-					address.clear();
 					parc_address_taken = true;
+					break;
 				}
 				else
 				{
@@ -119,16 +245,31 @@ void createParc(VacationParcs* vp)
 			}
 		} while (parc_address_taken);
 
+		if (parc_address == "exit")
+		{
+			return;
+		}
+
 		if (parc_name_taken == false && parc_address_taken == false) {
 			parc_created = true;
 		}
 	}
-	parc_services = createParcServices();
-	vp->setParc(new Parcs(name, address, parc_services));
+	parc_services = createParcServices(parc_name);
+
+	if (parc_services == NULL)
+	{
+		delete parc_services;
+		return;
+	}
+
+	parc = new Parcs(parc_name, parc_address, parc_services);
+	saveParcFile(parc);
+	vp->setParc(parc);
+
+
 	cout << "-------------------" << endl;
 	cout << "End of createParc()" << endl;
 	cout << "-------------------" << endl;
-
 }
 
 void showParcs(VacationParcs* vp)
@@ -147,7 +288,10 @@ void changeParc(VacationParcs* vp)
 	string parc_name;
 	int parc_index;
 	bool parc_found{ false };
-	int service_num;
+	char service_num;
+	char change_another_service;
+	bool bool_another_service;
+	bool invalid_input;
 
 	Parcs* selected_parc;
 	ParcServices* selected_services;
@@ -166,11 +310,28 @@ void changeParc(VacationParcs* vp)
 	bool childrens_paradise_val;
 	bool water_bikes_val;
 
+
+	cout << "------------------------------------------------------" << endl;
+
+	invalid_input = false;
 	do
 	{
-		cout << "------------------------------------------------------" << endl;
 		cout << "Enter the name of the park to see Services available: ";
 		cin >> parc_name;
+
+		if (!cin) {
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cout << "Invalid input please try again." << endl;
+			parc_name = '\0';
+			continue;
+		}
+
+		if (parc_name == "exit")
+		{
+			return;
+		}
+
 		for (int i{ 0 }; i < vp->getParcs().size(); i++)
 		{
 			if (vp->getParcs()[i]->getName() == parc_name)
@@ -184,6 +345,7 @@ void changeParc(VacationParcs* vp)
 			cout << "Parc name can't be found on the system. Try again." << endl;
 		}
 	} while (!parc_found);
+
 	cout << "------------------------------------------------------" << endl;
 
 	selected_parc = vp->getParcs()[parc_index];
@@ -204,12 +366,12 @@ void changeParc(VacationParcs* vp)
 	do
 	{
 		cout << "------------------------------------------------------------------" << endl;
-		cout << "Enter the number for the service you would like to add or remove: ";
+		cout << "Enter the number for the service you would like to add or remove or use \"e\" to exit: ";
 		cin >> service_num;
 
 		switch (service_num)
 		{
-		case 1:
+		case '1':
 			cout << "--------------" << endl;
 			cout
 				<< subtropic_swimming_pool_name
@@ -219,9 +381,10 @@ void changeParc(VacationParcs* vp)
 				<< "\"."
 				<< endl;
 			cout << "--------------" << endl;
-			selected_services->setSubtropicSwimmingPool(!subtropic_swimming_pool_val);
+			subtropic_swimming_pool_val = !subtropic_swimming_pool_val;
+			selected_services->setSubtropicSwimmingPool(subtropic_swimming_pool_val);
 			break;
-		case 2:
+		case '2':
 			cout << "--------------" << endl;
 			cout
 				<< sports_infrastructure_name
@@ -231,9 +394,10 @@ void changeParc(VacationParcs* vp)
 				<< "\"."
 				<< endl;
 			cout << "--------------" << endl;
-			selected_services->setSportsInfrastructure(!sports_infrastructure_val);
+			sports_infrastructure_val = !sports_infrastructure_val;
+			selected_services->setSportsInfrastructure(sports_infrastructure_val);
 			break;
-		case 3:
+		case '3':
 			cout << "--------------" << endl;
 			cout
 				<< bowling_alley_name
@@ -243,9 +407,10 @@ void changeParc(VacationParcs* vp)
 				<< "\"."
 				<< endl;
 			cout << "--------------" << endl;
-			selected_services->setBowlingAlley(!bowling_alley_val);
+			bowling_alley_val = !bowling_alley_val;
+			selected_services->setBowlingAlley(bowling_alley_val);
 			break;
-		case 4:
+		case '4':
 			cout << "--------------" << endl;
 			cout
 				<< bicycle_rent_name
@@ -255,9 +420,10 @@ void changeParc(VacationParcs* vp)
 				<< "\"."
 				<< endl;
 			cout << "--------------" << endl;
-			selected_services->setBicycleRent(!bicycle_rent_val);
+			bicycle_rent_val = !bicycle_rent_val;
+			selected_services->setBicycleRent(bicycle_rent_val);
 			break;
-		case 5:
+		case '5':
 			cout << "--------------" << endl;
 			cout
 				<< childrens_paradise_name
@@ -267,9 +433,10 @@ void changeParc(VacationParcs* vp)
 				<< "\"."
 				<< endl;
 			cout << "--------------" << endl;
-			selected_services->setChildrensParadise(!childrens_paradise_val);
+			childrens_paradise_val = !childrens_paradise_val;
+			selected_services->setChildrensParadise(childrens_paradise_val);
 			break;
-		case 6:
+		case '6':
 			cout << "--------------" << endl;
 			cout
 				<< water_bikes_name
@@ -279,16 +446,54 @@ void changeParc(VacationParcs* vp)
 				<< "\"."
 				<< endl;
 			cout << "--------------" << endl;
-			selected_services->setWaterBikes(!water_bikes_val);
+			water_bikes_val = !water_bikes_val;
+			selected_services->setWaterBikes(water_bikes_val);
 			break;
+		case 'e':
+			cout << "Updated Parc Object: " << endl;
+			cout << selected_services->toString() << endl;
+			reWriteParcsFile(vp);
+			return; //exit
 		default:
 			cout << "--------------" << endl;
 			cout << "Invalid input, try again." << endl;
 			cout << "--------------" << endl;
+			invalid_input = true;
 			break;
 		}
-	} while (service_num < 1 || service_num > 6);
+	
+		if (invalid_input)
+		{
+			continue;
+		}
 
+		while (true)
+		{
+			cout << "Would you like to make another change?(y/n): ";
+			cin >> change_another_service;
+			if (change_another_service == 'y')
+			{
+				bool_another_service = true;
+				break;
+			}
+			else if (change_another_service == 'n')
+			{
+				bool_another_service = false;
+				break;
+			}
+			else
+			{
+				cout << "Invalid input, please try again." << endl;
+			}
+		}
+		if (change_another_service == 'n')
+		{
+			break;
+		}
+
+	} while ((service_num < 1 || service_num > 6) || bool_another_service);
+
+	reWriteParcsFile(vp);
 }
 
 void deleteParc(VacationParcs* vp)
@@ -333,7 +538,9 @@ void deleteParc(VacationParcs* vp)
 			cout << "Invalid input, please try again." << endl;
 		}
 	} while (!(delete_parc == 'y' || delete_parc == 'n'));
+
 	cout << "--------------------------------------------------------" << endl;
+
 	if (delete_parc == 'y')
 	{
 		cout << "---------------------" << endl;
@@ -350,6 +557,8 @@ void deleteParc(VacationParcs* vp)
 		cout << "---------------------" << endl;
 	}
 
+	reWriteParcsFile(vp);
+
 }
 
 Parcs* selectParc(VacationParcs* vp)
@@ -358,13 +567,6 @@ Parcs* selectParc(VacationParcs* vp)
 	int parc_index;
 	bool parc_name_found{ false };
 	int i;
-
-	for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
-	{
-		cout << vp->getParcs()[i]->toString() << endl;
-	}
-
-	cout << "Here above, is the list of parcs in our system!" << endl;
 
 	do
 	{

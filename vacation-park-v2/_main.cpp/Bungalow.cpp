@@ -10,10 +10,10 @@ Bungalow::Bungalow(
     LuxuryLevel* luxury_level,
     const int bedrooms
 ) : Accomodations(id, nbr_people, size, bathroom_with_bath, is_booked, luxury_level), m_bedrooms(bedrooms) {
-	cout << "(!) Bungalow::Constructor" << endl;
+	cout << "(!) Bungalow::Constructor ->> " << this->getId() << " created." << endl;
 }
 Bungalow::~Bungalow() {
-	cout << "(!) Bungalow::Destructor" << endl;
+	cout << "(!) Bungalow::Destructor ->> " << this->getId() << " deleted." << endl;
 };
 
 const int& Bungalow::getBedrooms() const {

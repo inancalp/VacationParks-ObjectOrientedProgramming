@@ -9,7 +9,7 @@ class Parcs {
 private:
 	string m_name;
 	string m_address;
-	ParcServices* m_parcServices; // change later on
+	ParcServices* m_parcServices;
 	vector<Accomodations*> m_accomodations;
 public:
 	Parcs(string name, string address, ParcServices* parc_services);

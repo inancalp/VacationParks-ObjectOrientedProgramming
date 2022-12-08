@@ -12,11 +12,11 @@ HotelRoom::HotelRoom(
     const int nbr_beds,
     const bool children_bed
 ) : Accomodations(id, nbr_people, size, bathroom_with_bath, is_booked, luxury_level), m_floor(floor), m_location(location), m_nbrBeds(nbr_beds), m_childrenBed(children_bed) {
-    cout << "(!) HotelRoom::Constructor" << endl;
+    cout << "(!) HotelRoom::Constructor ->> " << this->getId() << " created." << endl;
 }
 
 HotelRoom::~HotelRoom() {
-    cout << "(!) HotelRoom::Destructor" << endl;
+    cout << "(!) HotelRoom::Destructor ->> " << this->getId() << " deleted." << endl;
 }
 
 const int& HotelRoom::getFloor() const {

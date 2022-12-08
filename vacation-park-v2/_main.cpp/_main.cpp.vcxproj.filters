@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="_main.cpp">
+    <ClCompile Include="__main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Customer.cpp">
@@ -24,7 +24,7 @@
     <ClCompile Include="VacationParcs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="useCaseLibrary.cpp">
+    <ClCompile Include="_useCaseLibrary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Booking.cpp">
@@ -68,7 +68,7 @@
     <ClInclude Include="VacationParcs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="useCaseLibrary.h">
+    <ClInclude Include="_useCaseLibrary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Booking.h">

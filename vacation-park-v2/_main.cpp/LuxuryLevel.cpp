@@ -8,10 +8,10 @@ LuxuryLevel::LuxuryLevel(
 	const string accomodation_kind
 ) : m_bbq(bbq), m_surroundSystem(surround_system), m_breakfastService(breakfast_service), m_cleaningService(cleaning_service), m_accomodationKind(accomodation_kind)
 {
-	cout << "(!) LuxuryLevel::Constructor" << endl;
+	cout << "(!) LuxuryLevel::Constructor ->> " << this->getAccomodationKind() << " created." << endl;
 }
 LuxuryLevel::~LuxuryLevel() {
-	cout << "(!) LuxuryLevel::Destructor" << endl;
+	cout << "(!) LuxuryLevel::Destructor ->> " << this->getAccomodationKind() << " deleted." << endl;
 }
 
 const bool& LuxuryLevel::getBbq() const {

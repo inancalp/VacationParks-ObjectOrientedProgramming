@@ -88,9 +88,3 @@ void Accomodations::setLuxuryLevel(LuxuryLevel* luxury_level) // ??
 {
 	this->m_luxuryLevel = luxury_level;
 }
-
-const string Accomodations::toString() const {
-	ostringstream output;
-	output << "N/A" << endl;
-	return output.str();
-}
