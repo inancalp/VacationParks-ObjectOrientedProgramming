@@ -12,6 +12,7 @@ private:
 public:
     Bungalow
     (
+        const string parc_name,
         const int id,
         const int nbr_people,
         const int size,
@@ -26,7 +27,7 @@ public:
     const int& getBedrooms() const;
     void setBedrooms(const int bedrooms);
 
-    const string toString() const override;
+    string toString() override;
 };
 
 #endif // BUNGALOW_H

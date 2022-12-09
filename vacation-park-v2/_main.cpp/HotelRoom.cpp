@@ -1,6 +1,7 @@
 #include "HotelRoom.h"
 
 HotelRoom::HotelRoom(
+    const string parc_name,
     const int id,
     const int nbr_people,
     const int size,
@@ -11,7 +12,7 @@ HotelRoom::HotelRoom(
     const string location,
     const int nbr_beds,
     const bool children_bed
-) : Accomodations(id, nbr_people, size, bathroom_with_bath, is_booked, luxury_level), m_floor(floor), m_location(location), m_nbrBeds(nbr_beds), m_childrenBed(children_bed) {
+) : Accomodations(parc_name, id, nbr_people, size, bathroom_with_bath, is_booked, luxury_level), m_floor(floor), m_location(location), m_nbrBeds(nbr_beds), m_childrenBed(children_bed) {
     cout << "(!) HotelRoom::Constructor ->> " << this->getId() << " created." << endl;
 }
 
@@ -45,7 +46,7 @@ void HotelRoom::setChildrenBed(const bool children_bed) {
     this->m_childrenBed = children_bed;
 }
 
-const string HotelRoom::toString() const {
+string HotelRoom::toString() {
 
     ostringstream output;
     output << "---------------" << endl;

@@ -14,6 +14,7 @@ private:
 public:
     HotelRoom
     (
+        const string parc_name,
         const int id,
         const int nbr_people,
         const int size,
@@ -38,7 +39,7 @@ public:
     void setNbrBeds(const int nbr_beds);
     void setChildrenBed(const bool children_bed);
 
-    const string toString() const override;
+    string toString() override;
 };
 
 #endif // HOTELROOM_H

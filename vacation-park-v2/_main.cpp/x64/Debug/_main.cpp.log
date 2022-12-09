@@ -1,3 +1,20 @@
-﻿  _ParcController.cpp
-C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\_main.cpp\_ParcController.cpp(596,18): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+﻿  Parcs.cpp
+  VacationParcs.cpp
+  _AccomodationController.cpp
+C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\_main.cpp\_AccomodationController.cpp(327,7): warning C4101: 'accom_type': unreferenced local variable
+C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\_main.cpp\_AccomodationController.cpp(767,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\_main.cpp\_AccomodationController.cpp(768,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  _BookingController.cpp
+C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\_main.cpp\_BookingController.cpp(21,7): warning C4101: 'include_service': unreferenced local variable
+C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\_main.cpp\_BookingController.cpp(22,7): warning C4101: 'no_available_accom': unreferenced local variable
+  _CustomerController.cpp
+  _ParcController.cpp
+C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\_main.cpp\_ParcController.cpp(487,18): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  __main.cpp
+  _useCaseLibrary.cpp
+C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\_main.cpp\_useCaseLibrary.cpp(9,9): warning C4101: 'p': unreferenced local variable
+  Generating Code...
+C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\_main.cpp\_BookingController.cpp(252): warning C4715: 'addServiceMiddleware': not all control paths return a value
+C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\_main.cpp\_AccomodationController.cpp(467): warning C4715: 'selectLuxuryLevel': not all control paths return a value
+C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\_main.cpp\_AccomodationController.cpp(604): warning C4715: 'selectAccomodation': not all control paths return a value
   _main.cpp.vcxproj -> C:\Users\inanc\Documents\.thomasMore\phase1-semester1\oop-with-(c++)\.vacation-park-main\vacation-park-v2\x64\Debug\_main.cpp.exe

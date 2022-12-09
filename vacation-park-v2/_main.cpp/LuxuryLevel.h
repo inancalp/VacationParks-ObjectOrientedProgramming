@@ -14,7 +14,6 @@ private:
 	bool m_breakfastService;
 	bool m_cleaningService;
 	string m_accomodationKind;
-
 public:
 	LuxuryLevel(
 		const bool bbq,

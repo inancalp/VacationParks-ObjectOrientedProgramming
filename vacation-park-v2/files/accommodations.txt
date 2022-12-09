@@ -1,0 +1,2 @@
+hotel_room park1 1000 2 25 1 0 vip 10 next_to_beach 1 0
+bungalow park1 1003 25 40 1 1 comfort 10

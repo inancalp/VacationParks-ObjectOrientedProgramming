@@ -3,44 +3,24 @@
 #include "_CustomerController.h"
 #include "_AccomodationController.h"
 #include "_BookingController.h"
+#include <iostream>
+#include <string>
+using namespace std;
+
 
 int main()
 {
+
 	VacationParcs* vp = new VacationParcs("MainObject", "Sint Katelijne Waver", "VAT info here.");
+	//luxuryLevel object accomodationKinds lowerCase since
+ 	vp->setLuxuryLevel(new LuxuryLevel(true, true, true, true, "vip"));
+	vp->setLuxuryLevel(new LuxuryLevel(false, false, true, true, "premium"));
+	vp->setLuxuryLevel(new LuxuryLevel(false, false, false, true, "comfort"));
 
 	retrieveParcsFile(vp);
+	retrieveAccomodationsFile(vp);
 
-
-	//vp->setCustomer(new Customer("inanc", "hertog", "inanc@gmail"));
-	//vp->setCustomer(new Customer("alp", "heverlee", "inanc@alp"));
-	//ParcServices* ps1 = new ParcServices(1, 1, 1, 1, 1, 1);
-	//ParcServices* ps2 = new ParcServices(1, 1, 1, 1, 1, 1);
-	//Parcs* p1 = new Parcs("park1", "park-address1", ps1);
-	//Parcs* p2 = new Parcs("park2", "park-address2", ps2);
-	//LuxuryLevel* lux_vip = new LuxuryLevel(true, true, true, true, "VIP");
-	//LuxuryLevel* lux_prem = new LuxuryLevel(false, false, true, true, "Premium");
-	//LuxuryLevel* lux_comfort = new LuxuryLevel(false, false, false, true, "Comfort");
-	//Accomodations* a1 = new HotelRoom(1, 5, 35, false, false, lux_comfort, 20, "Next to Ocean", 3, 1);
-	//Accomodations* a2 = new Bungalow(2, 2, 30, true, false, lux_vip, 1);
-	//Accomodations* a3 = new Bungalow(3, 2, 30, true, false, lux_prem, 1);
-	//Accomodations* a4 = new Bungalow(4, 2, 30, true, false, lux_comfort, 1);
-	//Accomodations* a5 = new HotelRoom(5, 5, 35, false, false, lux_vip, 20, "Next to Downtown", 3, 1);
-	//Accomodations* a6 = new HotelRoom(6, 5, 35, false, false, lux_comfort, 20, "Next to market", 3, 1);
-	//Accomodations* a7 = new HotelRoom(7, 5, 35, false, false, lux_comfort, 20, "Next to hood", 3, 1);
-	//Accomodations* a8 = new HotelRoom(8, 5, 35, false, false, lux_comfort, 20, "Next to parc", 3, 1);
-	//p1->setAccomodation(a1);
-	//p1->setAccomodation(a2);
-	//p2->setAccomodation(a3);
-	//p2->setAccomodation(a4);
-	//p2->setAccomodation(a5);
-	//p2->setAccomodation(a6);
-	//p2->setAccomodation(a7);
-	//p2->setAccomodation(a8);
-	//vp->setLuxuryLevel(lux_vip);
-	//vp->setLuxuryLevel(lux_prem);
-	//vp->setLuxuryLevel(lux_comfort);
-	//vp->setParc(p1);
-	//vp->setParc(p2);
+	
 
 	bool quit{ false };
 	int user_type;
@@ -51,8 +31,11 @@ int main()
 	cout << "\t\t_________________________________" << endl;
 	cout << endl << endl;
 	cout << "CLI based Object Oriented Programming application with C++" << endl;
-	cout << " - Unless information given, user can enter \"exit\" to cancel any function." << endl;
-
+	cout << " - ForYourInformation:" << endl;
+	cout << "\t - Unless information displayed, user can enter \"exit\" (all lower letters) to cancel any function." << endl;
+	cout << "\t - Error Handling is not in it's best state, so please do mind not to put any information rather than requested." << endl;
+	cout << "\t - Program flow works with only \"std::cin\" to have user input." << endl;
+	cout << "\t\t - In case of UserName, ParkName (and so on...), please create the spaces with snake_case or camelCase etc." << endl;
 	do
 	{
 
@@ -92,7 +75,7 @@ int main()
 	} while (!quit);
 
 	cout << "-----------------------------------------------" << endl;
-	cout << "Thanks for using our system. See you next time!" << endl;
+	cout << "Thanks for using the system. See you next time!" << endl;
 	cout << "-----------------------------------------------" << endl;
 
 	delete vp;

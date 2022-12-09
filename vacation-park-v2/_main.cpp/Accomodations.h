@@ -6,6 +6,7 @@
 class Accomodations
 {
 private:
+	string m_parcName;
 	int m_id;
 	int m_nbrPeople;
 	int m_size;
@@ -16,6 +17,7 @@ private:
 public:
 	Accomodations
 	(
+		const string m_parcName,
 		const int id,
 		const int nbr_people,
 		const int size,
@@ -26,13 +28,15 @@ public:
 
 	virtual ~Accomodations(); // virtual
 
+	const string& getParcName() const;
 	const int& getId() const;
 	const int& getNbrPeople() const;
 	const int& getSize() const;
 	const bool& getBathroomWithBath() const;
 	const bool& getIsBooked() const;
-	const LuxuryLevel* getLuxuryLevel() const;
+	LuxuryLevel* getLuxuryLevel();
 
+	void setParcName(const string& parc_name);
 	void setId(const int& id);
 	void setNbrPeople(const int& nbr_people);
 	void setSize(const int& size);
@@ -40,7 +44,7 @@ public:
 	void setIsBooked(const bool& is_booked);
 	void setLuxuryLevel(LuxuryLevel* luxury_level); // ??
 
-	virtual const string toString() const = 0;
+	virtual string toString() = 0;
 };
 
 

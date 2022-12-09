@@ -1,0 +1,2 @@
+Delete Accomodation done last.
+test the program and then continue with Customer CRUD

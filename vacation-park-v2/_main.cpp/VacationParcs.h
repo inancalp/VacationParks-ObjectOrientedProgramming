@@ -15,7 +15,6 @@ private:
 	vector<Customer*> m_customers;
 	vector<Booking*> m_bookings;
 	vector<LuxuryLevel*> m_luxuryLevels;
-
 public:
 	VacationParcs(string name, string address, string vat);
 	~VacationParcs();

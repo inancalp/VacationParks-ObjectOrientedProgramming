@@ -18,7 +18,7 @@ public:
 	const string& getName() const;
 	const string& getAddress() const;
 	ParcServices* getParcServices() const; //deleted const, refer changeParc()
-	const vector<Accomodations*>& getAccomodations() const;
+	vector<Accomodations*>& getAccomodations();
 
 	void setName(const string& name);
 	void setAddress(const string& address);

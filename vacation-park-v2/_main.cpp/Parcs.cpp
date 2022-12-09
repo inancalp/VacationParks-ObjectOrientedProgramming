@@ -29,7 +29,7 @@ ParcServices* Parcs::getParcServices() const
 {
 	return this->m_parcServices;
 }
-const vector<Accomodations*>& Parcs::getAccomodations() const
+vector<Accomodations*>& Parcs::getAccomodations()
 {
 	return this->m_accomodations;
 }

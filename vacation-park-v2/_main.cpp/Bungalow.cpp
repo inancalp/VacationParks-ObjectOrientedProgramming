@@ -2,6 +2,7 @@
 
 
 Bungalow::Bungalow(
+    const string parc_name,
     const int id,
     const int nbr_people,
     const int size,
@@ -9,7 +10,7 @@ Bungalow::Bungalow(
     const bool is_booked,
     LuxuryLevel* luxury_level,
     const int bedrooms
-) : Accomodations(id, nbr_people, size, bathroom_with_bath, is_booked, luxury_level), m_bedrooms(bedrooms) {
+) : Accomodations(parc_name, id, nbr_people, size, bathroom_with_bath, is_booked, luxury_level), m_bedrooms(bedrooms) {
 	cout << "(!) Bungalow::Constructor ->> " << this->getId() << " created." << endl;
 }
 Bungalow::~Bungalow() {
@@ -24,7 +25,7 @@ void Bungalow::setBedrooms(const int bedrooms) {
 }
 
 
-const string Bungalow::toString() const {
+string Bungalow::toString(){
     ostringstream output;
     output << "---------------" << endl;
     output << "Bungalow::ID -> " << this->getId() << endl;

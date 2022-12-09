@@ -15,11 +15,11 @@ void OwnerType(VacationParcs* vp)
 		cout << "                                  " << endl;
 		cout << "     1) Show Parcs                " << endl;
 		cout << "     2) Create Parc               " << endl;
-		cout << "     3) Change Parc               " << endl;
+		cout << "     3) Modify Parc               " << endl;
 		cout << "     4) Delete Parc               " << endl;
 		cout << "     5) Show Accomodations        " << endl;
 		cout << "     6) Create Accomodation       " << endl;
-		cout << "     7) Change Accomodation       " << endl;
+		cout << "     7) Modify Accomodation       " << endl;
 		cout << "     8) Delete Accomodation       " << endl;
 		cout << "     9) Show Bookings             " << endl;
 		cout << "    10) Exit                      " << endl;
@@ -39,24 +39,22 @@ void OwnerType(VacationParcs* vp)
 			createParc(vp);
 			break;
 		case 3:
-			changeParc(vp);
+			modifyParc(vp);
 			break;
 		case 4:
 			deleteParc(vp);
 			break;
 		case 5:
-			p = selectParc(vp);
 			showAccomodations(vp);
 			break;
 		case 6:
-			p = selectParc(vp);
-			createAccomodation(p);
+			createAccomodation(vp);
 			break;
 		case 7:
-			cout << "changeAccomodation() FEATURE (COMING SOON..)" << endl;
+			modifyAccomodation(vp);
 			break;
 		case 8:
-			cout << "deleteAccomodation() FEATURE (COMING SOON..)" << endl;
+			deleteAccomodation(vp);
 			break;
 		case 9:
 			showBookings(vp);

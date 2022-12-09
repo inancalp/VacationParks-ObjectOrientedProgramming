@@ -293,7 +293,7 @@ LuxuryLevel* filterAccomodations(VacationParcs* vp, char& accom_type, int& accom
 		case 'v':
 			for (size_t i{ 0 }; i < vp->getLuxuryLevels().size(); i++)
 			{
-				if (vp->getLuxuryLevels()[i]->getAccomodationKind() == "VIP")
+				if (vp->getLuxuryLevels()[i]->getAccomodationKind() == "vip")
 				{
 					luxuryLevel_index = static_cast<int>(i);
 					break;
@@ -308,7 +308,7 @@ LuxuryLevel* filterAccomodations(VacationParcs* vp, char& accom_type, int& accom
 		case 'p':
 			for (size_t i{ 0 }; i < vp->getLuxuryLevels().size(); i++)
 			{
-				if (vp->getLuxuryLevels()[i]->getAccomodationKind() == "Premium")
+				if (vp->getLuxuryLevels()[i]->getAccomodationKind() == "premium")
 				{
 					luxuryLevel_index = static_cast<int>(i);
 					break;
@@ -323,7 +323,7 @@ LuxuryLevel* filterAccomodations(VacationParcs* vp, char& accom_type, int& accom
 		case 'c':
 			for (size_t i{ 0 }; i < vp->getLuxuryLevels().size(); i++)
 			{
-				if (vp->getLuxuryLevels()[i]->getAccomodationKind() == "Comfort")
+				if (vp->getLuxuryLevels()[i]->getAccomodationKind() == "comfort")
 				{
 					luxuryLevel_index = static_cast<int>(i);
 					break;
