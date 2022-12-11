@@ -14,8 +14,7 @@ void saveAccomodationFile(Accomodations* accom)
 	}
 	if (typeid(*accom) == typeid(HotelRoom))
 	{
-		cout << "typeid(*accom) == " << typeid(*accom).name() << "&&"
-			<< "typeid(HotelRoom) == " << typeid(HotelRoom).name() << endl;
+		cout << "saveAccomodationFile() ->> HotelRoom::getId() ->> " << accom->getId() << " being saved." << endl;
 		HotelRoom* hotel_room = static_cast<HotelRoom*>(accom);
 		accomsFile
 			<< "hotel_room" << " "//to be able to see type.(could be changed to member variable?)
@@ -36,8 +35,7 @@ void saveAccomodationFile(Accomodations* accom)
 
 	if (typeid(*accom) == typeid(Bungalow))
 	{
-		cout << "typeid(*accom) == " << typeid(*accom).name() << "&&"
-			<< "typeid(Bungalow) == " << typeid(Bungalow).name() << endl;
+		cout << "saveAccomodationFile() ->> Bungalow::getId() ->> " << accom->getId() << " being saved." << endl;
 		Bungalow* bungalow = static_cast<Bungalow*>(accom);
 		accomsFile
 			<< "bungalow" << " " //to be able to see type.(could be changed to member variable?)
@@ -187,8 +185,7 @@ void reWriteAccomodationsFile(VacationParcs* vp)
 		{
 			if (typeid(*accom) == typeid(HotelRoom))
 			{
-				cout << "typeid(*accom) == " << typeid(*accom).name() << "&&"
-					<< "typeid(HotelRoom) == " << typeid(HotelRoom).name() << endl;
+				cout << "reWriteAccomodations() ->> HotelRoom::getId() ->> " << accom->getId() << " being manipulated." << endl;
 				HotelRoom* hotel_room = static_cast<HotelRoom*>(accom);
 				accomsFile
 					<< "hotel_room" << " "//to be able to see type.(could be changed to member variable?)
@@ -208,8 +205,7 @@ void reWriteAccomodationsFile(VacationParcs* vp)
 
 			if (typeid(*accom) == typeid(Bungalow))
 			{
-				cout << "typeid(*accom) == " << typeid(*accom).name() << "&&"
-					<< "typeid(Bungalow) == " << typeid(Bungalow).name() << endl;
+				cout << "reWriteAccomodations() ->> Bungalow::getId() ->> " << accom->getId() << " being manipulated." << endl;
 				Bungalow* bungalow = static_cast<Bungalow*>(accom);
 				accomsFile
 					<< "bungalow" << " " //to be able to see type.(could be changed to member variable?)
@@ -458,7 +454,7 @@ LuxuryLevel* selectLuxuryLevel(VacationParcs* vp)
 	{
 		if (vp->getLuxuryLevels()[i]->getAccomodationKind() == accom_kind)
 		{
-			cout << "Selected LuxuryLevel ->> " << vp->getLuxuryLevels()[i]->toString() << endl;
+			cout << "Selected LuxuryLevel ->> " << endl << vp->getLuxuryLevels()[i]->toString() << endl;
 			return vp->getLuxuryLevels()[i];
 		}
 	}
@@ -518,21 +514,19 @@ void showAccomodations(VacationParcs* vp)
 			cout << "There are no Parcs to show, thus no Accomodations to show either!" << endl;
 			return;
 		}
-		cout << "-------------------------" << endl;
-		cout << "Accomodations included in the system of Parcs::getName() ->> " << vp->getParcs()[i]->getName() << endl;
+		cout << "Accomodations included in the system of Parcs::getName() ->> " << vp->getParcs()[i]->getName() << endl << endl;
 
 		if (vp->getParcs()[i]->getAccomodations().size() == 0)
 		{
-			cout << "There are no Accommodations to show." << endl;
+			cout << "\t (!) There are no Accommodations to show." << endl << endl;
 			continue;
 		}
 
 		for (size_t j{ 0 }; j < vp->getParcs()[i]->getAccomodations().size(); j++)
 		{
-			
+			cout << " ->>";
 			cout << vp->getParcs()[i]->getAccomodations()[j]->toString() << endl;
 		}
-		cout << "-------------------------" << endl;
 	}
 }
 
@@ -630,7 +624,7 @@ void modifyHotelRoom(VacationParcs* vp, Accomodations* accom)
 
 	do
 	{
-		cout << "Enter the value for the attribute to be changed: " << endl;
+		cout << "Enter the value for the attribute to be changed: ";
 		cin >> selected_option_char;
 		if (selected_option_char == 'e')
 		{
@@ -703,7 +697,7 @@ void modifyBungalow(VacationParcs* vp, Accomodations* accom)
 
 	do
 	{
-		cout << "Enter the value for the attribute to be changed: " << endl;
+		cout << "Enter the value for the attribute to be changed: ";
 		cin >> selected_option_char;
 		if (selected_option_char == 'e')
 		{

@@ -13,7 +13,6 @@ private:
 	string m_name;
 	string m_address;
 	string m_email;
-	//vector<Booking*> m_bookings;
 
 public:
 
@@ -27,15 +26,11 @@ public:
 
 	void setEmail(const string& email);
 
-	//void setBooking(Booking* booking);
-
 	const string& getName() const;
 
 	const string& getAddress() const;
 
 	const string& getEmail() const;
-
-	//const vector<Booking*>& getBookings() const; 
 
 	const string toString() const;
 

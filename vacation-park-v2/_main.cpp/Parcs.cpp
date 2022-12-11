@@ -2,7 +2,7 @@
 
 
 Parcs::Parcs(string name, string address, ParcServices* parc_services) : m_name(name), m_address(address), m_parcServices(parc_services) {
-	cout << "Parcs::Constructor ->> " << this->getName() << " created." << endl;
+	cout << "(?) Parcs::Constructor ->> " << this->getName() << " created." << endl;
 }
 Parcs::~Parcs() {
 	//delete accomodations
@@ -14,7 +14,7 @@ Parcs::~Parcs() {
 	//delete services object
 	delete this->getParcServices();
 
-	cout << "Parcs::Destructor ->> " << this->getName() << " deleted." << endl;
+	cout << "(!) Parcs::Destructor ->> " << this->getName() << " deleted." << endl;
 }
 
 const string& Parcs::getName() const 
@@ -54,16 +54,8 @@ void Parcs::setAccomodation(Accomodations* accomodation)
 const string Parcs::toString() const
 {
 	stringstream output;
-	output << "--------------" << endl;
-	output << "Parcs::getName() ->> " << this->getName() << endl;
-	output << "Parcs::getAddress() ->> " << this->getAddress() << endl;
-	output << "Parcs::getParcServices() -> " << endl << this->getParcServices()->toString() << endl;
-	//output << "Parcs::getAccomodations()" << endl;
-	//for (size_t i{ 0 }; i < this->getAccomodations().size(); i++)
-	//{
-	//	output << "-> Parcs::getCustomers()[" << i << "]" << endl;
-	//	output << this->getAccomodations()[i]->toString() << endl;
-	//}
-	output << "--------------";
+	output << "\t Parcs::getName() ->> " << this->getName() << endl;
+	output << "\t Parcs::getAddress() ->> " << this->getAddress() << endl;
+	output << "\t Parcs::getParcServices() ->> " << endl << this->getParcServices()->toString() << endl;
 	return output.str();
 }

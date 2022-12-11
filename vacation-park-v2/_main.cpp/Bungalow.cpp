@@ -11,7 +11,7 @@ Bungalow::Bungalow(
     LuxuryLevel* luxury_level,
     const int bedrooms
 ) : Accomodations(parc_name, id, nbr_people, size, bathroom_with_bath, is_booked, luxury_level), m_bedrooms(bedrooms) {
-	cout << "(!) Bungalow::Constructor ->> " << this->getId() << " created." << endl;
+	cout << "(?) Bungalow::Constructor ->> " << this->getId() << " created." << endl;
 }
 Bungalow::~Bungalow() {
 	cout << "(!) Bungalow::Destructor ->> " << this->getId() << " deleted." << endl;
@@ -27,15 +27,14 @@ void Bungalow::setBedrooms(const int bedrooms) {
 
 string Bungalow::toString(){
     ostringstream output;
-    output << "---------------" << endl;
-    output << "Bungalow::ID -> " << this->getId() << endl;
-    output << "Bungalow::NbrPeople -> " << this->getNbrPeople() << endl;
-    output << "Bungalow::Size -> " << this->getSize() << endl;
-    output << "Bungalow::BathroomWithBath -> " << this->getBathroomWithBath() << endl;
-    output << "Accomodations::IsBooked -> " << ((this->getIsBooked() == true) ? "State: Booked" : "State: Available") << endl;
-    output << "(!) Accomodations::LuxuryLevel -> " << endl << this->getLuxuryLevel()->toString() << endl;
-    output << "Bungalow::Bedrooms -> " << this->getBedrooms() << endl;
-    output << "---------------" << endl;
+    output << "\t Bungalow::ParcName ->> " << this->getParcName() << endl;
+    output << "\t\t Bungalow::ID ->> " << this->getId() << endl;
+    output << "\t\t Bungalow::NbrPeople ->> " << this->getNbrPeople() << endl;
+    output << "\t\t Bungalow::Size ->> " << this->getSize() << endl;
+    output << "\t\t Bungalow::BathroomWithBath ->> " << this->getBathroomWithBath() << endl;
+    output << "\t\t Bungalow::IsBooked ->> " << ((this->getIsBooked() == true) ? "State: Booked" : "State: Available") << endl;
+    output << "\t\t Bungalow::LuxuryLevel ->> " << endl << this->getLuxuryLevel()->toString() << endl;
+    output << "\t\t Bungalow::Bedrooms ->> " << this->getBedrooms() << endl << endl;
 
     return output.str();
 }

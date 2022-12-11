@@ -1,18 +1,147 @@
 #include "_CustomerController.h"
+#include "_AccomodationController.h"
+#include "_BookingController.h"
+
+
+void saveCustomerFile(Customer* c)
+{
+	ofstream customersFile(CUSTOMERSFILE, ios::out | ios::app);
+	if (!customersFile)
+	{
+		cout << "Error occured while opening customers.txt file" << endl;
+		return;
+	}
+
+	cout << "saveCustomerFile() ->> Customer::getEmail() ->> " << c->getEmail() << " being saved." << endl;
+
+	customersFile
+		<< c->getName() << " "
+		<< c->getAddress() << " "
+		<< c->getEmail() << endl;
+
+	customersFile.close();
+}
+
+void retrieveCustomersFile(VacationParcs* vp)
+{
+	string customer_name;
+	string customer_address;
+	string customer_email;
+	Customer* c;
+
+	ifstream customersFile(CUSTOMERSFILE, ios::in);
+	if (!customersFile)
+	{
+		cout << "Error opening the file \"customers.txt\"." << endl;
+	}
+
+	while (customersFile >> customer_name >> customer_address >> customer_email)
+	{
+		c = new Customer(customer_name, customer_address, customer_email);
+		vp->setCustomer(c);
+		//cout << "retrieveCustomersFile() ->> Customer::getEmail() ->> " << c->getEmail() << " is retrieved." << endl;
+	}
+
+	customersFile.close();
+}
+
+void reWriteCustomersFile(VacationParcs* vp)
+{
+	ofstream customersFile(CUSTOMERSFILE, ios::out);
+	if (!customersFile)
+	{
+		cout << "Error opening the file \"customers.txt\"." << endl;
+		return;
+	}
+
+	for (Customer* customer : vp->getCustomers())
+	{
+		customersFile
+			<< customer->getName() << " "
+			<< customer->getAddress() << " "
+			<< customer->getEmail() << endl;
+	}
+
+	customersFile.close();
+}
+
+
+
+void CustomerSession(VacationParcs* vp, Customer* c)
+{
+	bool quit{ false };
+	int selected_option;
+	do
+	{
+		cout << "_____________________________________" << endl;
+		cout << "                                     " << endl;
+		cout << "   Current Customer:                 " << endl;
+		cout << "                                     " << endl;
+		cout << "  -Name: " << c->getName() << endl;
+		cout << "  -Address: " << c->getAddress() << endl;
+		cout << "  -Email: " << c->getEmail() << endl;
+		cout << "                                     " << endl;
+		cout << "  1) Modify Customer's Informations  " << endl;
+		cout << "  2) Show Customer's Bookings        " << endl;
+		cout << "  3) Make a Booking                  " << endl;
+		cout << "  4) Modify Existing Booking         " << endl;
+		cout << "  5) Exit                            " << endl;
+		cout << "                                     " << endl;
+		cout << "_____________________________________" << endl;
+
+		cout << endl;
+		cout << "Select Option: ";
+		cin >> selected_option; //
+
+
+		switch (selected_option)
+		{
+		case 1:
+			ModifyCustomer(vp, c);
+			break;
+		case 2:
+			showCustomersBookings(vp, c);
+			break;
+		case 3:
+			CreateBooking(vp, c);
+			break;
+		case 4:
+			cout << "COMING SOON." << endl;
+			break;
+		case 5:
+			quit = true;
+			break;
+		default:
+
+			break;
+		}
+
+	} while (!quit);
+}
 
 void createCustomer(VacationParcs* vp)
 {
 	string customer_name;
 	string customer_address;
 	string customer_email;
-
+	Customer* c;
 	bool customer_email_taken{ false };
 
 	cout << "Customer Name: ";
 	cin >> customer_name;
 
+	if (customer_name == "exit")
+	{
+		return;
+	}
+
 	cout << "Customer Address: ";
 	cin >> customer_address;
+
+	if (customer_address == "exit")
+	{
+		return;
+	}
 
 	do
 	{
@@ -21,6 +150,12 @@ void createCustomer(VacationParcs* vp)
 			cout << "Customer Email: ";
 			cin >> customer_email;
 		}
+
+		if (customer_email == "exit")
+		{
+			return;
+		}
+
 		for (size_t i{ 0 }; i < vp->getCustomers().size(); i++)
 		{
 			if (vp->getCustomers()[i]->getEmail() == customer_email)
@@ -36,8 +171,11 @@ void createCustomer(VacationParcs* vp)
 			}
 		}
 	} while (customer_email_taken);
-	vp->setCustomer(new Customer(customer_name, customer_address, customer_email));
+	c = new Customer(customer_name, customer_address, customer_email);
+	vp->setCustomer(c);
+	saveCustomerFile(c);
 	cout << "End of createCustomer()" << endl;
+	CustomerSession(vp, c);
 }
 
 void showCustomers(VacationParcs* vp)
@@ -49,6 +187,9 @@ void showCustomers(VacationParcs* vp)
 	}
 }
 
+
+//update later
+	//if customer has booking, delete is not possible.
 void deleteCustomer(VacationParcs* vp)
 {
 	string customer_email;
@@ -110,15 +251,13 @@ void ModifyCustomer(VacationParcs* vp, Customer* c)
 
 	do
 	{
-		cout << endl << endl;
 		cout << "_____________________________________" << endl;
-		cout << "_____________________________________" << endl;
+		cout << "                                     " << endl;
 		cout << "   Modify Customer:                  " << endl;
 		cout << "                                     " << endl;
 		cout << "  -Name: " << c->getName() << endl;
+		cout << "  -Address: " << c->getAddress() << endl;
 		cout << "  -Email: " << c->getEmail() << endl;
-		cout << "_____________________________________" << endl;
-		cout << "_____________________________________" << endl;
 		cout << "                                     " << endl;
 		cout << "  1) Change Name                     " << endl;
 		cout << "  2) Change Address                  " << endl;
@@ -127,6 +266,8 @@ void ModifyCustomer(VacationParcs* vp, Customer* c)
 		cout << "                                     " << endl;
 		cout << "_____________________________________" << endl;
 
+		cout << endl;
+		cout << "Select Option: ";
 		cin >> selected_option;
 
 		switch (selected_option)
@@ -134,15 +275,28 @@ void ModifyCustomer(VacationParcs* vp, Customer* c)
 		case 1:
 			cout << "Enter your new name: ";
 			cin >> customer_name;
+			if (customer_name == "exit")
+			{
+				continue;
+			}
 			c->setName(customer_name);
 			break;
 		case 2:
 			cout << "Enter your new address: ";
 			cin >> customer_address;
+			if (customer_address == "exit")
+			{
+				continue;
+			}
 			c->setAddress(customer_address);
 			break;
 		case 3:
-			c->setEmail(ModifyCustomerEmail(vp, c)); //see below
+			customer_email = ModifyCustomerEmail(vp, c);
+			if (customer_email == "exit")
+			{
+				continue;
+			}
+			c->setEmail(customer_email); //see below
 			break;
 		case 4:
 			quit = true;
@@ -151,9 +305,9 @@ void ModifyCustomer(VacationParcs* vp, Customer* c)
 			cout << "Invalid option, please try again." << endl;
 			break;
 		}
-
-
 	} while (!quit);
+
+	reWriteCustomersFile(vp);
 }
 
 string ModifyCustomerEmail(VacationParcs* vp, Customer* c)
@@ -168,6 +322,11 @@ string ModifyCustomerEmail(VacationParcs* vp, Customer* c)
 		{
 			cout << "Enter your new email address: ";
 			cin >> customer_email;
+			if (customer_email == "exit")
+			{
+				cout << "No change has been done to Email." << endl;
+				return "exit";
+			}
 
 			if (customer_email == c->getEmail())
 			{

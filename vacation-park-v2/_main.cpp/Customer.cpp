@@ -8,7 +8,7 @@ Customer::Customer
 )
 	: m_name(name), m_address(address), m_email(email)
 {
-	cout << "Customer::Constructor ->> " << this->getName() << " created." << endl;
+	cout << "(?) Customer::Constructor ->> " << this->getEmail() << " created." << endl;
 }
 
 Customer::~Customer()
@@ -17,7 +17,7 @@ Customer::~Customer()
 	{
 		delete this->getBookings()[i];
 	}*/
-	cout << "Customer::Destructor ->> " << this->getEmail() << " deleted." << endl;
+	cout << "(!) Customer::Destructor ->> " << this->getEmail() << " deleted." << endl;
 }
 
 
@@ -67,20 +67,9 @@ const string& Customer::getEmail() const
 const string Customer::toString() const
 {
 	ostringstream output;
-	output << "\tCustomer Name: " << this->getName() << endl;
-	output << "\tCustomer ID: " << this->getAddress() << endl;
-	output << "\tCustomer E-mail: " << this->getEmail() << endl;
-	//output << "\tCustomer Bookings:" << endl;
-	//
-	//if (!this->getBookings().size())
-	//{
-	//	output << "\t->> There are no bookings yet for " << this->getName() << "." << endl;
-	//}
-
-	//for (size_t i{ 0 }; i < this->getBookings().size(); i++)
-	//{
-	//	output << "\t" << this->getBookings()[i]->toString() << endl;
-	//}
+	output << "\t\tCustomer Name: " << this->getName() << endl;
+	output << "\t\tCustomer ID: " << this->getAddress() << endl;
+	output << "\t\tCustomer E-mail: " << this->getEmail() << endl;
 	return output.str();
 }
 

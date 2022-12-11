@@ -1,4 +1,4 @@
-#include "_useCaseLibrary.h"
+#include "_MainController.h"
 #include "_ParcController.h"
 #include "_CustomerController.h"
 #include "_AccomodationController.h"
@@ -12,13 +12,16 @@ int main()
 {
 
 	VacationParcs* vp = new VacationParcs("MainObject", "Sint Katelijne Waver", "VAT info here.");
-	//luxuryLevel object accomodationKinds lowerCase since
+	
+	// luxuryLevel(bbq, surround_system, breakfast_service, cleaning_service, luxury_type)
  	vp->setLuxuryLevel(new LuxuryLevel(true, true, true, true, "vip"));
 	vp->setLuxuryLevel(new LuxuryLevel(false, false, true, true, "premium"));
 	vp->setLuxuryLevel(new LuxuryLevel(false, false, false, true, "comfort"));
 
 	retrieveParcsFile(vp);
 	retrieveAccomodationsFile(vp);
+	retrieveCustomersFile(vp);
+	retrieveBookingsFile(vp);
 
 	
 
@@ -78,8 +81,8 @@ int main()
 	cout << "Thanks for using the system. See you next time!" << endl;
 	cout << "-----------------------------------------------" << endl;
 
-	delete vp;
 
+	delete vp;
 
 	return 0;
 }

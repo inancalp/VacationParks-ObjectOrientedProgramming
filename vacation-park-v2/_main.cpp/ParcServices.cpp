@@ -11,7 +11,7 @@ ParcServices::ParcServices
 	bool water_bikes
 ) : m_parcName(parc_name), m_subtropicSwimmingPool(subtropic_swimming_pool), m_sportsInfrastructure(sports_infrastructure), m_bowlingAlley(bowling_alley), m_bicycleRent(bicycle_rent), m_childrensParadise(childrens_paradise), m_waterBikes(water_bikes)
 {
-	cout << "(!) ParcServices::Constructor" << endl;
+	cout << "(?) ParcServices::Constructor" << endl;
 }
 
 ParcServices::~ParcServices()
@@ -81,14 +81,11 @@ void ParcServices::setWaterBikes(const bool& water_bikes)
 const string ParcServices::toString() const
 {
 	stringstream output;
-	output << "\t --------------" << endl;
-	output << "\t (!) ParcServices::getParcName() ->> " << this->getParcName() << endl;
-	output << "\t (1) ParcServices::getSubtropicSwimmingPool() ->> " << boolalpha << this->getSubtropicSwimmingPool() << endl;
-	output << "\t (2) ParcServices::getSportsInfrastructure() ->> " << boolalpha << this->getSportsInfrastructure() << endl;
-	output << "\t (3) ParcServices::getBowlingAlley() ->> " << boolalpha << this->getBowlingAlley() << endl;
-	output << "\t (4) ParcServices::getBicycleRent() ->> " << boolalpha << this->getBicycleRent() << endl;
-	output << "\t (5) ParcServices::getChildrensParadise() ->> " << boolalpha << this->getChildrensParadise() << endl;
-	output << "\t (6) ParcServices::getWaterBikes() ->> " << boolalpha << this->getWaterBikes() << endl;
-	output << "\t --------------";
+	output << "\t\t (1) ParcServices::getSubtropicSwimmingPool() ->> " << boolalpha << this->getSubtropicSwimmingPool() << endl;
+	output << "\t\t (2) ParcServices::getSportsInfrastructure() ->> " << boolalpha << this->getSportsInfrastructure() << endl;
+	output << "\t\t (3) ParcServices::getBowlingAlley() ->> " << boolalpha << this->getBowlingAlley() << endl;
+	output << "\t\t (4) ParcServices::getBicycleRent() ->> " << boolalpha << this->getBicycleRent() << endl;
+	output << "\t\t (5) ParcServices::getChildrensParadise() ->> " << boolalpha << this->getChildrensParadise() << endl;
+	output << "\t\t (6) ParcServices::getWaterBikes() ->> " << boolalpha << this->getWaterBikes() << endl;
 	return output.str();
 }

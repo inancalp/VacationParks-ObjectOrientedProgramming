@@ -7,17 +7,26 @@
 #include "Bungalow.h"
 #include "HotelRoom.h"
 
+#define BOOKINGSFILE "../files/bookings.txt"
+
+
+void saveBookingFile(Booking* booking);
+void retrieveBookingsFile(VacationParcs* vp);
+
 void CreateBooking(VacationParcs* vp, Customer* c);
 void addService(Parcs* selected_parc_obj, bool& swimmingPass, bool& sportsPass, bool& bicycleRent, bool& activityPass);
 bool addServiceMiddleware(bool& service_state, string& service_name);
-LuxuryLevel* filterAccomodations(VacationParcs* vp, char& accom_type, int& accom_nbrPeople, char& accom_luxuryLevel);
-void listFilteredAccomodations(VacationParcs* vp, Parcs* selected_parc_obj, LuxuryLevel* luxuryLevel_obj, int& accom_nbrPeople, char& accom_type, vector<Accomodations*>& accoms_filtered);
-
-
-//void searchBooking(VacationParcs* vp, Customer* c);
-
 void showBookings(VacationParcs* vp);
+void showCustomersBookings(VacationParcs* vp, Customer* customer);
 
+void setAvailableAccomodations(Parcs* selected_parc_obj, vector<Accomodations*>& available_accoms, vector<Accomodations*>& accoms_to_book);
+void showAvailableAccomodations(vector<Accomodations*>& available_accoms);
+
+LuxuryLevel* filterAccomodationLuxuryLevel(VacationParcs* vp);
+string filterAccomodationType();
+
+void showFilteredAccomodations(vector<Accomodations*>& accoms_filtered);
+void addAccomodationToBooking(vector<Accomodations*>& accoms_filtered, vector<Accomodations*>& accoms_to_book);
 
 #endif // !BOOKINGCONTROLLER_H
 

@@ -3,7 +3,7 @@
 
 VacationParcs::VacationParcs(string name, string address, string vat) : m_name(name), m_address(address), m_vat(vat)
 {
-	cout << "VacationParcs::Constructor ->> " << this->getName() << " created." << endl;
+	cout << "(?) VacationParcs::Constructor ->> " << this->getName() << " created." << endl;
 }
 VacationParcs::~VacationParcs()
 {
@@ -23,7 +23,7 @@ VacationParcs::~VacationParcs()
 	{
 		delete this->getLuxuryLevels()[i];
 	}
-	cout << "VacationParcs::Destructor ->> " << this->getName() << " deleted." << endl;
+	cout << "(!) VacationParcs::Destructor ->> " << this->getName() << " deleted." << endl;
 }
 
 

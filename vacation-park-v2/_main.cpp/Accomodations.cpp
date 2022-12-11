@@ -13,7 +13,7 @@ Accomodations::Accomodations
 )
 	: m_parcName(parc_name), m_id(id), m_nbrPeople(nbr_people), m_size(size), m_bathroomWithBath(bathroom_with_bath), m_isBooked(is_booked), m_luxuryLevel(luxury_level)
 {
-	cout << "(!) Accomodations::Constructor ->> Accomodation with id[" << this->getId() << "] created." << endl;
+	cout << "(?) Accomodations::Constructor ->> Accomodation with id[" << this->getId() << "] created." << endl;
 }
 
 Accomodations::~Accomodations() {

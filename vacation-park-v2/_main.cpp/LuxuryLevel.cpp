@@ -8,7 +8,7 @@ LuxuryLevel::LuxuryLevel(
 	const string accomodation_kind
 ) : m_bbq(bbq), m_surroundSystem(surround_system), m_breakfastService(breakfast_service), m_cleaningService(cleaning_service), m_accomodationKind(accomodation_kind)
 {
-	cout << "(!) LuxuryLevel::Constructor ->> " << this->getAccomodationKind() << " created." << endl;
+	cout << "(?) LuxuryLevel::Constructor ->> " << this->getAccomodationKind() << " created." << endl;
 }
 LuxuryLevel::~LuxuryLevel() {
 	cout << "(!) LuxuryLevel::Destructor ->> " << this->getAccomodationKind() << " deleted." << endl;
@@ -48,12 +48,10 @@ void LuxuryLevel::setAccomodationKind(const string& accomodation_kind) {
 
 const string LuxuryLevel::toString() const {
 	ostringstream output;
-	output << "\t---------------" << endl;
-	output << "\tLuxuryLevel::getBbq() ->> " << boolalpha << this->getBbq() << endl;
-	output << "\tLuxuryLevel::getSurroundSystem() ->> " << boolalpha << this->getSurroundSystem() << endl;
-	output << "\tLuxuryLevel::getBreakfastService() ->> " << boolalpha << this->getBreakfastService() << endl;
-	output << "\tLuxuryLevel::getCleaningService() ->> " << boolalpha << this->getCleaningService() << endl;
-	output << "\tLuxuryLevel::getAccomodationKind() ->> " << this->getAccomodationKind() << endl;
-	output << "\t---------------";
+	output << "\t\t\t LuxuryLevel::getBbq() ->> " << boolalpha << this->getBbq() << endl;
+	output << "\t\t\t LuxuryLevel::getSurroundSystem() ->> " << boolalpha << this->getSurroundSystem() << endl;
+	output << "\t\t\t LuxuryLevel::getBreakfastService() ->> " << boolalpha << this->getBreakfastService() << endl;
+	output << "\t\t\t LuxuryLevel::getCleaningService() ->> " << boolalpha << this->getCleaningService() << endl;
+	output << "\t\t\t LuxuryLevel::getAccomodationKind() ->> " << this->getAccomodationKind();
 	return output.str();
 }

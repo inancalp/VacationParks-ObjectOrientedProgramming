@@ -110,7 +110,7 @@ void reWriteParcsFile(VacationParcs* vp)
 
 	for (Parcs* parc : vp->getParcs())
 	{
-		cout << "Parc -> " << parc->getName() << " is being manipulated" << endl;
+		cout << "reWriteParcsFile() ->> Parcs::getName() ->> " << parc->getName() << " is being manipulated." << endl;
 		parcsFile << parc->getName() << " " << parc->getAddress() << endl;
 		saveParcServicesFile(parc->getParcServices());
 	}
@@ -165,8 +165,6 @@ ParcServices* retrieveParcServicesFile(ifstream& parcServicesFile)
 	for (size_t i{ 0 }; i < PARCSERVICESSIZE; i++)
 	{
 		parcServicesFile >> parc_service_value;
-		cout << "ParcName! = " << parc_name << endl;
-		cout << "ParcServicesValue! = " << parc_service_value << endl;
 		parc_services[i] = parc_service_value;
 	}
 
@@ -199,13 +197,12 @@ void createParc(VacationParcs* vp)
 		{
 			cout << "Parc Name: ";
 			cin >> parc_name;
+
 			for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
 			{
 				if (vp->getParcs()[i]->getName() == parc_name)
 				{
-					cout << "------------------------------------------------------" << endl;
 					cout << "Parc Name is already in use, please try another one." << endl;
-					cout << "------------------------------------------------------" << endl;
 					parc_name_taken = true;
 					break;
 				}
@@ -231,9 +228,7 @@ void createParc(VacationParcs* vp)
 			{
 				if (vp->getParcs()[i]->getAddress() == parc_address)
 				{
-					cout << "--------------------------------------------------------" << endl;
 					cout << "Parc Address is already in use, please try another one." << endl;
-					cout << "--------------------------------------------------------" << endl;
 					parc_address_taken = true;
 					break;
 				}
@@ -274,13 +269,21 @@ void createParc(VacationParcs* vp)
 
 void showParcs(VacationParcs* vp)
 {
-	cout << "-------------------------" << endl;
+	cout << endl;
+	cout << "------------------------------------------------------------ " << endl;
 	cout << "Parcs included in the system of VacationParcs::getName() ->> " << vp->getName() << endl;
+	cout << "------------------------------------------------------------ " << endl << endl;
+	if (vp->getParcs().size() == 0)
+	{
+		cout << "There are NO PARCS to show!" << endl;
+		return;
+	}
+
 	for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
 	{
-		cout << vp->getParcs()[i]->toString() << endl;
+		cout << " ->>";
+		cout << vp->getParcs()[i]->toString();
 	}
-	cout << "-------------------------" << endl;
 }
 
 void modifyParc(VacationParcs* vp)
@@ -318,14 +321,11 @@ void modifyParc(VacationParcs* vp)
 	childrens_paradise_val = selected_services->getChildrensParadise();
 	water_bikes_val = selected_services->getWaterBikes();
 
-	cout << "-----------------------------" << endl;
 	cout << "ParcServices::toString() ->> " << endl;
 	cout << selected_parc->toString() << endl;
-	cout << "-----------------------------" << endl;
 
 	do
 	{
-		cout << "------------------------------------------------------------------" << endl;
 		cout << "Enter the number for the service you would like to add or remove or use \"e\" to exit: ";
 		cin >> service_num;
 
@@ -361,9 +361,9 @@ void modifyParc(VacationParcs* vp)
 			reWriteParcsFile(vp);
 			return; //exit
 		default:
-			cout << "--------------" << endl;
+			cout << endl << endl;
 			cout << "Invalid input, try again." << endl;
-			cout << "--------------" << endl;
+			cout << endl << endl;
 			break;
 		}
 
@@ -395,14 +395,11 @@ void deleteParc(VacationParcs* vp)
 		}
 	}
 
-	cout << "--------------------------------------------------------" << endl;
 	cout << "Here is the information for the parc to be deleted: " << endl;
 	cout << selected_parc->toString() << endl;
-	cout << "--------------------------------------------------------" << endl;
 
 	do
 	{
-		cout << "--------------------------------------------------------" << endl;
 		cout << "If you are sure to delete it enter \"y\", else enter \"n\": ";
 		cin >> delete_parc;
 
@@ -411,9 +408,6 @@ void deleteParc(VacationParcs* vp)
 			cout << "Invalid input, please try again." << endl;
 		}
 	} while (!(delete_parc == 'y' || delete_parc == 'n'));
-
-	cout << "--------------------------------------------------------" << endl;
-
 
 
 	if (delete_parc == 'y')
@@ -426,9 +420,7 @@ void deleteParc(VacationParcs* vp)
 				break;
 			}
 		}
-		cout << "---------------------" << endl;
-		cout << selected_parc->getName() << " IS deleted." << endl;
-		cout << "---------------------" << endl;
+		cout << selected_parc->getName() << " is deleted." << endl << endl;
 		delete selected_parc;
 		vp->getParcs().erase(vp->getParcs().begin() + parc_index);
 
@@ -438,9 +430,7 @@ void deleteParc(VacationParcs* vp)
 	}
 	else
 	{
-		cout << "---------------------" << endl;
 		cout << selected_parc->getName() << " IS NOT deleted." << endl;
-		cout << "---------------------" << endl;
 	}
 
 }
@@ -475,7 +465,7 @@ Parcs* selectParc(VacationParcs* vp)
 
 		if (!parc_name_found)
 		{
-			cout << "Invalid ParcName, please try again!" << endl;
+			cout << endl << "Invalid ParcName, please try again!" << endl;
 		}
 
 	} while (!parc_name_found);

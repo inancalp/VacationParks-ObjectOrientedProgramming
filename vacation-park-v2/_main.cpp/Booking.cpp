@@ -17,12 +17,12 @@ Booking::Booking
 	m_bicycleRent(bicycle_rent),
 	m_swimmingPass(swimming_pass)
 {
-	cout << "Booking::Constructor ->> " << "Booking with id[" << this->getId() << "] created." << endl;
+	cout << "(?) Booking::Constructor ->> " << "Booking with id[" << this->getId() << "] created." << endl;
 }
 
 Booking::~Booking()
 {
-	cout << "Booking::Destructor ->> Booking with id[" << this->getId() << "] deleted." << endl;
+	cout << "(!) Booking::Destructor ->> Booking with id[" << this->getId() << "] deleted." << endl;
 }
 
 void Booking::setId(const int& id)
@@ -95,20 +95,18 @@ const bool& Booking::getSwimmingPass() const
 string Booking::toString()
 {
 	ostringstream output;
-	output << "--------------" << endl;
 	output << "\t Booking::getId() ->> " << this->getId() << endl;
-	output << "\t Booking::CustomerInfo ->> " <<
+	output << "\t Booking::CustomerInfo ->> " << endl <<
 		this->getCustomer()->toString() << endl;
 	output << "\t Booking::getActivityPass() ->> " << boolalpha << this->getActivityPass() << endl;
 	output << "\t Booking::getSportPass() ->> " << boolalpha << this->getSportPass() << endl;
 	output << "\t Booking::getBicycleRent() ->> " << boolalpha << this->getBicycleRent() << endl;
 	output << "\t Booking::getSwimmingPass() ->> " << boolalpha << this->getSwimmingPass() << endl;
-	output << "\t Booking::getAccomodations() ->> [ ";
+	output << "\t Booking::getAccomodations() ->> " << endl << endl;
 	for (size_t i{ 0 }; i < this->getAccomodations().size(); i++)
-	{
-		output << "\"" << this->getAccomodations()[i]->toString() << "\" ";
+	{	
+		output << "\t ->>";
+		output << this->getAccomodations()[i]->toString();
 	}
-	output << "]" << endl;
-	output << "\t--------------";
 	return output.str();
 }
