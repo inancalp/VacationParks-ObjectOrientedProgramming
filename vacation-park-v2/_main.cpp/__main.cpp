@@ -49,12 +49,24 @@ int main()
 		cout << "     1) Owner           " << endl;
 		cout << "     2) Employee        " << endl;
 		cout << "     3) Customer        " << endl;
-		cout << "     4) Exit            " << endl;
 		cout << "                        " << endl;
 		cout << "________________________" << endl;
 		cout << endl;
+
 		cout << "Select Option: ";
 		cin >> user_type;
+
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+
 
 		switch (user_type)
 		{
@@ -67,22 +79,17 @@ int main()
 		case 3:
 			CustomerType(vp);
 			break;
-		case 4:
-			quit = true;
-			break;
 		default:
-			cout << "Invalid input, please try again." << endl;
+			cout << "Invalid input." << endl;
 			break;
 		}
 
-	} while (!quit);
+	} while (true);
 
 	cout << "-----------------------------------------------" << endl;
 	cout << "Thanks for using the system. See you next time!" << endl;
 	cout << "-----------------------------------------------" << endl;
 
-
 	delete vp;
-
 	return 0;
 }

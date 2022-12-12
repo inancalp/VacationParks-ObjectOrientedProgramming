@@ -7,11 +7,15 @@
 #include "Bungalow.h"
 #include "HotelRoom.h"
 
+#include <iostream>
+using namespace std;
+
 #define BOOKINGSFILE "../files/bookings.txt"
 
 
 void saveBookingFile(Booking* booking);
 void retrieveBookingsFile(VacationParcs* vp);
+void reWriteBookingsFile(VacationParcs* vp);
 
 void CreateBooking(VacationParcs* vp, Customer* c);
 void addService(Parcs* selected_parc_obj, bool& swimmingPass, bool& sportsPass, bool& bicycleRent, bool& activityPass);

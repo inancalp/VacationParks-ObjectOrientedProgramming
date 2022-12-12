@@ -1,61 +1,6 @@
 #include "_ParcController.h"
 #include "_AccomodationController.h"
 
-//createParcServices() included in createParc();
-ParcServices* createParcServices(string& parc_name)
-{
-	char selected_option{'\0'};
-	cout << "Select Services included with the Parc" << endl;
-	cout << "(y)es/(n)o/(e)xit: " << endl;
-
-	array<bool, PARCSERVICESSIZE> parc_services{};
-	array<string, PARCSERVICESSIZE> parc_service_names = {
-		"SubtropicSwimmingPool",
-		"SportsInfrastructure",
-		"BowlingAlley",
-		"BicycleRent",
-		"ChildrensParadise",
-		"WaterBikes"
-	};
-
-	for (size_t i{0}; i < parc_services.size(); i++)
-	{
-
-		while (!selected_option)
-		{
-			cout << "-> " << parc_service_names[i] << ": " << right;
-			cin >> selected_option;
-			if (!cin) {
-				cin.clear();
-				cin.ignore(numeric_limits<streamsize>::max(), '\n');
-				cout << "Invalid input please try again." << endl;
-				selected_option = '\0'; //
-				continue;
-			}
-			switch (selected_option)
-			{
-			case 'y':
-				parc_services[i] = true;
-				break;
-			case 'n':
-				parc_services[i] = false;
-				break;
-			case 'e':
-				//exit
-				return NULL; //null for return object.
-			default:
-				cout << "Invalid input please try again." << endl;
-				selected_option = '\0';
-				break;
-			}
-		}
-		selected_option = '\0';
-	}
-
-	//update in case PARCSERVICESSIZE changes.
-	return new ParcServices(parc_name, parc_services[0], parc_services[1], parc_services[2], parc_services[3], parc_services[4], parc_services[5]);
-
-}
 
 void saveParcFile(Parcs* parc)
 {
@@ -110,7 +55,7 @@ void reWriteParcsFile(VacationParcs* vp)
 
 	for (Parcs* parc : vp->getParcs())
 	{
-		cout << "reWriteParcsFile() ->> Parcs::getName() ->> " << parc->getName() << " is being manipulated." << endl;
+	/*	cout << "reWriteParcsFile() ->> Parcs::getName() ->> " << parc->getName() << " is being manipulated." << endl;*/
 		parcsFile << parc->getName() << " " << parc->getAddress() << endl;
 		saveParcServicesFile(parc->getParcServices());
 	}
@@ -182,14 +127,21 @@ ParcServices* retrieveParcServicesFile(ifstream& parcServicesFile)
 //Parcs CRUD
 void createParc(VacationParcs* vp)
 {
-
 	string parc_name;
 	string parc_address;
 	ParcServices* parc_services;
 	Parcs* parc;
-	bool parc_created{ false };
-	bool parc_name_taken{ false };
-	bool parc_address_taken{ false };
+	bool parc_created;
+	bool parc_name_taken;
+	bool parc_address_taken;
+
+	parc_name.clear();
+	parc_address.clear();
+	parc_services = NULL; //(?)
+	parc = NULL;
+	parc_created = false;
+	parc_name_taken = false;
+	parc_address_taken = false;
 
 	while (parc_created == false)
 	{
@@ -197,6 +149,16 @@ void createParc(VacationParcs* vp)
 		{
 			cout << "Parc Name: ";
 			cin >> parc_name;
+			if (cin.eof())
+			{
+				cin.clear();
+				return;
+			}
+			if (cin.fail())
+			{
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
 
 			for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
 			{
@@ -214,16 +176,21 @@ void createParc(VacationParcs* vp)
 
 		} while (parc_name_taken);
 
-
-		if (parc_name == "exit")
-		{
-			return;
-		}
-
 		do
 		{
 			cout << "Parc Address: ";
 			cin >> parc_address;
+			if (cin.eof())
+			{
+				cin.clear();
+				return;
+			}
+			if (cin.fail())
+			{
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+
 			for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
 			{
 				if (vp->getParcs()[i]->getAddress() == parc_address)
@@ -239,20 +206,14 @@ void createParc(VacationParcs* vp)
 			}
 		} while (parc_address_taken);
 
-		if (parc_address == "exit")
-		{
-			return;
-		}
-
 		if (parc_name_taken == false && parc_address_taken == false) {
 			parc_created = true;
 		}
 	}
 	parc_services = createParcServices(parc_name);
-
-	if (parc_services == NULL)
+	if (cin.eof())
 	{
-		delete parc_services;
+		cin.clear();
 		return;
 	}
 
@@ -261,7 +222,6 @@ void createParc(VacationParcs* vp)
 	vp->setParc(parc);
 
 	cout << parc->toString() << endl;
-
 	cout << "-------------------" << endl;
 	cout << "End of createParc()" << endl;
 	cout << "-------------------" << endl;
@@ -307,13 +267,18 @@ void modifyParc(VacationParcs* vp)
 	bool water_bikes_val;
 	
 	selected_parc = selectParc(vp);
-	if (selected_parc == NULL)
+	if (cin.eof())
 	{
-		return; //exit
+		cin.clear();
+		return;
+	}
+	if (cin.fail())
+	{
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	}
 
-	selected_services = selected_parc->getParcServices();
-
+	selected_services = selected_parc->getParcServices(); //selected_services
 	subtropic_swimming_pool_val = selected_services->getSubtropicSwimmingPool();
 	sports_infrastructure_val = selected_services->getSportsInfrastructure();
 	bowling_alley_val = selected_services->getBowlingAlley();
@@ -326,8 +291,17 @@ void modifyParc(VacationParcs* vp)
 
 	do
 	{
-		cout << "Enter the number for the service you would like to add or remove or use \"e\" to exit: ";
+		cout << "Enter the number for the service you would like to add or remove: ";
 		cin >> service_num;
+
+		if (cin.eof())
+		{
+			cout << "Updated Parc Object: " << endl;
+			cout << selected_services->toString() << endl;
+			cin.clear();
+			reWriteParcsFile(vp); //user can exit only with using ^Z so save-point is here.
+			return;
+		}
 
 		switch (service_num)
 		{
@@ -355,21 +329,12 @@ void modifyParc(VacationParcs* vp)
 			changeSelectedParcServiceMiddleware(water_bikes_name, water_bikes_val);
 			selected_services->setWaterBikes(water_bikes_val);
 			break;
-		case 'e':
-			cout << "Updated Parc Object: " << endl;
-			cout << selected_services->toString() << endl;
-			reWriteParcsFile(vp);
-			return; //exit
 		default:
-			cout << endl << endl;
-			cout << "Invalid input, try again." << endl;
-			cout << endl << endl;
+			cout << "Invalid input." << endl;
 			break;
 		}
-
-	} while (service_num != 'e');
-
-	reWriteParcsFile(vp);
+	} while (true);
+	reWriteParcsFile(vp); //but still..just in case
 }
 
 void deleteParc(VacationParcs* vp)
@@ -380,9 +345,15 @@ void deleteParc(VacationParcs* vp)
 	char delete_parc;
 
 	Parcs* selected_parc = selectParc(vp);
-	if (selected_parc == NULL)
+	if (cin.eof())
 	{
+		cin.clear();
 		return;
+	}
+	if (cin.fail())
+	{
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	}
 
 	
@@ -390,24 +361,35 @@ void deleteParc(VacationParcs* vp)
 	{
 		if (selected_parc->getAccomodations()[i]->getIsBooked() == true)
 		{
-			cout << "There are bookings for the parc! Parc can't be deleted." << endl;
+			cout << "(!) There are bookings for the parc! Parc can't be deleted." << endl;
 			return;
 		}
 	}
 
 	cout << "Here is the information for the parc to be deleted: " << endl;
+	cout << " ->>";
 	cout << selected_parc->toString() << endl;
 
 	do
 	{
-		cout << "If you are sure to delete it enter \"y\", else enter \"n\": ";
+		cout << "If you are sure to delete it enter \"y\": ";
 		cin >> delete_parc;
+		if (cin.eof())
+		{
+			cin.clear();
+			return;
+		}
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
 
-		if (!(delete_parc == 'y' || delete_parc == 'n'))
+		if (!(delete_parc == 'y'))
 		{
 			cout << "Invalid input, please try again." << endl;
 		}
-	} while (!(delete_parc == 'y' || delete_parc == 'n'));
+	} while (!(delete_parc == 'y'));
 
 
 	if (delete_parc == 'y')
@@ -426,35 +408,35 @@ void deleteParc(VacationParcs* vp)
 
 		reWriteParcsFile(vp);
 		reWriteAccomodationsFile(vp);
-
 	}
-	else
-	{
-		cout << selected_parc->getName() << " IS NOT deleted." << endl;
-	}
-
 }
 
 Parcs* selectParc(VacationParcs* vp)
 {
 	string parc_name;
 	int parc_index;
-	bool parc_name_found{ false };
+	bool parc_name_found;
 	int i;
 
 	do
 	{
+		parc_name.clear();
+		parc_index = -1;
+		parc_name_found = false;
+
 		cout << "Please enter the \"name\" of the Parc: ";
-		cin >> parc_name; //cin to secure
-
-
-		//when createAccomodation(), function checks if Parcs object is null, then deletes object and cancels the process
-		if (parc_name == "exit")
+		cin >> parc_name; 
+		if (cin.eof())
 		{
-			return NULL; 
+			return NULL;
+		}
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		}
 
-		for (i = 0; i < vp->getParcs().size(); i++)
+		for (size_t i{0}; i < vp->getParcs().size(); i++)
 		{
 			if (vp->getParcs()[i]->getName() == parc_name)
 			{
@@ -462,7 +444,6 @@ Parcs* selectParc(VacationParcs* vp)
 				break;
 			}
 		}
-
 		if (!parc_name_found)
 		{
 			cout << endl << "Invalid ParcName, please try again!" << endl;
@@ -474,12 +455,67 @@ Parcs* selectParc(VacationParcs* vp)
 	{
 		if (parc_name == vp->getParcs()[i]->getName())
 		{
-			parc_index = i;
+			parc_index = static_cast<int>(i);
 			break;
 		}
 	}
 
 	return vp->getParcs()[parc_index];
+}
+
+//createParcServices() included in createParc();
+ParcServices* createParcServices(string& parc_name)
+{
+	char selected_option;
+	cout << "Select Services included with the Parc" << endl;
+	cout << "(y)es/(n)o/(e)xit: " << endl;
+	array<bool, PARCSERVICESSIZE> parc_services{};
+	array<string, PARCSERVICESSIZE> parc_service_names = {
+		"SubtropicSwimmingPool",
+		"SportsInfrastructure",
+		"BowlingAlley",
+		"BicycleRent",
+		"ChildrensParadise",
+		"WaterBikes"
+	};
+	
+
+	for (size_t i{ 0 }; i < parc_services.size(); i++)
+	{
+		selected_option = '\0';
+		while (!selected_option)
+		{
+			cout << "-> " << parc_service_names[i] << ": " << right;
+			cin >> selected_option;
+			if (cin.eof())
+			{
+				return NULL;
+			}
+			if (cin.fail()) {
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				selected_option = '\0'; //
+				continue;
+			}
+
+			switch (selected_option)
+			{
+			case 'y':
+				parc_services[i] = true;
+				break;
+			case 'n':
+				parc_services[i] = false;
+				break;
+			default:
+				cout << "Invalid input." << endl;
+				selected_option = '\0';
+				break;
+			}
+		}
+	}
+	//do update in case PARCSERVICESSIZE changes.
+	return new ParcServices(parc_name, parc_services[0], parc_services[1], parc_services[2], parc_services[3], parc_services[4], parc_services[5]);
+
 }
 
 void changeSelectedParcServiceMiddleware(string& data_name, bool& data)

@@ -14,6 +14,8 @@
 #include "_AccomodationController.h"
 #include "_BookingController.h"
 #include <iomanip>
+#include <iostream>
+using namespace std;
 
 void OwnerType(VacationParcs* vp);
 void EmployeeType(VacationParcs* vp);

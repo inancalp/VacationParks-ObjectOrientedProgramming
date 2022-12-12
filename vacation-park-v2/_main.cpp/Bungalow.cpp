@@ -31,7 +31,7 @@ string Bungalow::toString(){
     output << "\t\t Bungalow::ID ->> " << this->getId() << endl;
     output << "\t\t Bungalow::NbrPeople ->> " << this->getNbrPeople() << endl;
     output << "\t\t Bungalow::Size ->> " << this->getSize() << endl;
-    output << "\t\t Bungalow::BathroomWithBath ->> " << this->getBathroomWithBath() << endl;
+    output << "\t\t Bungalow::BathroomWithBath ->> " << boolalpha << this->getBathroomWithBath() << endl;
     output << "\t\t Bungalow::IsBooked ->> " << ((this->getIsBooked() == true) ? "State: Booked" : "State: Available") << endl;
     output << "\t\t Bungalow::LuxuryLevel ->> " << endl << this->getLuxuryLevel()->toString() << endl;
     output << "\t\t Bungalow::Bedrooms ->> " << this->getBedrooms() << endl << endl;

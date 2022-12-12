@@ -67,9 +67,9 @@ const string& Customer::getEmail() const
 const string Customer::toString() const
 {
 	ostringstream output;
-	output << "\t\tCustomer Name: " << this->getName() << endl;
-	output << "\t\tCustomer ID: " << this->getAddress() << endl;
-	output << "\t\tCustomer E-mail: " << this->getEmail() << endl;
+	output << "\t\tCustomer::getName: " << this->getName() << endl;
+	output << "\t\tCustomer::getId: " << this->getAddress() << endl;
+	output << "\t\tCustomer::getEmail: " << this->getEmail();
 	return output.str();
 }
 

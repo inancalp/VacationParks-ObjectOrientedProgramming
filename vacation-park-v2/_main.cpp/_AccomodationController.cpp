@@ -247,102 +247,209 @@ void saveLuxuryLevelsFile(const int& accom_id, LuxuryLevel* ll)
 
 void createAccomodation(VacationParcs* vp)
 {
-	int accom_id = -1;
-	bool accom_not_found{ true };
+	int accom_id;
+	bool accom_not_found;
 	char accom_type;
-	Parcs* p = selectParc(vp);
-
-	if (p == NULL)
-	{
-		return; //exit
-	}
-
-	//unique accomodation_id implementation.
-	for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
-	{
-		for (size_t j{ 0 }; j < vp->getParcs()[i]->getAccomodations().size(); j++)
-		{
-			//checks the largest id, increment it by 1.
-			if (accom_id <= vp->getParcs()[i]->getAccomodations()[j]->getId())
-			{
-				accom_id = vp->getParcs()[i]->getAccomodations()[j]->getId() + 1;
-			}
-			accom_not_found = false;
-		}
-	}
-
-	if (accom_not_found)
-	{
-		accom_id = 1000;
-	}
-
-	
-
-	string parc_name = p->getName();
+	string parc_name;
+	Parcs* p;
 
 	do
 	{
-		cout << "Do mind that, exit is not possible after the input below." << endl;
-		cout << "Type of accomodation('h' for hotel, 'b' for bungalow, 'e' for exit): ";
-		cin >> accom_type;
-
-		if (accom_type == 'e')
+		p = selectParc(vp);
+		if (cin.eof())
 		{
-			return; //exit
+			cin.clear();
+			return;
+		}
+		parc_name = p->getName();
+
+		//unique accomodation_id implementation.
+		accom_not_found = true;
+		accom_id = -1; //since it can't be negative.
+		for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
+		{
+			for (size_t j{ 0 }; j < vp->getParcs()[i]->getAccomodations().size(); j++)
+			{
+				//checks the largest id, increment it by 1.
+				if (accom_id <= vp->getParcs()[i]->getAccomodations()[j]->getId())
+				{
+					accom_id = vp->getParcs()[i]->getAccomodations()[j]->getId() + 1;
+				}
+				accom_not_found = false;
+			}
+		}
+		if (accom_not_found)
+		{
+			accom_id = 1000;
 		}
 
-		if (!(accom_type == 'h' || accom_type == 'b'))
+		do
 		{
-			cout << "Invalid input, please try again." << endl;
-		}
-	} while (!(accom_type == 'h' || accom_type == 'b'));
+			accom_type = '\0';
+			do
+			{
+				cout << "Type of accomodation?" << endl;
+				cout << "Enter \"h\" for HotelRoom, \"b\" for Bungalow: ";
+				cin >> accom_type;
+				if (cin.eof())
+				{
+					break; //exit
+				}
 
+				if (!(accom_type == 'h' || accom_type == 'b'))
+				{
+					cout << "Invalid input, please try again." << endl;
+				}
+			} while (!(accom_type == 'h' || accom_type == 'b'));
 
-	switch (accom_type)
-	{
-	case 'h':
-		createHotelRoom(vp, p, accom_id);
-		break;
+			//accom_type
+			if (cin.eof())
+			{
+				cin.clear();
+				break;
+			}
 
-	case 'b':
-		createBungalow(vp, p, accom_id);
-		break;
-	}
+			switch (accom_type)
+			{
+			case 'h':
+				createHotelRoom(vp, p, accom_id);
+				if (cin.eof())
+				{
+					cin.clear();
+					break;
+				}
+				return;
+			case 'b':
+				createBungalow(vp, p, accom_id);
+				if (cin.eof())
+				{
+					cin.clear();
+					break;
+				}
+				return;
+			default:
+				cout << "Invalid action." << endl;
+				break;
+			}
+		} while (true);
+
+		
+
+	} while (true);
 }
 
 void createHotelRoom(VacationParcs* vp, Parcs* p, int accom_id)
 {
-	int accom_nbrPeople;
-	int accom_size;
-	bool accom_withBath;
+	int accom_nbrPeople = -1;
+	int accom_size = -1;
+	int accom_withBath = -1; //static_cast when construct obj
 	bool accom_isBooked{ false };
-	int accom_floor;
-	string accom_location;
-	int accom_nbrBeds;
-	bool accom_childBed;
-	char accom_type;
+	int accom_floor = -1;
+	string accom_location = "\0";
+	int accom_nbrBeds = -1;
+	int accom_childBed = -1;
+	LuxuryLevel* accom_luxuryLevel = NULL;
+	HotelRoom* hotel_room = NULL;
 
-	LuxuryLevel* accom_luxuryLevel;
-	HotelRoom* hotel_room;
+	do
+	{
+		if (accom_nbrPeople == -1)
+		{
+			cin.clear();
+			cout << "? (Integer) NbrPeople: ";
+			cin >> accom_nbrPeople;
+			if (cin.eof())
+			{
+				return;
+			}
+		}
 
-	cout << "? NbrPeople(integer): ";
-	cin >> accom_nbrPeople;
-	cout << "? Size(integer): ";
-	cin >> accom_size;
-	cout << "? BathroomWithBath(bool->(1/0)): ";
-	cin >> accom_withBath;
-	cout << "--------------------" << endl;
-	cout << "? Setup LuxuryLevel: " << endl;
-	accom_luxuryLevel = selectLuxuryLevel(vp);
-	cout << "---------------------" << endl;
-	cout << "? Floor(integer): ";
-	cin >> accom_floor;
-	cout << "? Location(string): ";
-	cin >> accom_location;
-	cout << "? NbrBeds(integer): ";
-	cin >> accom_nbrBeds;
-	cout << "? ChildrenBed(bool->(1/0)): ";
-	cin >> accom_childBed;
+		if (accom_size == -1)
+		{
+			cin.clear();
+			cout << "? (Integer) Size: ";
+			cin >> accom_size;
+			if (cin.eof())
+			{
+				accom_nbrPeople = -1;
+				continue;
+			}
+		}
+
+		if (accom_withBath == -1)
+		{
+			cin.clear();
+			cout << "? BathroomWithBath(bool->(1/0)): ";
+			cin >> accom_withBath;
+			if (cin.eof())
+			{
+				accom_size = -1;
+				continue;
+			}
+		}
+
+		if (accom_luxuryLevel == NULL)
+		{
+			cin.clear();
+			cout << "? Setup LuxuryLevel: " << endl;
+			accom_luxuryLevel = selectLuxuryLevel(vp);
+			if (cin.eof())
+			{
+				accom_withBath = -1;
+				continue;
+			}
+		}
+
+		if (accom_floor == -1)
+		{
+			cin.clear();
+			cout << "? Floor(integer): ";
+			cin >> accom_floor;
+			if (cin.eof())
+			{
+				accom_luxuryLevel = NULL;
+				continue;
+			}
+		}
+
+		if (accom_location.empty())
+		{
+			cin.clear();
+			cout << "? Location(string): ";
+			cin >> accom_location;
+			if (cin.eof())
+			{
+				accom_floor = -1;
+				continue;
+			}
+		}
+
+		if (accom_nbrBeds == -1)
+		{
+			cin.clear();
+			cout << "? NbrBeds(integer): ";
+			cin >> accom_nbrBeds;
+			if (cin.eof())
+			{
+				accom_location.clear();
+				continue;
+			}
+		}
+
+		if (accom_childBed == -1)
+		{
+			cin.clear();
+			cout << "? ChildrenBed(bool->(1/0)): ";
+			cin >> accom_childBed;
+			if (cin.eof())
+			{
+				accom_nbrBeds = -1;
+				continue;
+			}
+		}
+		break;
+	} while (true);
+	
 
 	hotel_room =
 		new HotelRoom(
@@ -350,13 +457,13 @@ void createHotelRoom(VacationParcs* vp, Parcs* p, int accom_id)
 			accom_id,
 			accom_nbrPeople,
 			accom_size,
-			accom_withBath,
+			static_cast<bool>(accom_withBath),
 			accom_isBooked,
 			accom_luxuryLevel, //obj
 			accom_floor,
 			accom_location,
 			accom_nbrBeds,
-			accom_childBed
+			static_cast<bool>(accom_childBed)
 		);
 
 	saveAccomodationFile(hotel_room);
@@ -371,27 +478,74 @@ void createHotelRoom(VacationParcs* vp, Parcs* p, int accom_id)
 
 void createBungalow(VacationParcs* vp, Parcs* p, int accom_id)
 {
-	int accom_nbrPeople;
-	int accom_size;
-	bool accom_withBath;
+	int accom_nbrPeople = -1;
+	int accom_size = -1;
+	int accom_withBath = -1; //static_cast when construct obj
 	bool accom_isBooked{ false };
-	int accom_bedrooms;
+	int accom_bedrooms = -1;
+	LuxuryLevel* accom_luxuryLevel = NULL;
+	Bungalow* bungalow = NULL;
 
-	LuxuryLevel* accom_luxuryLevel;
-	Bungalow* bungalow;
+	
+	do
+	{
+		if (accom_nbrPeople == -1)
+		{
+			cin.clear();
+			cout << "? NbrPeople(integer): ";
+			cin >> accom_nbrPeople;
+			if (cin.eof())
+			{
+				return;
+			}
+		}
+		if (accom_size == -1)
+		{
+			cin.clear();
+			cout << "? Size(integer): ";
+			cin >> accom_size;
+			if (cin.eof())
+			{
+				accom_nbrPeople = -1;
+				continue;
+			}
+		}
+		if (accom_withBath == -1)
+		{
+			cin.clear();
+			cout << "? BathroomWithBath(bool->(1/0)): ";
+			cin >> accom_withBath;
+			if (cin.eof())
+			{
+				accom_size = -1;
+				continue;
+			}
+		}
+		if (accom_luxuryLevel == NULL)
+		{
+			cin.clear();
+			cout << "? Setup LuxuryLevel: " << endl;
+			accom_luxuryLevel = selectLuxuryLevel(vp);
+			if (cin.eof())
+			{
+				accom_withBath = -1;
+				continue;
+			}
+		}
+		if (accom_bedrooms == -1)
+		{
+			cin.clear();
+			cout << "Bedrooms(integer): ";
+			cin >> accom_bedrooms;
+			if (cin.eof())
+			{
+				accom_luxuryLevel = NULL;
+				continue;
+			}
+		}
+		break;
+	} while (true);
 
-	cout << "? NbrPeople(integer): ";
-	cin >> accom_nbrPeople;
-	cout << "? Size(integer): ";
-	cin >> accom_size;
-	cout << "? BathroomWithBath(bool->(1/0)): ";
-	cin >> accom_withBath;
-	cout << "--------------------" << endl;
-	cout << "? Setup LuxuryLevel: " << endl;
-	accom_luxuryLevel = selectLuxuryLevel(vp);
-	cout << "---------------------" << endl;
-	cout << "Bedrooms(integer): ";
-	cin >> accom_bedrooms;
 
 	bungalow = 
 		new Bungalow(
@@ -399,7 +553,7 @@ void createBungalow(VacationParcs* vp, Parcs* p, int accom_id)
 			accom_id,
 			accom_nbrPeople,
 			accom_size,
-			accom_withBath,
+			static_cast<bool>(accom_withBath),
 			accom_isBooked,
 			accom_luxuryLevel,
 			accom_bedrooms
@@ -425,11 +579,17 @@ LuxuryLevel* selectLuxuryLevel(VacationParcs* vp)
 
 	do
 	{
-		cout << "Enter (v)ip/(p)remium/(c)omfort: ";
+		cout << "Enter, \"v\" for VIP, \"p\" for Premium, \"c\" for Comfort: ";
 		cin >> selected_ll;
+		if (cin.eof())
+		{
+			return NULL;
+		}
+
 		if (!(selected_ll == 'v' || selected_ll == 'p' || selected_ll == 'c'))
 		{
 			cout << "Invalid input, please try again." << endl;
+			cin.clear();
 		}
 	} while (!(selected_ll == 'v' || selected_ll == 'p' || selected_ll == 'c'));
 
@@ -449,7 +609,6 @@ LuxuryLevel* selectLuxuryLevel(VacationParcs* vp)
 		break;
 	}
 
-	cout << "vp->getLuxuryLevels().size() ->> " << vp->getLuxuryLevels().size() << endl;
 	for (size_t i{ 0 }; i < vp->getLuxuryLevels().size(); i++)
 	{
 		if (vp->getLuxuryLevels()[i]->getAccomodationKind() == accom_kind)
@@ -524,7 +683,7 @@ void showAccomodations(VacationParcs* vp)
 
 		for (size_t j{ 0 }; j < vp->getParcs()[i]->getAccomodations().size(); j++)
 		{
-			cout << " ->>";
+			cout << " ->>\t";
 			cout << vp->getParcs()[i]->getAccomodations()[j]->toString() << endl;
 		}
 	}
@@ -533,51 +692,55 @@ void showAccomodations(VacationParcs* vp)
 void modifyAccomodation(VacationParcs* vp)
 {
 	Accomodations* accom;
+	accom = NULL;
 	accom = selectAccomodation(vp);
-
-	if (accom == NULL)
+	if (cin.eof())
 	{
-		return;
-	}
-
-	if (accom->getIsBooked() == true)
-	{
-		cout << "Accomodation is booked. Try again later." << endl;
+		cin.clear();
 		return;
 	}
 
 	cout << accom->toString() << endl;
+	if (accom->getIsBooked() == true)
+	{
+		cout << "(!) Accomodation is booked. Try again later." << endl;
+		return;
+	}
 
 	if (typeid(*accom) == typeid(HotelRoom))
 	{
 		modifyHotelRoom(vp, accom);
+		if (cin.eof())
+		{
+			cout << "(!) modifyHotelRoom() canceled." << endl;
+			cin.clear();
+			return;
+		}
 	}
 	if (typeid(*accom) == typeid(Bungalow))
 	{
 		modifyBungalow(vp, accom);
+		if (cin.eof())
+		{
+			cout << "(!) modifyBungalow() canceled." << endl;
+			cin.clear();
+			return;
+		}
 	}
-
 	reWriteAccomodationsFile(vp); //(?)
 }
 
 Accomodations* selectAccomodation(VacationParcs* vp)
 {
-	string accom_id_string;
 	int accom_id;
-	bool accom_not_found{ true };
-
 	do
 	{
 		cout << "Enter Accommodation ID: ";
-		cin >> accom_id_string;
-
-		//exit
-		if (accom_id_string == "exit")
+		cin >> accom_id;
+		if (cin.eof())
 		{
-			return NULL;//
+			return NULL;
 		}
-
-		accom_id = stoi(accom_id_string); //stringToInt
 
 		for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
 		{
@@ -590,28 +753,24 @@ Accomodations* selectAccomodation(VacationParcs* vp)
 				}
 			}
 		}
-
 		cout << "Accomodation with ID[" << accom_id << "] could not found." << endl;
-	} while (accom_not_found);
-
-
+	} while (true);
 }
 
 void modifyHotelRoom(VacationParcs* vp, Accomodations* accom)
 {
-	char selected_option_char;
-	int selected_option;
-	int accom_nbrPeople;
-	int accom_size;
-	bool accom_withBath;
-	int accom_floor;
+	int selected_option = -1;
+	int accom_nbrPeople = -1;
+	int accom_size = -1;
+	int accom_withBath = -1; //static_cast<bool>
+	int accom_floor = -1;
 	string accom_location;
-	int accom_nbrBeds;
-	bool accom_childBed;
+	int accom_nbrBeds = -1;
+	int accom_childBed = -1; //static_cast<bool>
+	LuxuryLevel* accom_luxuryLevel = NULL;
 	HotelRoom* hotel_room = static_cast<HotelRoom*>(accom);
 
-	cout << "HotelRoom selected to modify." << endl;
-	cout << "(!) Please do mind that, \"exit\" is not possible when an option is selected." << endl;
+	cout << "HotelRoom selected to modify.(Don't forget to save changes!)" << endl;
 	cout << "\t (1) NbrPeople" << endl;
 	cout << "\t (2) Size" << endl;
 	cout << "\t (3) BathRoomWithBath" << endl;
@@ -620,57 +779,119 @@ void modifyHotelRoom(VacationParcs* vp, Accomodations* accom)
 	cout << "\t (6) Location" << endl;
 	cout << "\t (7) NbrBeds" << endl;
 	cout << "\t (8) ChildrenBed" << endl;
-	cout << "\t (e) Exit the Function" << endl;
+	cout << "\t (9) SAVE CHANGES and EXIT." << endl;
 
 	do
 	{
-		cout << "Enter the value for the attribute to be changed: ";
-		cin >> selected_option_char;
-		if (selected_option_char == 'e')
+		cout << "Select option: ";
+		cin >> selected_option;
+		if (cin.eof())
 		{
 			return;
 		}
-		selected_option = selected_option_char - '0';
 
 		switch (selected_option)
 		{
 		case 1:
 			cout << "Enter new NbrPeople(integer): ";
 			cin >> accom_nbrPeople;
-			hotel_room->setNbrPeople(accom_nbrPeople);
+			if (cin.eof())
+			{
+				return;
+			}
 			break;
 		case 2:
 			cout << "Enter new Size(integer): ";
 			cin >> accom_size;
-			hotel_room->setSize(accom_size);
+			if (cin.eof())
+			{
+				return;
+			}
 			break;
 		case 3:
 			cout << "Enter new BathRoomWithBath(bool(1/0)): ";
 			cin >> accom_withBath;
-			hotel_room->setBathroomWithBath(accom_withBath);
+			if (cin.eof())
+			{
+				return;
+			}
 			break;
 		case 4:
-			hotel_room->setLuxuryLevel(selectLuxuryLevel(vp));
+			accom_luxuryLevel = selectLuxuryLevel(vp);
+			if (cin.eof())
+			{
+				return;
+			}
 			break;
 		case 5:
 			cout << "Enter new Floor(integer): ";
 			cin >> accom_floor;
-			hotel_room->setFloor(accom_floor);
+			if (cin.eof())
+			{
+				return;
+			}
 			break;
 		case 6:
 			cout << "Enter new Location(string): ";
 			cin >> accom_location;
-			hotel_room->setLocation(accom_location);
+			if (cin.eof())
+			{
+				return;
+			}
 			break;
 		case 7:
 			cout << "Enter new NbrBeds(integer): ";
 			cin >> accom_nbrBeds;
-			hotel_room->setNbrBeds(accom_nbrBeds);
+			if (cin.eof())
+			{
+				return;
+			}
 			break;
 		case 8:
 			cout << "Enter new ChildrenBed(bool(1/0)): ";
 			cin >> accom_childBed;
-			hotel_room->setChildrenBed(accom_childBed);
+			if (cin.eof())
+			{
+				return;
+			}
+			break;
+		case 9:
+			if (accom_nbrPeople != -1)
+			{
+				hotel_room->setNbrPeople(accom_nbrPeople);
+			}
+			if (accom_size != -1)
+			{
+				hotel_room->setSize(accom_size);
+			}
+			if (accom_withBath != -1)
+			{
+				hotel_room->setBathroomWithBath(static_cast<bool>(accom_withBath));
+			}
+			if (accom_luxuryLevel != NULL)
+			{
+				hotel_room->setLuxuryLevel(accom_luxuryLevel);
+			}
+			if (accom_floor != -1)
+			{
+				hotel_room->setFloor(accom_floor);
+			}
+			if (!accom_location.empty())
+			{
+				hotel_room->setLocation(accom_location);
+			}
+			if (accom_nbrBeds != -1)
+			{
+				hotel_room->setNbrBeds(accom_nbrBeds);
+			}
+			if (accom_childBed != -1)
+			{
+				hotel_room->setChildrenBed(static_cast<bool>(accom_childBed));
+			}
+			return;
+		default:
+			cout << "Invalid input." << endl;
+			cin.clear();
 			break;
 		}
 	} while (true);
@@ -678,57 +899,97 @@ void modifyHotelRoom(VacationParcs* vp, Accomodations* accom)
 
 void modifyBungalow(VacationParcs* vp, Accomodations* accom)
 {
-	char selected_option_char;
-	int selected_option;
-	int accom_nbrPeople;
-	int accom_size;
-	bool accom_withBath;
-	int accom_bedrooms;
+	int selected_option = -1;
+	int accom_nbrPeople = -1;
+	int accom_size = -1;
+	int accom_withBath = -1; //static_cast<bool>
+	int accom_bedrooms = -1;
 	Bungalow* bungalow = static_cast<Bungalow*>(accom);
+	LuxuryLevel* accom_luxuryLevel = NULL;
 
-	cout << "Bungalow selected to modify." << endl;
-	cout << "(!) Please do mind that, \"exit\" is not possible when an option is selected." << endl;
+	cout << "Bungalow selected to modify.(Don't forget to save changes!)" << endl;
 	cout << "\t (1) NbrPeople" << endl;
 	cout << "\t (2) Size" << endl;
 	cout << "\t (3) BathRoomWithBath" << endl;
 	cout << "\t (4) LuxuryLevel" << endl;
 	cout << "\t (5) NbrBedrooms" << endl;
-	cout << "\t (e) Exit the Function" << endl;
+	cout << "\t (6) SAVE CHANGES and EXIT." << endl;
 
 	do
 	{
-		cout << "Enter the value for the attribute to be changed: ";
-		cin >> selected_option_char;
-		if (selected_option_char == 'e')
+		cout << "Enter option: ";
+		cin >> selected_option;
+		if (cin.eof())
 		{
 			return;
 		}
-		selected_option = selected_option_char - '0';
 
 		switch (selected_option)
 		{
 		case 1:
 			cout << "Enter new NbrPeople(integer): ";
 			cin >> accom_nbrPeople;
-			bungalow->setNbrPeople(accom_nbrPeople);
+			if (cin.eof())
+			{
+				return;
+			}
 			break;
 		case 2:
 			cout << "Enter new Size(integer): ";
 			cin >> accom_size;
-			bungalow->setSize(accom_size);
+			if (cin.eof())
+			{
+				return;
+			}
 			break;
 		case 3:
 			cout << "Enter new BathRoomWithBath(bool(1/0)): ";
 			cin >> accom_withBath;
-			bungalow->setBathroomWithBath(accom_withBath);
+			if (cin.eof())
+			{
+				return;
+			}
 			break;
 		case 4:
-			bungalow->setLuxuryLevel(selectLuxuryLevel(vp));
+			accom_luxuryLevel = selectLuxuryLevel(vp);
+			if (cin.eof())
+			{
+				return;
+			}
 			break;
 		case 5:
-			cout << "Enter new Floor(integer): ";
+			cout << "Enter new Bedrooms(integer): ";
 			cin >> accom_bedrooms;
-			bungalow->setBedrooms(accom_bedrooms);
+			if (cin.eof())
+			{
+				return;
+			}
+			break;
+		case 6:
+			if (accom_nbrPeople != -1)
+			{
+				bungalow->setNbrPeople(accom_nbrPeople);
+			}
+			if (accom_size != -1)
+			{
+				bungalow->setSize(accom_size);
+			}
+			if (accom_withBath != -1)
+			{
+				bungalow->setBathroomWithBath(static_cast<bool>(accom_withBath));
+			}
+			if (accom_luxuryLevel != NULL)
+			{
+				bungalow->setLuxuryLevel(accom_luxuryLevel);
+			}
+			if (accom_bedrooms != -1)
+			{
+				bungalow->setBedrooms(accom_bedrooms);
+			}
+			return;
+		default:
+			cout << "Invalid input." << endl;
+			cin.clear();
 			break;
 		}
 	} while (true);
@@ -736,38 +997,73 @@ void modifyBungalow(VacationParcs* vp, Accomodations* accom)
 
 void deleteAccomodation(VacationParcs* vp)
 {
-	Accomodations* selected_accom;
-	selected_accom = selectAccomodation(vp);
-	int accom_index_i;
-	int accom_index_j;
+	int accom_index_i = -1;
+	int accom_index_j = -1;
+	char delete_accom = '\0';
+	bool accom_found{ false };
+	Accomodations* selected_accom = NULL;
 
-	if (selected_accom == NULL)
+	do
 	{
-		return;
-	}
-
-	if (selected_accom->getIsBooked() == true)
-	{
-		cout << "Accomodation is booked. Try again later." << endl;
-		return;
-	}
-
-	for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
-	{
-		for (size_t j{ 0 }; j < vp->getParcs()[i]->getAccomodations().size(); j++)
+		cin.clear();
+		selected_accom = selectAccomodation(vp);
+		if (cin.eof())
 		{
-			if (selected_accom->getId() == vp->getParcs()[i]->getAccomodations()[j]->getId())
+			cin.clear();
+			return;
+		}
+
+		if (selected_accom->getIsBooked() == true)
+		{
+			cout << "Accomodation is booked. Try again later." << endl;
+			return;
+		}
+
+		for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
+		{
+			for (size_t j{ 0 }; j < vp->getParcs()[i]->getAccomodations().size(); j++)
 			{
-				accom_index_i = i;
-				accom_index_j = j;
-				break;
+				if (selected_accom->getId() == vp->getParcs()[i]->getAccomodations()[j]->getId())
+				{
+					accom_found = true;
+					accom_index_i = static_cast<int>(i);
+					accom_index_j = static_cast<int>(j);
+					break;
+				}
 			}
 		}
-	}
+
+		if (!accom_found)
+		{
+			cout << "Accomodation not found." << endl;
+		}
+
+	} while (!accom_found);
+
+	do
+	{
+		cout << selected_accom->toString() << endl;
+		cout << "If you are sure to delete it enter \"y\": ";
+		cin >> delete_accom;
+		if (cin.eof())
+		{
+			cin.clear();
+			return;
+		}
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+
+		if (!(delete_accom == 'y'))
+		{
+			cout << "Invalid input, please try again." << endl;
+		}
+	} while (!(delete_accom == 'y'));
 
 	cout << "Accomodation with id[" << selected_accom->getId() << "] is deleted." << endl;
 	delete selected_accom;
 	vp->getParcs()[accom_index_i]->getAccomodations().erase(vp->getParcs()[accom_index_i]->getAccomodations().begin() + accom_index_j);
-
 	reWriteAccomodationsFile(vp);
 }

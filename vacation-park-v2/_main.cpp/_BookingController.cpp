@@ -112,25 +112,67 @@ void retrieveBookingsFile(VacationParcs* vp)
 
 }
 
+void reWriteBookingsFile(VacationParcs* vp)
+{
+	ofstream bookingsFile(BOOKINGSFILE, ios::out);
+	if (!bookingsFile)
+	{
+		cout << "reWritebookingfile() ->> something went wrong while opening \"bookings.txt\" file." << endl;
+		return;
+	}
+
+	for (Booking* booking : vp->getBookings())
+	{
+		bookingsFile
+			<< booking->getId() << " "
+			<< booking->getCustomer()->getEmail() << " "; //customer will be retrieved with using email
+
+		bookingsFile
+			<< booking->getAccomodations().size() << " "; //size is stored to be used in loop when retrieving vector data
+
+		for (size_t i{ 0 }; i < booking->getAccomodations().size(); i++)
+		{
+			bookingsFile
+				<< booking->getAccomodations()[i]->getId() << " "; //IDs for the accomodations stored to retrieve later.
+		}
+
+		bookingsFile
+			<< booking->getActivityPass() << " "
+			<< booking->getSportPass() << " "
+			<< booking->getBicycleRent() << " "
+			<< booking->getSwimmingPass() << endl;
+
+		cout << "Booking::getId() ->> " << booking->getId() << " is stored." << endl;
+	}
+
+	bookingsFile.close();
+}
+
+
 void CreateBooking(VacationParcs* vp, Customer* customer)
 {
 
-	int booking_id = -1;
+	bool luxuryLevel_selected{ false };
 	bool no_bookings_found{ true };
-	Parcs* selected_parc_obj;
+	bool add_another_accom{ false };
+
+	int booking_id = -1;
+	int luxuryLevel_index = -1;
+	int accom_nbrPeople = -1;
+
+	char accom_luxuryLevel = '\0';
+	char accom_type = '\0';
+	char add_another_accom_char = '\0';
+	string accom_typeid = "\0";
+
+	Parcs* selected_parc_obj = NULL;
+	Booking* booking = NULL;
+	LuxuryLevel* ll = NULL;
+
 	vector<Accomodations*> accoms_filtered;
 	vector<Accomodations*> accoms_to_book;
 	vector<Accomodations*> available_accoms;
-	Booking* booking;
-	bool add_another_accom = false;
-	LuxuryLevel* ll;
-	int luxuryLevel_index;
-	bool luxuryLevel_selected{ false };
-	char accom_type;
-	string accom_typeid;
-	string accom_nbrPeople_string;
-	int accom_nbrPeople;
-	char accom_luxuryLevel;
+
 
 	//unique_id
 	for (size_t i{ 0 }; i < vp->getBookings().size(); i++)
@@ -141,7 +183,6 @@ void CreateBooking(VacationParcs* vp, Customer* customer)
 		}
 		no_bookings_found = false;
 	}
-
 	if (no_bookings_found)
 	{
 		booking_id = 100;
@@ -149,51 +190,59 @@ void CreateBooking(VacationParcs* vp, Customer* customer)
 
 	showParcs(vp); // @_parController
 	selected_parc_obj = selectParc(vp);
-	if (selected_parc_obj == NULL)
+	if (cin.eof())
 	{
+		cin.clear();
 		return;
 	}
 
 	do
 	{
 		add_another_accom = false;
-
+		accoms_filtered.clear(); //empty the vector to fill back in.
+		available_accoms.clear();
 		setAvailableAccomodations(selected_parc_obj, available_accoms, accoms_to_book);
 		showAvailableAccomodations(available_accoms);
 
-		accoms_filtered.clear(); //empty the vector to fill back in.
-
 		//hotel_or_bungalow
 		accom_typeid = filterAccomodationType();
-		if (accom_typeid == "exit")
+		if (cin.eof())
 		{
+			cin.clear();
 			return;
 		}
+
 		if (accom_typeid == "continue")
 		{
-			if (accoms_to_book.size() == 0)
+			if (accoms_to_book.empty())
 			{
-				cout << endl << "(!) There are no accomodation selected. Canceling the booking." << endl;
+				cout << endl;
+				cout << "----------------------------------------------------------------------" << endl;
+				cout << "(!) There are no accomodation selected. Canceling the Booking Process." << endl;
+				cout << "----------------------------------------------------------------------" << endl << endl;
 				return;
 			}
 			continue;
 		}
 
 		//amount_of_people
-		cout << "For how many people?((e)xit): ";
-		cin >> accom_nbrPeople_string;
-		if (accom_nbrPeople_string == "exit" || accom_nbrPeople_string == "e")
+		cout << "For how many people?: ";
+		cin >> accom_nbrPeople;
+		if (cin.eof())
 		{
+			cin.clear();
 			return;
 		}
-		accom_nbrPeople = stoi(accom_nbrPeople_string);
 
 		//level_of_luxury
 		ll = filterAccomodationLuxuryLevel(vp);
-		if (ll == NULL)
+		if (cin.eof())
 		{
+			cin.clear();
 			return;
 		}
+
+		//filter available accomodation into an array
 		for (size_t i{ 0 }; i < available_accoms.size(); i++)
 		{
 			if (typeid(*available_accoms[i]).name() == accom_typeid
@@ -204,32 +253,53 @@ void CreateBooking(VacationParcs* vp, Customer* customer)
 			}
 		}
 
-		if (accoms_filtered.size() > 0)
+		if (!accoms_filtered.empty())
 		{
 			showFilteredAccomodations(accoms_filtered);
 			addAccomodationToBooking(accoms_filtered, accoms_to_book);
+			if (cin.eof())
+			{
+				cin.clear();
+				return;
+			}
 		}
 		else
 		{
-			cout << endl << "There are not Accomodations available in the range of user's request. Try again." << endl;
-			add_another_accom = true;
+			cout << endl;
+			cout << "------------------------------------------------------------------------" << endl;
+			cout << "(!) There are no Accomodations available in the range of user's request." << endl;
+			add_another_accom = true; //so can loop again.
 			continue;
 		}
 
 		if (accoms_to_book.size() == 3)
 		{
-			cout << "Maximum amount for Accomodations per Booking has been reached." << endl;
+			cout << endl << "(!) Maximum amount for Accomodations per Booking has been reached." << endl;
 			continue;
 		}
 
 		//ask if user wants to add another accom to booking.
-		cout << "Would you like to add another Accomodation to you Booking?(1/0): ";
-		cin >> add_another_accom;
+		cout << "Would you like to add another Accomodation to you Booking?(y/n): ";
+		cin >> add_another_accom_char;
+		if (cin.eof())
+		{
+			cin.clear();
+			return;
+		}
+		if (add_another_accom_char == 'y')
+		{
+			add_another_accom = true;
+		}
+		if (add_another_accom_char == 'n')
+		{
+			add_another_accom = false;
+		}
 
 	} while (accoms_to_book.size() <= 3 && add_another_accom == true);
 
-
-	cout << endl << "Here are the Accomodations user has picked for the Booking: " << endl;
+	cout << endl;
+	cout << "----------------------------------------------------------  " << endl;
+	cout << "Here are the Accomodations user has picked for the Booking: " << endl << endl;
 
 	for (size_t i{ 0 }; i < accoms_to_book.size(); i++)
 	{
@@ -237,13 +307,22 @@ void CreateBooking(VacationParcs* vp, Customer* customer)
 		cout << accoms_to_book[i]->toString() << endl;
 	}
 
+
+
+
+	//selectParcServices here below
 	bool activityPass{ false };
 	bool sportsPass{ false };
 	bool bicycleRent{ false };
 	bool swimmingPass{ false };
 
-	cout << "(!) There is no \"exit\" possible for the addService() functionality below." << endl;
 	addService(selected_parc_obj, swimmingPass, sportsPass, bicycleRent, activityPass);
+	if (cin.eof())
+	{
+		cout << endl << "(!) Booking is canceled." << endl;
+		cin.clear();
+		return;
+	}
 
 	cout << "Selected Services: " << endl;
 	cout << "swimmingPass: " << boolalpha << swimmingPass << endl
@@ -267,22 +346,21 @@ void CreateBooking(VacationParcs* vp, Customer* customer)
 
 void setAvailableAccomodations(Parcs* selected_parc_obj, vector<Accomodations*>& available_accoms, vector<Accomodations*>& accoms_to_book)
 {
-	bool accomIn_accomsToBook;
-	available_accoms.clear(); //so can have a fresh fill.
+	bool accom_in_accoms_to_book = false;
 	for (size_t i{ 0 }; i < selected_parc_obj->getAccomodations().size(); i++)
 	{
+		accom_in_accoms_to_book = false;
 		if (selected_parc_obj->getAccomodations()[i]->getIsBooked() == false)
 		{
-			accomIn_accomsToBook = false;
 			for (size_t j{ 0 }; j < accoms_to_book.size(); j++)
 			{
 				if (accoms_to_book[j]->getId() == selected_parc_obj->getAccomodations()[i]->getId())
 				{
-					accomIn_accomsToBook = true;
-					break; //hopefully only breaks out from parent loop.
+					accom_in_accoms_to_book = true;
+					break; //(?)
 				}
 			}
-			if (!accomIn_accomsToBook)
+			if (!accom_in_accoms_to_book)
 			{
 				available_accoms.push_back(selected_parc_obj->getAccomodations()[i]);
 			}
@@ -292,11 +370,16 @@ void setAvailableAccomodations(Parcs* selected_parc_obj, vector<Accomodations*>&
 
 void showAvailableAccomodations(vector<Accomodations*>& available_accoms)
 {
-	cout << endl <<"Here are the Available Accomodations for your Booking: " << endl;
+	cout << endl;
+	cout << "-----------------------------------------------------  " << endl;
+	cout << "Here are the Available Accomodations for your Booking: " << endl;
+	cout << "-----------------------------------------------------  " << endl << endl;
 
 	if (available_accoms.size() == 0)
 	{
-		cout << endl << "There are no Avaliable Accomodations at the moment.Please Continue with your current selection or exit from the process." << endl << endl;
+		cout << endl;
+		cout << "--------------------------------------------------------------------------------------------------------------------------" << endl;
+		cout << "There are no Avaliable Accomodations at the moment. Please Continue with your current selections or exit from the process." << endl << endl;
 		return;
 	}
 
@@ -314,18 +397,16 @@ string filterAccomodationType()
 
 	do
 	{
-		cout << "Type of accomodation((h)otel/(b)ungalow or (c)continueBooking/(e)xit): ";
+		cout << "Enter, \"h\" for HotelRoom, \"b\" for Bungalow, \"c\" to continue booking process: ";
 		cin >> accom_type;
-
-		if (accom_type == 'e')
+		if (cin.eof())
 		{
-			return "exit";
+			return "\0";
 		}
 		if (accom_type == 'c')
 		{
 			return "continue";
 		}
-
 
 		if (!(accom_type == 'h' || accom_type == 'b'))
 		{
@@ -351,14 +432,14 @@ string filterAccomodationType()
 LuxuryLevel* filterAccomodationLuxuryLevel(VacationParcs* vp)
 {
 	char accom_luxuryLevel;
-	int luxuryLevel_index;
+	int luxuryLevel_index = -1;
 
 	do
 	{
 		cout << "What level of luxury?" << endl;
-		cout << " -Choices are VIP,Premium,Comfort (v/p/c/(e)xit):";
+		cout << "Enter, \"v\" for VIP, \"p\" for Premium, \"c\" for Comfort: ";
 		cin >> accom_luxuryLevel;
-		if (accom_luxuryLevel == 'e')
+		if (cin.eof())
 		{
 			return NULL;
 		}
@@ -368,8 +449,10 @@ LuxuryLevel* filterAccomodationLuxuryLevel(VacationParcs* vp)
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			cout << "Invalid input, please try again." << endl;
+			continue;
 		}
-	} while (!(accom_luxuryLevel == 'v' || accom_luxuryLevel == 'p' || accom_luxuryLevel == 'c'));
+		break;
+	} while (true);
 
 	switch (accom_luxuryLevel)
 	{
@@ -413,7 +496,9 @@ LuxuryLevel* filterAccomodationLuxuryLevel(VacationParcs* vp)
 
 void showFilteredAccomodations(vector<Accomodations*>& accoms_filtered)
 {
-	cout << endl << "Accomodations available in range of user's request: " << endl;
+	cout << endl;
+	cout << "--------------------------------------------------  " << endl;
+	cout << "Accomodations available in range of user's request: " << endl << endl;
 	for (size_t i{ 0 }; i < accoms_filtered.size(); i++)
 	{
 		cout << " ->>";
@@ -431,6 +516,10 @@ void addAccomodationToBooking(vector<Accomodations*>& accoms_filtered, vector<Ac
 	{
 		cout << "ID: ";
 		cin >> accom_id;
+		if (cin.eof())
+		{
+			return;
+		}
 
 		for (size_t i{ 0 }; i < accoms_filtered.size(); i++)
 		{
@@ -450,7 +539,7 @@ void addAccomodationToBooking(vector<Accomodations*>& accoms_filtered, vector<Ac
 
 }
 
-void addService(Parcs* selected_parc_obj, bool& swimmingPass, bool& sportsPass, bool& bicycleRent, bool& activityPass)
+void addService(Parcs* selected_parc_obj, bool& swimmingPass, bool& sportsPass, bool& bicycleRent, bool& activityPass)	
 {
 
 	string subtropic_swimming_pool_name{ "SubtropicSwimmingPool" };
@@ -477,24 +566,37 @@ void addService(Parcs* selected_parc_obj, bool& swimmingPass, bool& sportsPass, 
 		|| parc_childrens_paradise == true
 		|| parc_water_bikes == true))
 	{
-		cout << "For some odd reason, there are no service available for this park, sorry about that!" << endl;
+		cout << "----------------------------------------------------------------------------------------" << endl;
+		cout << "(!) For some odd reason, there are no service available for this park, sorry about that!" << endl;
 	}
 	else
 	{
-		cout << "Select the Parc Services you would like to include with your booking(y/n)." << endl;
+		cout << "Select Parc Services(y/n)." << endl;
 	}
 
 	if (parc_subtropic_swimming_pool)
 	{
 		swimmingPass = addServiceMiddleware(parc_subtropic_swimming_pool, subtropic_swimming_pool_name);
+		if (cin.eof())
+		{
+			return;
+		}
 	}
 	if (parc_sports_infrastructure)
 	{
 		sportsPass = addServiceMiddleware(parc_sports_infrastructure, sports_infrastructure_name);
+		if (cin.eof())
+		{
+			return;
+		}
 	}
 	if (parc_bicycle_rent)
 	{
 		bicycleRent = addServiceMiddleware(parc_bicycle_rent, bicycle_rent_name);
+		if (cin.eof())
+		{
+			return;
+		}
 	}
 
 	if (parc_bowling_alley || parc_childrens_paradise || parc_bicycle_rent)
@@ -502,6 +604,10 @@ void addService(Parcs* selected_parc_obj, bool& swimmingPass, bool& sportsPass, 
 		parc_activity_pass = true;
 		cout << "Any other activities inside the park are included with Activity Pass." << endl;
 		activityPass = addServiceMiddleware(parc_activity_pass, activity_pass_name);
+		if (cin.eof())
+		{
+			return;
+		}
 	}
 
 }
@@ -515,6 +621,10 @@ bool addServiceMiddleware(bool& service_state, string& service_name)
 		{
 			cout << service_name << ": ";
 			cin >> include_service;
+			if (cin.eof())
+			{
+				return NULL;
+			}
 
 			if (!(include_service == 'y' || include_service == 'n'))
 			{
@@ -528,17 +638,35 @@ bool addServiceMiddleware(bool& service_state, string& service_name)
 
 void showBookings(VacationParcs* vp)
 {
-	cout << "Current Bookings in the system: " << endl;
-	for (size_t i{ 0 }; i < vp->getBookings().size(); i++)
+	string parc_name;
+	int count_bookings;
+	for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
 	{
-		cout << vp->getBookings()[i]->toString() << endl;
+		parc_name = vp->getParcs()[i]->getName();
+		count_bookings = 0;
+		cout << endl << "->> Bookings included in Parcs::getName() ->> " << parc_name << endl << endl;
+		for (size_t j{ 0 }; j < vp->getBookings().size(); j++)
+		{
+			if (vp->getBookings()[j]->getAccomodations()[0]->getParcName() == parc_name)
+			{
+				count_bookings++;
+				cout << "    ->>";
+				cout << vp->getBookings()[j]->toString();
+			}
+		}
+
+		if (count_bookings == 0)
+		{
+			cout << "(!) There are no Bookings included within the Parcs::getName() ->> " << parc_name << endl << endl;
+		}
 	}
+
 }
 
 void showCustomersBookings(VacationParcs* vp, Customer* customer)
 {
 	bool customer_has_no_bookings{ true };
-	cout << "Here are the bookings of Customer::getEmail() ->> " << customer->getEmail() << endl << endl;
+	cout << endl << "Here are the bookings of Customer::getEmail() ->> " << customer->getEmail() << endl << endl;
 	for (size_t i{ 0 }; i < vp->getBookings().size(); i++)
 	{
 		if (vp->getBookings()[i]->getCustomer()->getEmail() == customer->getEmail())
@@ -550,6 +678,14 @@ void showCustomersBookings(VacationParcs* vp, Customer* customer)
 	}
 	if (customer_has_no_bookings)
 	{
-		cout << endl << "Customer::getEmail() ->> " << customer->getEmail() << " has no Bookings recorded in the system!" << endl << endl;
+		cout << endl;
+		cout << "------------------------------------------------" << endl;
+		cout << "(!) User has no Bookings recorded in the system!" << endl;
+		cout << "------------------------------------------------" << endl;
 	}
+}
+
+void ModifyBookings(VacationParcs* vp, Customer* customer)
+{
+
 }

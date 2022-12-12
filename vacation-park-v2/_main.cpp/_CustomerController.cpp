@@ -69,6 +69,8 @@ void reWriteCustomersFile(VacationParcs* vp)
 
 void CustomerSession(VacationParcs* vp, Customer* c)
 {
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	bool quit{ false };
 	int selected_option;
 	do
@@ -85,14 +87,22 @@ void CustomerSession(VacationParcs* vp, Customer* c)
 		cout << "  2) Show Customer's Bookings        " << endl;
 		cout << "  3) Make a Booking                  " << endl;
 		cout << "  4) Modify Existing Booking         " << endl;
-		cout << "  5) Exit                            " << endl;
 		cout << "                                     " << endl;
 		cout << "_____________________________________" << endl;
-
 		cout << endl;
-		cout << "Select Option: ";
-		cin >> selected_option; //
 
+		cout << "Select Option: ";
+		cin >> selected_option; 
+		if (cin.eof())
+		{
+			cin.clear();
+			return;
+		}
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
 
 		switch (selected_option)
 		{
@@ -106,17 +116,14 @@ void CustomerSession(VacationParcs* vp, Customer* c)
 			CreateBooking(vp, c);
 			break;
 		case 4:
+			//modifyBooking();
 			cout << "COMING SOON." << endl;
 			break;
-		case 5:
-			quit = true;
-			break;
 		default:
-
+			cout << "Invalid input." << endl;
 			break;
 		}
-
-	} while (!quit);
+	} while (true);
 }
 
 void createCustomer(VacationParcs* vp)
@@ -125,22 +132,38 @@ void createCustomer(VacationParcs* vp)
 	string customer_address;
 	string customer_email;
 	Customer* c;
-	bool customer_email_taken{ false };
+	bool customer_email_taken;
+
+
+	customer_name.clear();
+	customer_address.clear();
+	customer_email.clear();
+	customer_email_taken = false;
 
 	cout << "Customer Name: ";
 	cin >> customer_name;
-
-	if (customer_name == "exit")
+	if (cin.eof())
 	{
+		cin.clear();
 		return;
+	}
+	if (cin.fail())
+	{
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	}
 
 	cout << "Customer Address: ";
 	cin >> customer_address;
-
-	if (customer_address == "exit")
+	if (cin.eof())
 	{
+		cin.clear();
 		return;
+	}
+	if (cin.fail())
+	{
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	}
 
 	do
@@ -149,11 +172,16 @@ void createCustomer(VacationParcs* vp)
 		{
 			cout << "Customer Email: ";
 			cin >> customer_email;
-		}
-
-		if (customer_email == "exit")
-		{
-			return;
+			if (cin.eof())
+			{
+				cin.clear();
+				return;
+			}
+			if (cin.fail())
+			{
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
 		}
 
 		for (size_t i{ 0 }; i < vp->getCustomers().size(); i++)
@@ -180,10 +208,11 @@ void createCustomer(VacationParcs* vp)
 
 void showCustomers(VacationParcs* vp)
 {
-	cout << "Customers included in the system of VacationParcs::getName() ->> " << vp->getName() << endl;
+	cout << "Customers included in the system of VacationParcs::getName() ->> " << vp->getName() << endl << endl;
 	for (size_t i{ 0 }; i < vp->getCustomers().size(); i++)
 	{
-		cout << vp->getCustomers()[i]->toString() << endl;
+		cout << " ->>";
+		cout << vp->getCustomers()[i]->toString() << endl << endl;
 	}
 }
 
@@ -194,13 +223,29 @@ void deleteCustomer(VacationParcs* vp)
 {
 	string customer_email;
 	int customer_index;
-	bool customer_found{ false };
+	bool customer_found;
 	char delete_customer;
+
+	customer_email.clear();
+	customer_index = -1;
+	customer_found = false;
+	delete_customer = '\0';
 
 	do
 	{
 		cout << "Enter the Email of the Customer to that needs to be deleted: ";
 		cin >> customer_email;
+		if (cin.eof())
+		{
+			cin.clear();
+			return;
+		}
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+
 		for (int i{ 0 }; i < vp->getCustomers().size(); i++)
 		{
 			if (vp->getCustomers()[i]->getEmail() == customer_email)
@@ -220,14 +265,23 @@ void deleteCustomer(VacationParcs* vp)
 
 	do
 	{
-		cout << "If you are sure to delete the customer enter \"y\", else enter \"n\".: ";
+		cout << "If you are sure to delete the customer enter \"y\".";
 		cin >> delete_customer;
-
-		if (!(delete_customer == 'y' || delete_customer == 'n'))
+		if (cin.eof())
+		{
+			cin.clear();
+			return;
+		}
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+		if (!(delete_customer == 'y'))
 		{
 			cout << "Invalid input, please try again." << endl;
 		}
-	} while (!(delete_customer == 'y' || delete_customer == 'n'));
+	} while (!(delete_customer == 'y'));
 
 	if (delete_customer == 'y')
 	{
@@ -235,19 +289,19 @@ void deleteCustomer(VacationParcs* vp)
 		delete vp->getCustomers()[customer_index];
 		vp->getCustomers().erase(vp->getCustomers().begin() + customer_index);
 	}
-	else
-	{
-		cout << vp->getCustomers()[customer_index]->getEmail() << " IS NOT deleted." << endl;
-	}
 }
 
 void ModifyCustomer(VacationParcs* vp, Customer* c)
 {
-	bool quit{ false };
 	int selected_option;
 	string customer_name;
 	string customer_address;
 	string customer_email;
+
+	customer_name.clear();
+	customer_address.clear();
+	customer_email.clear();
+	selected_option = NULL;
 
 	do
 	{
@@ -262,52 +316,76 @@ void ModifyCustomer(VacationParcs* vp, Customer* c)
 		cout << "  1) Change Name                     " << endl;
 		cout << "  2) Change Address                  " << endl;
 		cout << "  3) Change Email                    " << endl;
-		cout << "  4) Exit                            " << endl;
 		cout << "                                     " << endl;
 		cout << "_____________________________________" << endl;
-
 		cout << endl;
+
 		cout << "Select Option: ";
 		cin >> selected_option;
+		if (cin.eof())
+		{
+			cin.clear();
+			return;
+		}
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
 
 		switch (selected_option)
 		{
 		case 1:
 			cout << "Enter your new name: ";
 			cin >> customer_name;
-			if (customer_name == "exit")
+			if (cin.eof())
 			{
+				cin.clear();
 				continue;
+			}
+			if (cin.fail())
+			{
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			}
 			c->setName(customer_name);
 			break;
 		case 2:
 			cout << "Enter your new address: ";
 			cin >> customer_address;
-			if (customer_address == "exit")
+			if (cin.eof())
 			{
+				cin.clear();
 				continue;
+			}
+			if (cin.fail())
+			{
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			}
 			c->setAddress(customer_address);
 			break;
 		case 3:
 			customer_email = ModifyCustomerEmail(vp, c);
-			if (customer_email == "exit")
+			if (cin.eof())
 			{
+				cin.clear();
 				continue;
+			}
+			if (cin.fail())
+			{
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			}
 			c->setEmail(customer_email); //see below
 			break;
-		case 4:
-			quit = true;
-			break;
 		default:
-			cout << "Invalid option, please try again." << endl;
+			cout << "Invalid input." << endl;
 			break;
 		}
-	} while (!quit);
-
-	reWriteCustomersFile(vp);
+		reWriteCustomersFile(vp);
+		reWriteBookingsFile(vp);
+	} while (true);
 }
 
 string ModifyCustomerEmail(VacationParcs* vp, Customer* c)
@@ -322,10 +400,14 @@ string ModifyCustomerEmail(VacationParcs* vp, Customer* c)
 		{
 			cout << "Enter your new email address: ";
 			cin >> customer_email;
-			if (customer_email == "exit")
+			if (cin.eof())
 			{
-				cout << "No change has been done to Email." << endl;
-				return "exit";
+				return "\0";
+			}
+			if (cin.fail())
+			{
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			}
 
 			if (customer_email == c->getEmail())
@@ -358,7 +440,6 @@ string ModifyCustomerEmail(VacationParcs* vp, Customer* c)
 	} while (email_is_taken);
 
 	return customer_email;
-
 }
 
 

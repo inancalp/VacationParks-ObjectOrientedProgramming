@@ -18,6 +18,7 @@ void reWriteParcsFile(VacationParcs* vp);
 void emptyParcServicesFile();
 void retrieveParcsFile(VacationParcs* vp);
 ParcServices* retrieveParcServicesFile(ifstream& parcServicesFile);
+
 void createParc(VacationParcs* vp);
 void saveParcFile(Parcs* parc);
 void saveParcServicesFile(ParcServices* parc_services);
