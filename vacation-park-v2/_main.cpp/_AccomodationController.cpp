@@ -673,7 +673,7 @@ void showAccomodations(VacationParcs* vp)
 			cout << "There are no Parcs to show, thus no Accomodations to show either!" << endl;
 			return;
 		}
-		cout << "Accomodations included in the system of Parcs::getName() ->> " << vp->getParcs()[i]->getName() << endl << endl;
+		cout << "->> Accomodations included in the system of Parcs::getName() ->> " << vp->getParcs()[i]->getName() << endl << endl;
 
 		if (vp->getParcs()[i]->getAccomodations().size() == 0)
 		{
@@ -683,7 +683,7 @@ void showAccomodations(VacationParcs* vp)
 
 		for (size_t j{ 0 }; j < vp->getParcs()[i]->getAccomodations().size(); j++)
 		{
-			cout << " ->>\t";
+			cout << "\t->>";
 			cout << vp->getParcs()[i]->getAccomodations()[j]->toString() << endl;
 		}
 	}
@@ -748,7 +748,6 @@ Accomodations* selectAccomodation(VacationParcs* vp)
 			{
 				if (accom_id == vp->getParcs()[i]->getAccomodations()[j]->getId())
 				{
-					cout << "Accomodation found!" << endl;
 					return vp->getParcs()[i]->getAccomodations()[j];//
 				}
 			}
@@ -1015,7 +1014,9 @@ void deleteAccomodation(VacationParcs* vp)
 
 		if (selected_accom->getIsBooked() == true)
 		{
+			cout << "----------------------------------------" << endl;
 			cout << "Accomodation is booked. Try again later." << endl;
+			cout << "----------------------------------------" << endl;
 			return;
 		}
 

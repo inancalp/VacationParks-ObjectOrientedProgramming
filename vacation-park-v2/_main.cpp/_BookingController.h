@@ -32,6 +32,15 @@ string filterAccomodationType();
 void showFilteredAccomodations(vector<Accomodations*>& accoms_filtered);
 void addAccomodationToBooking(vector<Accomodations*>& accoms_filtered, vector<Accomodations*>& accoms_to_book);
 
+
+void modifyBookings(VacationParcs* vp, Customer* customer);
+void bookingModifyParcServices(VacationParcs* vp, Booking* booking);
+void bookingAddAccomodation(VacationParcs* vp, Booking* booking);
+void bookingRemoveAccomodation(VacationParcs* vp, Booking* booking);
+
+void deleteBookings(VacationParcs* vp);
+
+
 #endif // !BOOKINGCONTROLLER_H
 
 

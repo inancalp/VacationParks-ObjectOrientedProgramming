@@ -13,10 +13,6 @@ Customer::Customer
 
 Customer::~Customer()
 {
-	/*for (size_t i{ 0 }; i < this->getBookings().size(); i++)
-	{
-		delete this->getBookings()[i];
-	}*/
 	cout << "(!) Customer::Destructor ->> " << this->getEmail() << " deleted." << endl;
 }
 

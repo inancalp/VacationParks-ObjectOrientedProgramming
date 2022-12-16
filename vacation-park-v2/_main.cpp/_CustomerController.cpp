@@ -1,7 +1,7 @@
 #include "_CustomerController.h"
 #include "_AccomodationController.h"
 #include "_BookingController.h"
-
+#include "_MainController.h"
 
 void saveCustomerFile(Customer* c)
 {
@@ -67,64 +67,7 @@ void reWriteCustomersFile(VacationParcs* vp)
 
 
 
-void CustomerSession(VacationParcs* vp, Customer* c)
-{
-	cin.clear();
-	cin.ignore(numeric_limits<streamsize>::max(), '\n');
-	bool quit{ false };
-	int selected_option;
-	do
-	{
-		cout << "_____________________________________" << endl;
-		cout << "                                     " << endl;
-		cout << "   Current Customer:                 " << endl;
-		cout << "                                     " << endl;
-		cout << "  -Name: " << c->getName() << endl;
-		cout << "  -Address: " << c->getAddress() << endl;
-		cout << "  -Email: " << c->getEmail() << endl;
-		cout << "                                     " << endl;
-		cout << "  1) Modify Customer's Informations  " << endl;
-		cout << "  2) Show Customer's Bookings        " << endl;
-		cout << "  3) Make a Booking                  " << endl;
-		cout << "  4) Modify Existing Booking         " << endl;
-		cout << "                                     " << endl;
-		cout << "_____________________________________" << endl;
-		cout << endl;
 
-		cout << "Select Option: ";
-		cin >> selected_option; 
-		if (cin.eof())
-		{
-			cin.clear();
-			return;
-		}
-		if (cin.fail())
-		{
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		}
-
-		switch (selected_option)
-		{
-		case 1:
-			ModifyCustomer(vp, c);
-			break;
-		case 2:
-			showCustomersBookings(vp, c);
-			break;
-		case 3:
-			CreateBooking(vp, c);
-			break;
-		case 4:
-			//modifyBooking();
-			cout << "COMING SOON." << endl;
-			break;
-		default:
-			cout << "Invalid input." << endl;
-			break;
-		}
-	} while (true);
-}
 
 void createCustomer(VacationParcs* vp)
 {
@@ -216,9 +159,6 @@ void showCustomers(VacationParcs* vp)
 	}
 }
 
-
-//update later
-	//if customer has booking, delete is not possible.
 void deleteCustomer(VacationParcs* vp)
 {
 	string customer_email;
@@ -265,7 +205,8 @@ void deleteCustomer(VacationParcs* vp)
 
 	do
 	{
-		cout << "If you are sure to delete the customer enter \"y\".";
+		cout << "(!) All the bookings releated with customer will also be deleted." << endl;
+		cout << "If you are sure to delete the customer enter \"y\": ";
 		cin >> delete_customer;
 		if (cin.eof())
 		{
@@ -285,10 +226,29 @@ void deleteCustomer(VacationParcs* vp)
 
 	if (delete_customer == 'y')
 	{
+		for (size_t i{ 0 }; i < vp->getBookings().size(); i++)
+		{
+			if (vp->getCustomers()[customer_index]->getEmail() == vp->getBookings()[i]->getCustomer()->getEmail())
+			{
+				for (size_t j{ 0 }; j < vp->getBookings()[i]->getAccomodations().size(); j++)
+				{
+					vp->getBookings()[i]->getAccomodations()[j]->setIsBooked(false);
+				}
+				delete vp->getBookings()[i];
+				vp->getBookings().erase(vp->getBookings().begin() + i);
+				i--;
+			}
+		}
+
 		cout << vp->getCustomers()[customer_index]->getEmail() << " IS deleted." << endl;
 		delete vp->getCustomers()[customer_index];
 		vp->getCustomers().erase(vp->getCustomers().begin() + customer_index);
 	}
+
+	reWriteCustomersFile(vp);
+	reWriteAccomodationsFile(vp);
+	reWriteBookingsFile(vp);
+
 }
 
 void ModifyCustomer(VacationParcs* vp, Customer* c)
@@ -441,6 +401,8 @@ string ModifyCustomerEmail(VacationParcs* vp, Customer* c)
 
 	return customer_email;
 }
+
+
 
 
 

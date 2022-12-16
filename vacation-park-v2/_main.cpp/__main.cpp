@@ -12,7 +12,6 @@ int main()
 {
 
 	VacationParcs* vp = new VacationParcs("MainObject", "Sint Katelijne Waver", "VAT info here.");
-	
 	// luxuryLevel(bbq, surround_system, breakfast_service, cleaning_service, luxury_type)
  	vp->setLuxuryLevel(new LuxuryLevel(true, true, true, true, "vip"));
 	vp->setLuxuryLevel(new LuxuryLevel(false, false, true, true, "premium"));
@@ -23,22 +22,21 @@ int main()
 	retrieveCustomersFile(vp);
 	retrieveBookingsFile(vp);
 
-	
-
 	bool quit{ false };
 	int user_type;
 
-	cout << endl << endl;
-	cout << "\t\t---------------------------------" << endl;
-	cout << "\t\tWelcome to VacationParcs Project!" << endl;
-	cout << "\t\t_________________________________" << endl;
-	cout << endl << endl;
-	cout << "CLI based Object Oriented Programming application with C++" << endl;
-	cout << " - ForYourInformation:" << endl;
-	cout << "\t - Unless information displayed, user can enter \"exit\" (all lower letters) to cancel any function." << endl;
-	cout << "\t - Error Handling is not in it's best state, so please do mind not to put any information rather than requested." << endl;
-	cout << "\t - Program flow works with only \"std::cin\" to have user input." << endl;
-	cout << "\t\t - In case of UserName, ParkName (and so on...), please create the spaces with snake_case or camelCase etc." << endl;
+	cout 
+		<< endl << endl
+		<< "\t\t---------------------------------" << endl
+		<< "\t\tWelcome to VacationParcs Project!" << endl
+		<< "\t\t_________________________________" << endl << endl
+		<< "CLI based Object Oriented Programming application with C++" << endl << endl
+		<< "(!) ForYourInformation:" << endl 
+		<< "\t - User can enter \"Ctrl+Z\" to cancel any process or exit the program when in UserType Menu." << endl
+		<< "\t - Error Handling is not in it's best state, so please do mind not to put any information rather than requested." << endl << endl
+		<< "\t - Program flow works with only \"std::cin\" to have user input." << endl
+		<< "\t\t - In case of UserName, ParkName (and so on...), please create the spaces with snake_case or camelCase etc." << endl << endl;
+
 	do
 	{
 
@@ -59,6 +57,10 @@ int main()
 		if (cin.eof())
 		{
 			cin.clear();
+			delete vp;
+			cout << "-----------------------------------------------" << endl;
+			cout << "Thanks for using the system. See you next time!" << endl;
+			cout << "-----------------------------------------------" << endl;
 			return 0;
 		}
 		if (cin.fail())

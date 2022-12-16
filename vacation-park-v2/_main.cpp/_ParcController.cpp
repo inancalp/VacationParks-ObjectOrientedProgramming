@@ -278,6 +278,21 @@ void modifyParc(VacationParcs* vp)
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	}
 
+
+	//(!)update: if any any accomodation included in the park has the isBooked as "true";
+	//park can't be modified since it's kind of a construction which is not proper while there are guests in park (reputation--);
+	for (size_t i{ 0 }; i < selected_parc->getAccomodations().size(); i++)
+	{
+		if (selected_parc->getAccomodations()[i]->getIsBooked() == true)
+		{
+			cout << "-----------------------------------------------------------------" << endl;
+			cout << "(!) Parc can't be modified while there are bookings by customers." << endl;
+			cout << "-----------------------------------------------------------------" << endl;
+			return;
+		}
+	}
+
+
 	selected_services = selected_parc->getParcServices(); //selected_services
 	subtropic_swimming_pool_val = selected_services->getSubtropicSwimmingPool();
 	sports_infrastructure_val = selected_services->getSportsInfrastructure();
@@ -361,7 +376,9 @@ void deleteParc(VacationParcs* vp)
 	{
 		if (selected_parc->getAccomodations()[i]->getIsBooked() == true)
 		{
-			cout << "(!) There are bookings for the parc! Parc can't be deleted." << endl;
+			cout << "----------------------------------------------------------------" << endl;
+			cout << "(!) Parc can't be deleted while there are bookings by customers." << endl;
+			cout << "----------------------------------------------------------------" << endl;
 			return;
 		}
 	}
@@ -467,8 +484,7 @@ Parcs* selectParc(VacationParcs* vp)
 ParcServices* createParcServices(string& parc_name)
 {
 	char selected_option;
-	cout << "Select Services included with the Parc" << endl;
-	cout << "(y)es/(n)o/(e)xit: " << endl;
+	cout << "Select Services included with the Parc. (y/n)" << endl;
 	array<bool, PARCSERVICESSIZE> parc_services{};
 	array<string, PARCSERVICESSIZE> parc_service_names = {
 		"SubtropicSwimmingPool",

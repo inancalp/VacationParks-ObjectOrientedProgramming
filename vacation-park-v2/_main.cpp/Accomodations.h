@@ -41,7 +41,7 @@ public:
 	void setNbrPeople(const int& nbr_people);
 	void setSize(const int& size);
 	void setBathroomWithBath(const bool& bathroom_with_bath);
-	void setIsBooked(const bool& is_booked);
+	void setIsBooked(const bool is_booked);
 	void setLuxuryLevel(LuxuryLevel* luxury_level); // ??
 
 	virtual string toString() = 0;

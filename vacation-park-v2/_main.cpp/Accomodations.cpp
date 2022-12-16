@@ -91,7 +91,7 @@ void Accomodations::setBathroomWithBath(const bool& bathroom_with_bath)
 	this->m_bathroomWithBath = bathroom_with_bath;
 }
 
-void Accomodations::setIsBooked(const bool& is_booked)
+void Accomodations::setIsBooked(const bool is_booked)
 {
 	this->m_isBooked = is_booked;
 }

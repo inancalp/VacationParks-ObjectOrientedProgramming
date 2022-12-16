@@ -53,7 +53,7 @@ void retrieveBookingsFile(VacationParcs* vp)
 	ifstream bookingsFile(BOOKINGSFILE, ios::in);
 	if (!bookingsFile)
 	{
-		cout << "savebookingfile() ->> something went wrong while opening \"bookings.txt\" file." << endl;
+		cout << "Error opening the file \"bookings.txt\"." << endl;
 		return;
 	}
 
@@ -379,7 +379,7 @@ void showAvailableAccomodations(vector<Accomodations*>& available_accoms)
 	{
 		cout << endl;
 		cout << "--------------------------------------------------------------------------------------------------------------------------" << endl;
-		cout << "There are no Avaliable Accomodations at the moment. Please Continue with your current selections or exit from the process." << endl << endl;
+		cout << "(!) There are no Avaliable Accomodations at the moment. Please Continue with your current selections or exit from the process." << endl << endl;
 		return;
 	}
 
@@ -685,7 +685,523 @@ void showCustomersBookings(VacationParcs* vp, Customer* customer)
 	}
 }
 
-void ModifyBookings(VacationParcs* vp, Customer* customer)
+void modifyBookings(VacationParcs* vp, Customer* customer)
 {
 
+	int selected_option = -1;
+	int booking_id = -1;
+	bool booking_not_found{ true };
+	Booking* booking = NULL;
+	Parcs* parc = NULL;
+
+	do
+	{
+		cout << "Booking ID: ";
+		cin >> booking_id;
+		if (cin.eof())
+		{
+			cin.clear();
+			return;
+		}
+		for (size_t i{ 0 }; i < vp->getBookings().size(); i++)
+		{
+			if (vp->getBookings()[i]->getId() == booking_id)
+			{
+				if (vp->getBookings()[i]->getCustomer()->getEmail() == customer->getEmail())
+				{
+					booking = vp->getBookings()[i];
+					booking_not_found = false;
+					break;
+				}
+			}
+		}
+		if (booking_not_found)
+		{
+			cout << "Booking not found, try again." << endl;
+			continue;
+		}
+		break;
+	} while (true);
+
+	for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
+	{
+		if (vp->getParcs()[i]->getName() == booking->getAccomodations()[0]->getParcName())
+		{
+			parc = vp->getParcs()[i];
+			break;
+		}
+	}
+
+	do
+	{
+		cout << endl;
+		cout << "---------------------" << endl;
+		cout << "(!) Selected Booking:" << endl;
+		cout << " ->>";
+		cout << booking->toString() << endl;
+		cout << endl << endl;
+		cout << "---------------------------" << endl;
+		cout << " Booking::getId() ->> " << booking->getId() << endl;
+		cout << "---------------------------" << endl;
+		cout << "                           " << endl;
+		cout << "  (1) Modify ParcServices  " << endl;
+		cout << "  (2) Add Accomodation     " << endl;
+		cout << "  (3) Remove Accomodation  " << endl;
+		cout << "                           " << endl;
+		cout << "---------------------------" << endl;
+		cout << "Enter Option: ";
+		cin >> selected_option;
+		if (cin.eof())
+		{
+			cin.clear();
+			return;
+		}
+
+		switch (selected_option)
+		{
+		case 1:
+			bookingModifyParcServices(vp, booking);
+			if (cin.eof())
+			{
+				cin.clear();
+				return;
+			}
+			reWriteBookingsFile(vp);
+			break;
+		case 2:
+			bookingAddAccomodation(vp, booking);
+			if (cin.eof())
+			{
+				cin.clear();
+				return;
+			}
+			reWriteAccomodationsFile(vp);
+			reWriteBookingsFile(vp);
+			break;
+		case 3:
+			bookingRemoveAccomodation(vp, booking);
+			if (cin.eof())
+			{
+				cin.clear();
+				return;
+			}
+			reWriteAccomodationsFile(vp);
+			reWriteBookingsFile(vp);
+			break;
+		default:
+			cout << "Invalid input." << endl;
+			continue;
+		}
+	} while (true);
+
+
+}
+
+void bookingModifyParcServices(VacationParcs* vp, Booking* booking)
+{
+	Parcs* parc = NULL;
+	bool parc_not_found{ true };
+	char input_char = '\0';
+	bool sportsPass_bool = false;
+	bool swimmingPass_bool = false;
+	bool activityPass_bool = false;
+	bool bicycleRent_bool = false;
+	bool invalid_input = false;
+	bool no_services_included{ true };
+
+	//since there can be only one parc included inside booking. ->> [0]
+	string parc_name = booking->getAccomodations()[0]->getParcName();
+
+	for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
+	{
+		if (parc_name == vp->getParcs()[i]->getName())
+		{
+			parc_not_found = false;
+			parc = vp->getParcs()[i];
+			break;
+		}
+	}
+
+	if (parc_not_found)
+	{
+		cout << "There is something wrong with the application's logic, time to DEBUG!" << endl;
+		exit(-1);
+	}
+
+	cout << "ParcServices InformationTable for Parc::getName() ->> " << parc->getName() << endl;
+	cout << parc->getParcServices()->toString() << endl << endl;
+	cout << "---------------------------------------------------------------------------------------" << endl;
+	cout << "(!) NOTE: BowlingAlley/ChildrensParadise/BicycleRent is included with the ActivityPass." << endl;	
+	cout << "---------------------------------------------------------------------------------------" << endl;
+
+	cout << "To modify the state of the service enter \"y\", else enter \"n\"." << endl;
+
+	//(?) SwimmingPass
+	if (parc->getParcServices()->getSubtropicSwimmingPool() == true)
+	{
+		no_services_included = false;
+		do
+		{
+			cout << "(?) SwimmingPass: ";
+			cin >> input_char;
+			if (cin.eof())
+			{
+				return;
+			}
+			switch (input_char)
+			{
+			case 'y':
+				cout << "(!) SwimmingPass state changed from \"" << boolalpha << booking->getSwimmingPass() << "\" to \"" << !(booking->getSwimmingPass()) << "\"" << endl;
+				//state_change
+				booking->setSwimmingPass(!(booking->getSwimmingPass()));
+				swimmingPass_bool = true;
+				invalid_input = false;
+				break;
+			case 'n':
+				swimmingPass_bool = false;
+				invalid_input = false;
+				break;
+			default:
+				cout << "Invalid Input." << endl;
+				invalid_input = true;
+				break;
+			}
+			if (invalid_input) continue;
+			break;
+			input_char = '\0';
+		} while (true);
+	}
+
+
+	// (?)sportPass
+	if (parc->getParcServices()->getSportsInfrastructure() == true)
+	{
+		no_services_included = false;
+
+		do
+		{
+			cout << "(?) SportsPass: ";
+			cin >> input_char;
+			if (cin.eof())
+			{
+				return;
+			}
+			switch (input_char)
+			{
+			case 'y':
+				cout << "(!) SportsPass state changed from \"" << boolalpha << booking->getSportPass() << "\" to \"" << !(booking->getSportPass()) << "\"" << endl;
+				//state_change
+				booking->setSportPass(!(booking->getSportPass()));
+				swimmingPass_bool = true;
+				invalid_input = false;
+				break;
+			case 'n':
+				swimmingPass_bool = false;
+				invalid_input = false;
+				break;
+			default:
+				cout << "Invalid Input." << endl;
+				invalid_input = true;
+				break;
+			}
+			if (invalid_input) continue;
+			break;
+			input_char = '\0';
+		} while (true);
+	}
+
+	//(?)bicycleRent
+	if (parc->getParcServices()->getBicycleRent() == true)
+	{
+		no_services_included = false;
+
+		do
+		{
+			cout << "(?) BicycleRent: ";
+			cin >> input_char;
+			if (cin.eof())
+			{
+				return;
+			}
+			switch (input_char)
+			{
+			case 'y':
+				cout << "(!) BicycleRent state changed from \"" << boolalpha << booking->getBicycleRent() << "\" to \"" << !(booking->getBicycleRent()) << "\"" << endl;
+				//state_change
+				booking->setBicycleRent(!(booking->getBicycleRent()));
+				swimmingPass_bool = true;
+				invalid_input = false;
+				break;
+			case 'n':
+				swimmingPass_bool = false;
+				invalid_input = false;
+				break;
+			default:
+				cout << "Invalid Input." << endl;
+				invalid_input = true;
+				break;
+			}
+			if (invalid_input) continue;
+			break;
+			input_char = '\0';
+		} while (true);
+	}
+
+	////since activityPass uses 3 member_variables from ParcServices, middleware function was not optimal to use in this case.
+	if (parc->getParcServices()->getBowlingAlley() == true
+		|| parc->getParcServices()->getChildrensParadise() == true
+		|| parc->getParcServices()->getWaterBikes() == true)
+	{
+		no_services_included = false;
+
+		do
+		{
+			cout << "(?) ActivityPass: ";
+			cin >> input_char;
+			if (cin.eof())
+			{
+				return;
+			}
+			switch (input_char)
+			{
+			case 'y':
+				cout << "(!) ActivityPass state changed from \"" << boolalpha << booking->getActivityPass() << "\" to \"" << !(booking->getActivityPass()) << "\"" << endl;
+				//state_change
+				booking->setActivityPass(!(booking->getActivityPass()));
+				swimmingPass_bool = true;
+				invalid_input = false;
+				break;
+			case 'n':
+				swimmingPass_bool = false;
+				invalid_input = false;
+				break;
+			default:
+				cout << "Invalid Input." << endl;
+				invalid_input = true;
+				break;
+			}
+			if (invalid_input) continue;
+			break;
+			input_char = '\0';
+		} while (true);
+	}
+
+	if (no_services_included)
+	{
+		cout << "----------------------------------------------------------------------------------------" << endl;
+		cout << "(!) There are no services included in the park, we suggest you to contact DebuggingTeam." << endl;
+		cout << "----------------------------------------------------------------------------------------" << endl;
+	}
+
+}
+
+void bookingAddAccomodation(VacationParcs* vp, Booking* booking)
+{
+
+	Parcs* parc = NULL;
+	string parc_name;
+	bool no_accom_available = true;
+	int accom_id = -1;
+	bool accom_not_found = true;
+	char add_accom_confirm;
+	vector<Accomodations*> accoms;
+	Accomodations* accom = NULL;
+
+	if (booking->getAccomodations().size() == 3)
+	{
+		cout << "----------------------------------------------------------------------" << endl;
+		cout << "There are maximum(3) amount of Accommodations included in the booking." << endl;
+		cout << "----------------------------------------------------------------------" << endl;
+		return;
+	}
+
+	parc_name = booking->getAccomodations()[0]->getParcName();
+
+	for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
+	{
+		if (vp->getParcs()[i]->getName() == parc_name)
+		{
+			parc = vp->getParcs()[i];
+			break;
+		}
+	}
+
+	accoms.clear();
+	cout << "Here are the available Accommodations included in the Parcs::getName() ->> " << parc_name << endl;
+	cout << "---------------------------------------------------------------------------" << endl;
+	for (size_t i{ 0 }; i < parc->getAccomodations().size(); i++)
+	{
+		if (parc->getAccomodations()[i]->getIsBooked() == false)
+		{
+			no_accom_available = false;
+			accoms.push_back(parc->getAccomodations()[i]);
+			cout << " ->>\t";
+			cout << parc->getAccomodations()[i]->toString() << endl;
+		}
+	}
+	if (no_accom_available)
+	{
+		cout << "At the moment, there are no Accommodations availabe in the Parc. Try again later." << endl;
+		return;
+	}
+	cout << "---------------------------------------------------------------------------" << endl;
+
+	cout << "(?) Enter the Accommodation ID you would like to include with you booking." << endl;
+	
+	do
+	{
+		accom_id = -1;
+		cout << "ID: ";
+		cin >> accom_id;
+		if (cin.eof())
+		{
+			return;
+		}
+
+		for (size_t i{ 0 }; i < accoms.size(); i++)
+		{
+			if (accom_id == accoms[i]->getId())
+			{
+				accom = accoms[i];
+				accom_not_found = false;
+				break;
+			}
+		}
+		if (accom_not_found)
+		{
+			cout << "Invalid ID, try again." << endl;
+			continue;
+		}
+		break;
+	} while (true);
+
+	
+	cout << "Accomodation will be added to you booking. Enter \"y\" to confirm: ";
+	cin >> add_accom_confirm;
+	if (cin.eof())
+	{
+		return;
+	}
+	if (add_accom_confirm == 'y')
+	{
+		accom->setIsBooked(true);
+		cout << "Accommodations::getId() ->> " << accom->getId() << " added to the Bookings::getId() ->>" << booking->getId() << "." << endl;
+		booking->getAccomodations().push_back(accom);
+	}
+}
+
+void bookingRemoveAccomodation(VacationParcs* vp, Booking* booking)
+{
+	int accom_id = -1;
+	bool accom_not_found = true;
+	Accomodations* accom = NULL;
+	char rm_accom_confirm = '\0';
+
+	if (booking->getAccomodations().size() == 1)
+	{
+		cout << "-------------------------------------------------------------------" << endl;
+		cout << "User can only remove Accomodations when there are multiple of them." << endl;
+		cout << "-------------------------------------------------------------------" << endl;
+		return;
+	}
+
+
+	cout << "Here are the Accommodations included with the booking->getAccomodations()[0]->getParcName() ->> " << booking->getAccomodations()[0]->getParcName() << endl;	cout << 
+		
+		"---------------------------------------------------------------------------" << endl;
+	for (size_t i{ 0 }; i < booking->getAccomodations().size(); i++)
+	{
+		cout << " ->>\t";
+		cout << booking->getAccomodations()[i]->toString() << endl;
+	}
+	cout << "---------------------------------------------------------------------------" << endl;
+
+	cout << "(?) Enter the Accommodation ID you would like exclude from the booking." << endl;
+
+	do
+	{
+		accom_id = -1;
+		cout << "ID: ";
+		cin >> accom_id;
+		if (cin.eof())
+		{
+			return;
+		}
+
+		for (size_t i{ 0 }; i < booking->getAccomodations().size(); i++)
+		{
+			if (accom_id == booking->getAccomodations()[i]->getId())
+			{
+				accom = booking->getAccomodations()[i];
+				accom_not_found = false;
+				break;
+			}
+		}
+		if (accom_not_found)
+		{
+			cout << "Invalid ID, try again." << endl;
+			continue;
+		}
+		break;
+	} while (true);
+
+	cout << "Accomodation will be removed from your booking. Enter \"y\" to confirm: ";
+	cin >> rm_accom_confirm;
+	if (cin.eof())
+	{
+		return;
+	}
+	if (rm_accom_confirm == 'y')
+	{
+		accom->setIsBooked(false);
+		cout << "Accommodations::getId() ->> " << accom->getId() << " removed from the Bookings::getId() ->>" << booking->getId() << "." << endl;
+		for (size_t i{ 0 }; i < booking->getAccomodations().size(); i++)
+		{
+			if (accom->getId() == booking->getAccomodations()[i]->getId())
+			{
+				booking->getAccomodations()[i]->setIsBooked(false);
+				booking->getAccomodations().erase(booking->getAccomodations().begin() + i);
+			}
+		}
+	}
+
+	
+}
+
+void deleteBookings(VacationParcs* vp)
+{
+
+	bool customer_not_found;
+	string customer_email;
+	Customer* customer = NULL;
+	vector<Booking*> customer_bookings;
+
+	customer_not_found = true;
+	do
+	{
+		cout << "Enter Customer's Email: ";
+		cin >> customer_email;
+		if (cin.eof())
+		{
+			cin.clear();
+			return;
+		}
+		for (size_t i{ 0 }; i < vp->getCustomers().size(); i++)
+		{
+			if (customer_email == vp->getCustomers()[i]->getEmail())
+			{
+				customer = vp->getCustomers()[i];
+				customer_not_found = false;
+				break;
+			}
+		}
+		if (customer_not_found)
+		{
+			cout << "Customer not found. Try again." << endl;
+		}
+	} while (customer_not_found);
+
+	showCustomersBookings(vp, customer);
+
+	
 }

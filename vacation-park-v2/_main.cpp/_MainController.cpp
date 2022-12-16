@@ -83,16 +83,15 @@ void EmployeeType(VacationParcs* vp)
 	do
 	{
 		cout << "__________________________________" << endl;
-		cout << "   OwnerType Functionalities:     " << endl;
+		cout << "  EmployeeType Functionalities:   " << endl;
 		cout << "__________________________________" << endl;
 		cout << "                                  " << endl;
-		cout << "     1) Show Parcs                " << endl;
-		cout << "     2) Show Accomodations        " << endl;
-		cout << "     3) Show Customers            " << endl;
-		cout << "     4) Show Bookings             " << endl;
-		cout << "     5) Show Customer's Bookings  " << endl;
-		cout << "     6) Delete Booking            " << endl;
-		cout << "     7) Delete Customer           " << endl;
+		cout << "    1) Show Parcs                 " << endl;
+		cout << "    2) Show Accomodations         " << endl;
+		cout << "    3) Show Customers             " << endl;
+		cout << "    4) Show Bookings              " << endl;
+		cout << "    5) Delete Customer's Bookings " << endl;
+		cout << "    6) Delete Customer            " << endl;
 		cout << "                                  " << endl;
 		cout << "__________________________________" << endl;
 		cout << endl;
@@ -125,42 +124,10 @@ void EmployeeType(VacationParcs* vp)
 			showBookings(vp);
 			break;
 		case 5:
-			customer_not_found = true;
-			do
-			{
-				cout << "Enter Customer's Email: ";
-				cin >> customer_email;
-				if (cin.eof())
-				{
-					customer_email.clear();
-					break;
-				}
-				for (size_t i{ 0 }; i < vp->getCustomers().size(); i++)
-				{
-					if (customer_email == vp->getCustomers()[i]->getEmail())
-					{
-						c = vp->getCustomers()[i];
-						customer_not_found = false;
-						break;
-					}
-				}
-				if (customer_not_found)
-				{
-					cout << "Customer not found. Try again." << endl;
-				}
-			} while (customer_not_found);
-			if (cin.eof())
-			{
-				cin.clear();
-				break;
-			}
-			showCustomersBookings(vp, c);
+			deleteBookings(vp);
 			break;
 		case 6:
-			//deleteBooking();
-			break;
-		case 7:
-			//deleteCustomer(vp);
+			deleteCustomer(vp);
 			break;
 		default:
 			cout << "Invalid input." << endl;
@@ -259,7 +226,63 @@ void CustomerType(VacationParcs* vp)
 		}
 	} while (true);
 }	
+void CustomerSession(VacationParcs* vp, Customer* c)
+{
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	bool quit{ false };
+	int selected_option;
+	do
+	{
+		cout << "_____________________________________" << endl;
+		cout << "                                     " << endl;
+		cout << "   Current Customer:                 " << endl;
+		cout << "                                     " << endl;
+		cout << "  -Name: " << c->getName() << endl;
+		cout << "  -Address: " << c->getAddress() << endl;
+		cout << "  -Email: " << c->getEmail() << endl;
+		cout << "                                     " << endl;
+		cout << "  1) Modify Customer's Informations  " << endl;
+		cout << "  2) Show Customer's Bookings        " << endl;
+		cout << "  3) Make a Booking                  " << endl;
+		cout << "  4) Modify Customer's Bookings      " << endl;
+		cout << "                                     " << endl;
+		cout << "_____________________________________" << endl;
+		cout << endl;
 
+		cout << "Select Option: ";
+		cin >> selected_option;
+		if (cin.eof())
+		{
+			cin.clear();
+			return;
+		}
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+
+		switch (selected_option)
+		{
+		case 1:
+			ModifyCustomer(vp, c);
+			break;
+		case 2:
+			showCustomersBookings(vp, c);
+			break;
+		case 3:
+			CreateBooking(vp, c);
+			break;
+		case 4:
+			modifyBookings(vp, c);
+			break;
+		default:
+			cout << "Invalid input." << endl;
+			break;
+		}
+	} while (true);
+}
 
 
 

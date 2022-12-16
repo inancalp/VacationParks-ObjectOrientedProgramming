@@ -20,6 +20,7 @@ using namespace std;
 void OwnerType(VacationParcs* vp);
 void EmployeeType(VacationParcs* vp);
 void CustomerType(VacationParcs* vp);
+void CustomerSession(VacationParcs* vp, Customer* c);
 
 #endif // !MAINCONTROLLER_H
 

@@ -11,7 +11,6 @@ void saveCustomerFile(Customer* c);
 void retrieveCustomersFile(VacationParcs* vp);
 void reWriteCustomersFile(VacationParcs* vp);
 
-void CustomerSession(VacationParcs* vp, Customer* c);
 void createCustomer(VacationParcs* vp);
 void showCustomers(VacationParcs* vp);
 void deleteCustomer(VacationParcs* vp);
