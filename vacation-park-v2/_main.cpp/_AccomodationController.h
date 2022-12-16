@@ -1,9 +1,10 @@
+#ifndef ACCOMMODATIONCONTROLLER_H
+#define ACCOMMODATIONCONTROLLER_H
 
 #include "Parcs.h"
 #include "HotelRoom.h"
 #include "Bungalow.h"
 #include "VacationParcs.h"
-
 #define ACCOMSFILE "../files/accommodations.txt"
 
 void saveLuxuryLevelsFile(const int& accom_id, LuxuryLevel* ll);
@@ -25,3 +26,6 @@ Accomodations* selectAccomodation(VacationParcs* vp);
 void modifyHotelRoom(VacationParcs* vp, Accomodations* accom);
 void modifyBungalow(VacationParcs* vp, Accomodations* accom);
 void deleteAccomodation(VacationParcs* vp);
+
+#endif
+

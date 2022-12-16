@@ -1,7 +1,7 @@
 #include "_CustomerController.h"
 #include "_AccomodationController.h"
 #include "_BookingController.h"
-#include "_MainController.h"
+#include "__MainController.h"
 
 void saveCustomerFile(Customer* c)
 {
@@ -151,7 +151,10 @@ void createCustomer(VacationParcs* vp)
 
 void showCustomers(VacationParcs* vp)
 {
-	cout << "Customers included in the system of VacationParcs::getName() ->> " << vp->getName() << endl << endl;
+	cout << endl;
+	cout << "---------------------------------------------------------------- " << endl;
+	cout << "Customers included in the system of VacationParcs::getName() ->> " << vp->getName() << endl;
+	cout << "---------------------------------------------------------------- " << endl;
 	for (size_t i{ 0 }; i < vp->getCustomers().size(); i++)
 	{
 		cout << " ->>";
@@ -199,13 +202,16 @@ void deleteCustomer(VacationParcs* vp)
 			cout << "Customer can't be found on the system. Try again." << endl;
 		}
 	} while (!customer_found);
-
+	
+	cout << endl;
 	cout << "Here is the information for the Customer to be deleted: " << endl;
 	cout << vp->getCustomers()[customer_index]->toString() << endl;
 
 	do
-	{
+	{	
+		cout << "-----------------------------------------------------------------" << endl;
 		cout << "(!) All the bookings releated with customer will also be deleted." << endl;
+		cout << "-----------------------------------------------------------------" << endl;
 		cout << "If you are sure to delete the customer enter \"y\": ";
 		cin >> delete_customer;
 		if (cin.eof())

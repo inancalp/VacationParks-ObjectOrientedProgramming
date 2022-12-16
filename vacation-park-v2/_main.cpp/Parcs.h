@@ -14,20 +14,15 @@ private:
 public:
 	Parcs(string name, string address, ParcServices* parc_services);
 	~Parcs();
-
 	const string& getName() const;
 	const string& getAddress() const;
 	ParcServices* getParcServices() const; //deleted const, refer changeParc()
 	vector<Accomodations*>& getAccomodations();
-
 	void setName(const string& name);
 	void setAddress(const string& address);
 	void setParcServices(ParcServices* parc_services);
 	void setAccomodation(Accomodations* accomodation);
-
 	const string toString() const;
 };
-
-
 
 #endif // ! PARCS_H

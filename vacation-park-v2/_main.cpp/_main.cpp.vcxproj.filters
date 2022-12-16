@@ -24,7 +24,7 @@
     <ClCompile Include="VacationParcs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="_MainController.cpp">
+    <ClCompile Include="__MainController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Booking.cpp">
@@ -68,7 +68,7 @@
     <ClInclude Include="VacationParcs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_MainController.h">
+    <ClInclude Include="__MainController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Booking.h">

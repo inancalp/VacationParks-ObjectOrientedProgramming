@@ -1,4 +1,3 @@
-
 #ifndef BOOKING_H
 #define BOOKING_H
 #include "Accomodations.h"
@@ -13,8 +12,7 @@ private:
 	bool m_sportsPass;
 	bool m_bicycleRent;
 	bool m_swimmingPass;
-
-public: // (?) const for every param
+public:
 	Booking(
 		const int& id,
 		Customer* customer,
@@ -25,7 +23,6 @@ public: // (?) const for every param
 		const bool& swimming_pass
 	);
 	~Booking();
-
 	void setId(const int& id);
 	void setCustomer(Customer* customer);
 	void setAccomodations(vector<Accomodations*>& accomodations);
@@ -33,7 +30,6 @@ public: // (?) const for every param
 	void setSportPass(const bool& sport_pass);
 	void setBicycleRent(const bool& bicycle_rent);
 	void setSwimmingPass(const bool& swimming_pass);
-
 	const int& getId() const;
 	Customer* getCustomer() const;
 	vector<Accomodations*>& getAccomodations();
@@ -41,9 +37,7 @@ public: // (?) const for every param
 	const bool& getSportPass() const;
 	const bool& getBicycleRent() const;
 	const bool& getSwimmingPass() const;
-
 	string toString();
-
 };
 
 #endif //BOOKING_H

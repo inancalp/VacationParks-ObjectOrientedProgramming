@@ -10,7 +10,6 @@ private:
     string m_location;
     int m_nbrBeds;
     bool m_childrenBed;
-
 public:
     HotelRoom
     (
@@ -26,19 +25,15 @@ public:
         const int nbr_beds,
         const bool children_bed
     );
-
     ~HotelRoom();
-
     const int& getFloor() const;
     const string& getLocation() const;
     const int& getNbrBeds() const;
     const bool& getChildrenBed() const;
-
     void setFloor(const int floor);
     void setLocation(const string location);
     void setNbrBeds(const int nbr_beds);
     void setChildrenBed(const bool children_bed);
-
     string toString() override;
 };
 

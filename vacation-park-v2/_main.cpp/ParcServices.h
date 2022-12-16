@@ -1,11 +1,9 @@
 #ifndef PARCSERVICES_H
 #define PARCSERVICES_H
-
 using namespace std;
 #include <iostream>
 #include <string>
 #include <sstream>
-
 
 class ParcServices {
 private:
@@ -16,9 +14,7 @@ private:
 	bool m_bicycleRent;
 	bool m_childrensParadise;
 	bool m_waterBikes;
-
 public:
-
 	ParcServices
 	(
 		string m_parcName,
@@ -30,7 +26,6 @@ public:
 		bool water_bikes
 	);
 	~ParcServices();
-
 	const string& getParcName() const;
 	const bool& getSubtropicSwimmingPool() const;
 	const bool& getSportsInfrastructure() const;
@@ -38,7 +33,6 @@ public:
 	const bool& getBicycleRent() const;
 	const bool& getChildrensParadise() const;
 	const bool& getWaterBikes() const;
-
 	void setParcName(const string& parc_name);
 	void setSubtropicSwimmingPool(const bool& subtropic_swimming_pool);
 	void setSportsInfrastructure(const bool& sports_infrastructure);
@@ -46,9 +40,7 @@ public:
 	void setBicycleRent(const bool& bicycle_rent);
 	void setChildrensParadise(const bool& childrens_paradise);
 	void setWaterBikes(const bool& water_bikes);
-
 	const string toString() const;
 };
 
-
-#endif
+#endif // !PARCSERVICES_H

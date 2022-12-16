@@ -141,8 +141,6 @@ void reWriteBookingsFile(VacationParcs* vp)
 			<< booking->getSportPass() << " "
 			<< booking->getBicycleRent() << " "
 			<< booking->getSwimmingPass() << endl;
-
-		cout << "Booking::getId() ->> " << booking->getId() << " is stored." << endl;
 	}
 
 	bookingsFile.close();
@@ -638,13 +636,16 @@ bool addServiceMiddleware(bool& service_state, string& service_name)
 
 void showBookings(VacationParcs* vp)
 {
+	cout << endl;
 	string parc_name;
 	int count_bookings;
 	for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
 	{
 		parc_name = vp->getParcs()[i]->getName();
 		count_bookings = 0;
-		cout << endl << "->> Bookings included in Parcs::getName() ->> " << parc_name << endl << endl;
+		cout << "--------------------------------------------- " << endl;
+		cout << "->> Bookings included in Parcs::getName() ->> " << parc_name << endl;
+		cout << "--------------------------------------------- " << endl;
 		for (size_t j{ 0 }; j < vp->getBookings().size(); j++)
 		{
 			if (vp->getBookings()[j]->getAccomodations()[0]->getParcName() == parc_name)
@@ -657,7 +658,8 @@ void showBookings(VacationParcs* vp)
 
 		if (count_bookings == 0)
 		{
-			cout << "(!) There are no Bookings included within the Parcs::getName() ->> " << parc_name << endl << endl;
+			cout << endl << "(!) There are no Bookings included within the Parcs::getName() ->> " << parc_name << endl;
+			cout << "------------------------------------------------------------------ " << endl << endl;
 		}
 	}
 
@@ -666,7 +668,10 @@ void showBookings(VacationParcs* vp)
 void showCustomersBookings(VacationParcs* vp, Customer* customer)
 {
 	bool customer_has_no_bookings{ true };
-	cout << endl << "Here are the bookings of Customer::getEmail() ->> " << customer->getEmail() << endl << endl;
+	cout << endl;
+	cout << "------------------------------------------------- " << endl;
+	cout << "Here are the bookings of Customer::getEmail() ->> " << customer->getEmail() << endl;
+	cout << "------------------------------------------------- " << endl;
 	for (size_t i{ 0 }; i < vp->getBookings().size(); i++)
 	{
 		if (vp->getBookings()[i]->getCustomer()->getEmail() == customer->getEmail())
@@ -693,6 +698,26 @@ void modifyBookings(VacationParcs* vp, Customer* customer)
 	bool booking_not_found{ true };
 	Booking* booking = NULL;
 	Parcs* parc = NULL;
+	bool customer_does_not_have_booking{ true };
+
+	showCustomersBookings(vp, customer);
+
+	//if no-booking-found, function will be terminated.
+	for (size_t i{ 0 }; i < vp->getBookings().size(); i++)
+	{
+		if (vp->getBookings()[i]->getCustomer()->getEmail() == customer->getEmail())
+		{
+			customer_does_not_have_booking = false;
+			break;
+		}
+	}
+	if (customer_does_not_have_booking)
+	{
+		//since showCustmersBookings() already mentions that if there are no bookings for the customer, no statement needed here.
+		return;
+	}
+
+
 
 	do
 	{
@@ -1099,24 +1124,23 @@ void bookingRemoveAccomodation(VacationParcs* vp, Booking* booking)
 
 	if (booking->getAccomodations().size() == 1)
 	{
-		cout << "-------------------------------------------------------------------" << endl;
-		cout << "User can only remove Accomodations when there are multiple of them." << endl;
-		cout << "-------------------------------------------------------------------" << endl;
+		cout << "-----------------------------------------------------------------------" << endl;
+		cout << "(!) User can only remove Accomodations when there are multiple of them." << endl;
+		cout << "-----------------------------------------------------------------------" << endl;
 		return;
 	}
 
 
-	cout << "Here are the Accommodations included with the booking->getAccomodations()[0]->getParcName() ->> " << booking->getAccomodations()[0]->getParcName() << endl;	cout << 
-		
-		"---------------------------------------------------------------------------" << endl;
+	cout << "----------------------------------------------------------------------------------------------- " << endl;
+	cout << "Here are the Accommodations included with the booking->getAccomodations()[0]->getParcName() ->> " << booking->getAccomodations()[0]->getParcName() << endl;
+	cout << "----------------------------------------------------------------------------------------------- " << endl;
 	for (size_t i{ 0 }; i < booking->getAccomodations().size(); i++)
 	{
 		cout << " ->>\t";
 		cout << booking->getAccomodations()[i]->toString() << endl;
 	}
-	cout << "---------------------------------------------------------------------------" << endl;
 
-	cout << "(?) Enter the Accommodation ID you would like exclude from the booking." << endl;
+	cout << endl << "(?) Enter the Accommodation ID you would like exclude from the booking." << endl;
 
 	do
 	{
@@ -1161,22 +1185,24 @@ void bookingRemoveAccomodation(VacationParcs* vp, Booking* booking)
 			{
 				booking->getAccomodations()[i]->setIsBooked(false);
 				booking->getAccomodations().erase(booking->getAccomodations().begin() + i);
+				break;
 			}
 		}
 	}
-
-	
 }
 
 void deleteBookings(VacationParcs* vp)
 {
 
-	bool customer_not_found;
+	bool customer_not_found{ true };
+	bool booking_not_found{ true };
+	bool customer_has_no_bookings{ true };
 	string customer_email;
 	Customer* customer = NULL;
 	vector<Booking*> customer_bookings;
+	int booking_id;
+	char delete_booking_confirmation = '\0';
 
-	customer_not_found = true;
 	do
 	{
 		cout << "Enter Customer's Email: ";
@@ -1202,6 +1228,81 @@ void deleteBookings(VacationParcs* vp)
 	} while (customer_not_found);
 
 	showCustomersBookings(vp, customer);
-
 	
+	for (size_t i{ 0 }; i < vp->getBookings().size(); i++)
+	{
+		if (vp->getBookings()[i]->getCustomer()->getEmail() == customer_email)
+		{
+			customer_bookings.push_back(vp->getBookings()[i]);
+			customer_has_no_bookings = false;
+		}
+	}
+	if (customer_has_no_bookings)
+	{
+		//if no bookings, showCustomersBookings() already mentions that above.
+		//so no need to mention it again here.
+		return;
+	}
+
+	do
+	{
+		cout << "Enter Booking ID: ";
+		cin >> booking_id;
+		if (cin.eof())
+		{
+			cin.clear();
+			return;
+		}
+		for (size_t i{ 0 }; i < customer_bookings.size(); i++)
+		{
+			if (booking_id == customer_bookings[i]->getId())
+			{
+				booking_not_found = false;
+				break;
+			}
+		}
+		if (booking_not_found)
+		{
+			cout << "(!) Invalid ID, try again." << endl;
+			continue;
+		}
+		break;
+	} while (true);
+
+
+	do
+	{
+		cout << "Booking is about to be deleted. To confirm enter \"y\": ";
+		cin >> delete_booking_confirmation;
+		if (cin.eof())
+		{
+			cin.clear();
+			return;
+		}
+
+		if (delete_booking_confirmation != 'y')
+		{
+			cout << "Invalid input." << endl;
+			delete_booking_confirmation = '\0';
+			continue;
+		}
+
+		for (size_t i{ 0 }; i < vp->getBookings().size(); i++)
+		{
+			if (vp->getBookings()[i]->getId() == booking_id)
+			{
+				cout << "Booking with id[" << vp->getBookings()[i]->getId() << "] is deleted." << endl;
+				for (size_t j{ 0 }; j < vp->getBookings()[i]->getAccomodations().size(); j++)
+				{
+					vp->getBookings()[i]->getAccomodations()[j]->setIsBooked(false);
+				}
+				delete vp->getBookings()[i];
+				vp->getBookings().erase(vp->getBookings().begin() + i);
+				reWriteAccomodationsFile(vp);
+				reWriteBookingsFile(vp);
+				return;
+			}
+		}
+	} while (true);
+
 }

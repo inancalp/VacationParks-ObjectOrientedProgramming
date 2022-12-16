@@ -1,7 +1,5 @@
-
 #ifndef BUNGALOW_H
 #define BUNGALOW_H
-
 #include "Accomodations.h"
 
 class Bungalow :
@@ -21,12 +19,9 @@ public:
         LuxuryLevel* luxury_level,
         const int bedrooms
     );
-
     ~Bungalow();
-
     const int& getBedrooms() const;
     void setBedrooms(const int bedrooms);
-
     string toString() override;
 };
 

@@ -3,9 +3,7 @@
 
 #include "VacationParcs.h"
 #include "Customer.h"
-
 #define CUSTOMERSFILE "../files/customers.txt"
-
 
 void saveCustomerFile(Customer* c);
 void retrieveCustomersFile(VacationParcs* vp);

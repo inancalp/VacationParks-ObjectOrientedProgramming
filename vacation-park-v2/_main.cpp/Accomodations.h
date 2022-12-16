@@ -1,6 +1,5 @@
 #ifndef ACCOMODATION_H
 #define ACCOMODATION_H
-
 #include "LuxuryLevel.h"
 
 class Accomodations
@@ -13,7 +12,6 @@ private:
 	bool m_bathroomWithBath;
 	bool m_isBooked;
 	LuxuryLevel* m_luxuryLevel; 
-
 public:
 	Accomodations
 	(
@@ -25,9 +23,7 @@ public:
 		const bool is_booked,
 		LuxuryLevel* luxury_level 
 	);
-
 	virtual ~Accomodations(); // virtual
-
 	const string& getParcName() const;
 	const int& getId() const;
 	const int& getNbrPeople() const;
@@ -35,18 +31,13 @@ public:
 	const bool& getBathroomWithBath() const;
 	const bool& getIsBooked() const;
 	LuxuryLevel* getLuxuryLevel();
-
 	void setParcName(const string& parc_name);
 	void setId(const int& id);
 	void setNbrPeople(const int& nbr_people);
 	void setSize(const int& size);
 	void setBathroomWithBath(const bool& bathroom_with_bath);
 	void setIsBooked(const bool is_booked);
-	void setLuxuryLevel(LuxuryLevel* luxury_level); // ??
-
+	void setLuxuryLevel(LuxuryLevel* luxury_level); 
 	virtual string toString() = 0;
 };
-
-
-
 #endif //ACCOMODATION_H

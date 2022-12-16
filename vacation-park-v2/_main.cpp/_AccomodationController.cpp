@@ -185,7 +185,7 @@ void reWriteAccomodationsFile(VacationParcs* vp)
 		{
 			if (typeid(*accom) == typeid(HotelRoom))
 			{
-				cout << "reWriteAccomodations() ->> HotelRoom::getId() ->> " << accom->getId() << " being manipulated." << endl;
+				
 				HotelRoom* hotel_room = static_cast<HotelRoom*>(accom);
 				accomsFile
 					<< "hotel_room" << " "//to be able to see type.(could be changed to member variable?)
@@ -205,7 +205,6 @@ void reWriteAccomodationsFile(VacationParcs* vp)
 
 			if (typeid(*accom) == typeid(Bungalow))
 			{
-				cout << "reWriteAccomodations() ->> Bungalow::getId() ->> " << accom->getId() << " being manipulated." << endl;
 				Bungalow* bungalow = static_cast<Bungalow*>(accom);
 				accomsFile
 					<< "bungalow" << " " //to be able to see type.(could be changed to member variable?)
@@ -666,6 +665,7 @@ void createLuxuryLevelMiddleWare(int& data, string data_name)
 
 void showAccomodations(VacationParcs* vp)
 {
+	cout << endl;
 	for (size_t i{ 0 }; i < vp->getParcs().size(); i++)
 	{
 		if (vp->getParcs().size() == 0)
@@ -673,7 +673,9 @@ void showAccomodations(VacationParcs* vp)
 			cout << "There are no Parcs to show, thus no Accomodations to show either!" << endl;
 			return;
 		}
-		cout << "->> Accomodations included in the system of Parcs::getName() ->> " << vp->getParcs()[i]->getName() << endl << endl;
+		cout << "---------------------------------------------------------------- " << endl;
+		cout << "->> Accomodations included in the system of Parcs::getName() ->> " << vp->getParcs()[i]->getName() << endl;
+		cout << "---------------------------------------------------------------- " << endl;
 
 		if (vp->getParcs()[i]->getAccomodations().size() == 0)
 		{
@@ -1014,9 +1016,9 @@ void deleteAccomodation(VacationParcs* vp)
 
 		if (selected_accom->getIsBooked() == true)
 		{
-			cout << "----------------------------------------" << endl;
-			cout << "Accomodation is booked. Try again later." << endl;
-			cout << "----------------------------------------" << endl;
+			cout << "--------------------------------------------" << endl;
+			cout << "(!) Accomodation is booked. Try again later." << endl;
+			cout << "--------------------------------------------" << endl;
 			return;
 		}
 

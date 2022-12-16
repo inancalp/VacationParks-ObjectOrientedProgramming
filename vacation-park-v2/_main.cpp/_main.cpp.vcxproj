@@ -139,7 +139,7 @@
     <ClCompile Include="_ParcController.cpp" />
     <ClCompile Include="Parcs.cpp" />
     <ClCompile Include="ParcServices.cpp" />
-    <ClCompile Include="_MainController.cpp" />
+    <ClCompile Include="__MainController.cpp" />
     <ClCompile Include="VacationParcs.cpp" />
     <ClCompile Include="__main.cpp" />
   </ItemGroup>
@@ -156,7 +156,7 @@
     <ClInclude Include="_ParcController.h" />
     <ClInclude Include="Parcs.h" />
     <ClInclude Include="ParcServices.h" />
-    <ClInclude Include="_MainController.h" />
+    <ClInclude Include="__MainController.h" />
     <ClInclude Include="VacationParcs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

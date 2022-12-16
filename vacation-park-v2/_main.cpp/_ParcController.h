@@ -1,4 +1,3 @@
-
 #ifndef  PARCCONTROLLER_H
 #define PARCCONTROLLER_H
 
@@ -9,7 +8,6 @@ using namespace std;
 #include <iostream>
 #include <array>
 #include <fstream>
-
 #define PARCSERVICESSIZE 6
 #define PARCSFILE "../files/parcs.txt"
 #define PARCSERVICESFILE "../files/parcservices.txt"
@@ -25,8 +23,8 @@ void saveParcServicesFile(ParcServices* parc_services);
 ParcServices* createParcServices(string& parc_name);
 void showParcs(VacationParcs* vp);
 void modifyParc(VacationParcs* vp);
-void changeSelectedParcServiceMiddleware(string& data_name, bool& data);
+void changeSelectedParcServiceMiddleware(string data_name, bool& data);
 void deleteParc(VacationParcs* vp);
 Parcs* selectParc(VacationParcs* vp);
 
-#endif
+#endif // !PARCCONTROLLER_H

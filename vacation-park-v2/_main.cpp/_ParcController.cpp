@@ -7,7 +7,7 @@ void saveParcFile(Parcs* parc)
 	ofstream parcsFile(PARCSFILE, ios::out | ios::app);
 	if (!parcsFile)
 	{
-		cout << "Error occured while opening parcs.txt file" << endl;
+		cout << "Error opening the file \"parcs.txt\"." << endl;
 		return;
 	}
 	
@@ -235,7 +235,9 @@ void showParcs(VacationParcs* vp)
 	cout << "------------------------------------------------------------ " << endl << endl;
 	if (vp->getParcs().size() == 0)
 	{
-		cout << "There are NO PARCS to show!" << endl;
+		cout << "-------------------------------" << endl;
+		cout << "(!) There are no parcs to show." << endl;
+		cout << "-------------------------------" << endl;
 		return;
 	}
 
@@ -251,14 +253,6 @@ void modifyParc(VacationParcs* vp)
 	char service_num;
 	Parcs* selected_parc;
 	ParcServices* selected_services;
-
-	string subtropic_swimming_pool_name{ "SubtropicSwimmingPool" };
-	string sports_infrastructure_name{ "SportsInfrastructure" };
-	string bowling_alley_name{ "BowlingAlley" };
-	string bicycle_rent_name{ "BicycleRent" };
-	string childrens_paradise_name{ "ChildrensParadise" };
-	string water_bikes_name{ "WaterBikes" };
-
 	bool subtropic_swimming_pool_val;
 	bool sports_infrastructure_val;
 	bool bowling_alley_val;
@@ -321,27 +315,27 @@ void modifyParc(VacationParcs* vp)
 		switch (service_num)
 		{
 		case '1':
-			changeSelectedParcServiceMiddleware(subtropic_swimming_pool_name, subtropic_swimming_pool_val);
+			changeSelectedParcServiceMiddleware("SubtropicSwimmingPool", subtropic_swimming_pool_val);
 			selected_services->setSubtropicSwimmingPool(subtropic_swimming_pool_val);
 			break;
 		case '2':
-			changeSelectedParcServiceMiddleware(sports_infrastructure_name, sports_infrastructure_val);
+			changeSelectedParcServiceMiddleware("SportsInfrastructure", sports_infrastructure_val);
 			selected_services->setSportsInfrastructure(sports_infrastructure_val);
 			break;
 		case '3':
-			changeSelectedParcServiceMiddleware(bowling_alley_name, bowling_alley_val);
+			changeSelectedParcServiceMiddleware("BowlingAlley", bowling_alley_val);
 			selected_services->setBowlingAlley(bowling_alley_val);
 			break;
 		case '4':
-			changeSelectedParcServiceMiddleware(bicycle_rent_name, bicycle_rent_val);
+			changeSelectedParcServiceMiddleware("BicycleRent", bicycle_rent_val);
 			selected_services->setBicycleRent(bicycle_rent_val);
 			break;
 		case '5':
-			changeSelectedParcServiceMiddleware(childrens_paradise_name, childrens_paradise_val);
+			changeSelectedParcServiceMiddleware("ChildrensParadise", childrens_paradise_val);
 			selected_services->setChildrensParadise(childrens_paradise_val);
 			break;
 		case '6':
-			changeSelectedParcServiceMiddleware(water_bikes_name, water_bikes_val);
+			changeSelectedParcServiceMiddleware("WaterBikes", water_bikes_val);
 			selected_services->setWaterBikes(water_bikes_val);
 			break;
 		default:
@@ -534,7 +528,7 @@ ParcServices* createParcServices(string& parc_name)
 
 }
 
-void changeSelectedParcServiceMiddleware(string& data_name, bool& data)
+void changeSelectedParcServiceMiddleware(string data_name, bool& data)
 {
 	cout << "--------------" << endl;
 	cout
