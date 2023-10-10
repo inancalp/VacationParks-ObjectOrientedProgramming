@@ -1,5 +1,7 @@
 ﻿# OOP-with-CPP-VacationParks-Project
- 
+
+This is an enjoyable command-line interface project that provides users with the roles of Owner, Employee, and Customer, allowing them to interact with various features of the application.
+
 Brief Summary:
 - As an Owner, you have the ability to perform CRUD (Create, Read, Update, Delete) operations on Parks and Accommodations. Employees, on the other hand, can make modifications to and delete accommodations, as well as manage customer bookings and accounts. Customers are able to create and modify their accounts, make bookings, and adjust included services and accommodations to suit their preferences.
 
