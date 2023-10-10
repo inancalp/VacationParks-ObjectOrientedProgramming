@@ -1,9 +1,10 @@
 ﻿# OOP-with-CPP-VacationParks-Project
-//description
+ 
+Brief Summary:
+- As an Owner, you have the ability to perform CRUD (Create, Read, Update, Delete) operations on Parks and Accommodations. Employees, on the other hand, can make modifications to and delete accommodations, as well as manage customer bookings and accounts. Customers are able to create and modify their accounts, make bookings, and adjust included services and accommodations to suit their preferences.
 
-## Features
-//features
-
+For more detailed information on the project's content and functionality, please refer to the class and use case diagrams.
 
 ## How to Run the Project
-//project
+
+I recommend the following approach: Install the "Desktop Development with C++" module within the Visual Studio, then launch the application directly from the IDE.
